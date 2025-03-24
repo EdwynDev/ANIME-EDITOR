@@ -21,6 +21,11 @@
             font-family: 'Electrolize';
         }
 
+        .text-stroke {
+            text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000,
+                1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;
+        }
+
         .gradient-border {
             border: 4px solid;
             border-image-slice: 1;
@@ -347,7 +352,7 @@
                                 <span id="card-rarity">BASIC</span>
                             </div>
                             <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
-                                <span id="card-name">???</span>
+                                <span id="card-name" class="text-stroke">???</span>
                             </div>
                             <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
                                 #0
@@ -355,11 +360,11 @@
                             <div class="absolute bottom-16 left-2 right-2 px-2">
                                 <p>
                                     <span id="card-skill"
-                                        class="text-xl text-white font-bold text-linear-gradient">???</span>
+                                        class="text-xl text-white font-bold text-linear-gradient text-stroke">???</span>
                                 </p>
                                 <p class="mt-3 rounded-lg bg-gray-500 h-100 p-2 bg-opacity-70">
                                     <span id="card-description"
-                                        class="text-xs text-white font-bold text-linear-gradient ">???</span>
+                                        class="text-xs text-white font-bold text-linear-gradient text-stroke">???</span>
                                 </p>
                             </div>
                             <div class="absolute bottom-2 w-full px-4 flex justify-between">
@@ -386,7 +391,7 @@
                                     class="absolute top-2 left-2 bg-gray-800 text-white text-xs font-bold px-2 py-1 rounded">
                                     BASIC</div>
                                 <div class="absolute bottom-2 right-2 text-white text-sm font-bold"
-                                    id="basic-probability"></div>
+                                    id="basic-probability" class="text-stroke"></div>
                             </div>
                         </div>
                         <div class="full-card">
@@ -400,17 +405,17 @@
                                         BASIC</div>
                                     <div
                                         class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
-                                        <span id="basic-full-name">???</span>
+                                        <span id="basic-full-name" class="text-stroke">???</span>
                                     </div>
                                     <div
                                         class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
                                         #0</div>
                                     <div class="absolute bottom-16 left-2 right-2 px-2">
                                         <p><span id="basic-full-skill"
-                                                class="text-xl text-white font-bold text-linear-gradient">???</span></p>
+                                                class="text-xl text-white font-bold text-linear-gradient text-stroke">???</span></p>
                                         <p class="mt-3 mb-12 rounded-lg bg-gray-500 h-100 p-2 bg-opacity-70"><span
                                                 id="basic-full-description"
-                                                class="text-xs text-white font-bold text-linear-gradient">???</span></p>
+                                                class="text-xs text-white font-bold text-linear-gradient text-stroke">???</span></p>
                                     </div>
                                     <div class="absolute bottom-2 w-full px-4 flex justify-between">
                                         <div class="stat-dmg font-bold text-lg">ATK <span
@@ -435,7 +440,7 @@
                                     class="absolute top-2 left-2 bg-yellow-600 text-white text-xs font-bold px-2 py-1 rounded">
                                     GOLD</div>
                                 <div class="absolute bottom-2 right-2 text-white text-sm font-bold"
-                                    id="gold-probability"></div>
+                                    id="gold-probability" class="text-stroke"></div>
                             </div>
                         </div>
                         <div class="full-card">
@@ -482,7 +487,7 @@
                                     class="absolute top-2 left-2 bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 text-white text-xs font-bold px-2 py-1 rounded">
                                     RAINBOW</div>
                                 <div class="absolute bottom-2 right-2 text-white text-sm font-bold"
-                                    id="rainbow-probability"></div>
+                                    id="rainbow-probability" class="text-stroke"></div>
                             </div>
                         </div>
                         <div class="full-card">
@@ -496,17 +501,17 @@
                                         RAINBOW</div>
                                     <div
                                         class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
-                                        <span id="rainbow-full-name">???</span>
+                                        <span id="rainbow-full-name" class="text-stroke">???</span>
                                     </div>
                                     <div
                                         class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
                                         #0</div>
                                     <div class="absolute bottom-16 left-2 right-2 px-2">
                                         <p><span id="rainbow-full-skill"
-                                                class="text-xl text-white font-bold text-linear-gradient">???</span></p>
+                                                class="text-xl text-white font-bold text-linear-gradient text-stroke">???</span></p>
                                         <p class="mt-3 mb-12 rounded-lg bg-gray-500 h-100 p-2 bg-opacity-70"><span
                                                 id="rainbow-full-description"
-                                                class="text-xs text-white font-bold text-linear-gradient">???</span></p>
+                                                class="text-xs text-white font-bold text-linear-gradient text-stroke">???</span></p>
                                     </div>
                                     <div class="absolute bottom-2 w-full px-4 flex justify-between">
                                         <div class="stat-dmg font-bold text-lg">ATK <span
@@ -531,7 +536,7 @@
                                     class="absolute top-2 left-2 bg-red-900 text-white text-xs font-bold px-2 py-1 rounded">
                                     SECRET</div>
                                 <div class="absolute bottom-2 right-2 text-white text-sm font-bold"
-                                    id="secret-probability"></div>
+                                    id="secret-probability" class="text-stroke"></div>  
                             </div>
                         </div>
                         <div class="full-card">
@@ -545,17 +550,17 @@
                                         SECRET</div>
                                     <div
                                         class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
-                                        <span id="secret-full-name">???</span>
+                                        <span id="secret-full-name" class="text-stroke">???</span>
                                     </div>
                                     <div
                                         class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
                                         #0</div>
                                     <div class="absolute bottom-16 left-2 right-2 px-2">
                                         <p><span id="secret-full-skill"
-                                                class="text-xl text-white font-bold text-linear-gradient">???</span></p>
+                                                class="text-xl text-white font-bold text-linear-gradient text-stroke">???</span></p>
                                         <p class="mt-3 mb-12 rounded-lg bg-gray-500 h-100 p-2 bg-opacity-70"><span
                                                 id="secret-full-description"
-                                                class="text-xs text-white font-bold text-linear-gradient">???</span></p>
+                                                class="text-xs text-white font-bold text-linear-gradient text-stroke">???</span></p>
                                     </div>
                                     <div class="absolute bottom-2 w-full px-4 flex justify-between">
                                         <div class="stat-dmg font-bold text-lg">ATK <span
