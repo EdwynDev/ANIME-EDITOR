@@ -205,74 +205,80 @@
         }
 
         @media (max-width: 768px) {
-            .container {
-                max-width: 100% !important;
-                padding: 0 20px !important;
+            .grid-cols-2 {
+                grid-template-columns: 1fr !important;
+            }
+
+            .rarity-card {
+                margin-bottom: 20px !important;
+            }
+
+            .full-card {
+                transform: translate(-50%, -50%) !important;
             }
 
             .glass-effect {
                 padding: 10px !important;
             }
 
-            .rarity-preview {
-                width: 120px !important;
-                height: 120px !important;
+            .space-y-6 {
+                margin-top: 20px !important;
             }
 
-            .full-card {
-                transform: translate(-50%, -50%) !important;
-            }
-
-            .gradient-content {
-                height: 300px !important;
+            .space-y-4 {
+                margin-top: 10px !important;
             }
         }
 
         @media (min-width: 769px) and (max-width: 1024px) {
-            .container {
-                max-width: 90% !important;
-                padding: 0 40px !important;
+            .grid-cols-2 {
+                grid-template-columns: 1fr 1fr !important;
+            }
+
+            .rarity-card {
+                margin-bottom: 20px !important;
+            }
+
+            .full-card {
+                transform: translate(-50%, -50%) !important;
             }
 
             .glass-effect {
                 padding: 20px !important;
             }
 
-            .rarity-preview {
-                width: 160px !important;
-                height: 160px !important;
+            .space-y-6 {
+                margin-top: 30px !important;
             }
 
-            .full-card {
-                transform: translate(-50%, -50%) !important;
-            }
-
-            .gradient-content {
-                height: 400px !important;
+            .space-y-4 {
+                margin-top: 15px !important;
             }
         }
 
         @media (min-width: 1025px) {
-            .container {
-                max-width: 80% !important;
-                padding: 0 60px !important;
+            .grid-cols-2 {
+                grid-template-columns: 1fr 1fr !important;
+            }
+
+            .rarity-card {
+                margin-bottom: 20px !important;
+            }
+
+            .full-card {
+                transform: translate(-50%, -50%) !important;
             }
 
             .glass-effect {
                 padding: 30px !important;
             }
 
-            .rarity-preview {
-                width: 200px !important;
-                height: 200px !important;
+            .space-y-6 {
+                margin-top: 40px !important;
             }
 
-            .full-card {
-                transform: translate(-50%, -50%) !important;
-            }
-
-            .gradient-content {
-                height: 500px !important;
+            .space-y-4 {
+                margin-top: 20px !important;
             }
         }
     </style>
