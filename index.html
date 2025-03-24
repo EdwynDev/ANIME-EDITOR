@@ -578,7 +578,7 @@
                 'Ce', 'UCe'
             ];
             const exp = Math.floor(Math.log10(num) / 3);
-            return (num / Math.pow(1000, exp)).toFixed(1) + suffixes[exp];
+            return (num / Math.pow(1000, exp)).toFixed(2) + suffixes[exp];
         }
 
         function handleImageUpload() {
@@ -651,15 +651,11 @@
             });
         }
 
-        function formatNumber(num) {
-            return num.toLocaleString();
-        }
-
         function updateProbabilities(baseProbability) {
-            document.getElementById('basic-probability').innerText = formatNumber(baseProbability);
-            document.getElementById('gold-probability').innerText = formatNumber(baseProbability * 100);
-            document.getElementById('rainbow-probability').innerText = formatNumber(baseProbability * 10000);
-            document.getElementById('secret-probability').innerText = formatNumber(baseProbability * 1000000);
+            document.getElementById('basic-probability').innerText = formatNumberWithSuffix(baseProbability);
+            document.getElementById('gold-probability').innerText = formatNumberWithSuffix(baseProbability * 100);
+            document.getElementById('rainbow-probability').innerText = formatNumberWithSuffix(baseProbability * 10000);
+            document.getElementById('secret-probability').innerText = formatNumberWithSuffix(baseProbability * 1000000);
         }
 
         updateProbabilities(1);
