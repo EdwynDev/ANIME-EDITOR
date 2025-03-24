@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Electrolize';
+        }
+
+        .gradient-border {
+            border: 4px solid;
+            border-image-slice: 1;
+            border-width: 4px;
+        }
+
+        .gradient-border-basic {
+            position: relative;
+            background: linear-gradient(45deg, #808080, #d3d3d3);
+            border-radius: 0.6rem;
+        }
+
+        .gradient-border-gold {
+            position: relative;
+            background: linear-gradient(45deg, #ffd700, #ffec8b);
+            border-radius: 0.6rem;
+        }
+
+        .gradient-border-rainbow {
+            position: relative;
+            background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
+            border-radius: 0.6rem;
+        }
+
+        .gradient-border-secret {
+            position: relative;
+            background: linear-gradient(45deg, #ff0000, #8b0000);
+            border-radius: 0.6rem;
+        }
+
+        .gradient-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .hover-scale {
+            transition: transform 0.2s;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.02);
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .text-linear-gradient {
+            background: transparent;
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            background-image: linear-gradient(180deg, #ffffff 0%, #aaaaaa 100%);
+            text-shadow: #000000 0px 0px 5px;
+            font-weight: 600;
+        }
+
+        .stat-dmg {
+            background: transparent;
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            background-image: linear-gradient(180deg, #ff4444 0%, #cc0000 100%);
+            text-shadow: none;
+        }
+
+        .stat-hp {
+            background: transparent;
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            background-image: linear-gradient(180deg, #44ff44 0%, #00cc00 100%);
+            text-shadow: none;
+        }
+
+        @keyframes rotatingShadow {
+            0% {
+                filter: drop-shadow(0 0 10px var(--shadow-start)) drop-shadow(0 0 20px var(--shadow-end));
+            }
+
+            25% {
+                filter: drop-shadow(10px 0 10px var(--shadow-start)) drop-shadow(-10px 0 20px var(--shadow-end));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 10px var(--shadow-start)) drop-shadow(0 0 20px var(--shadow-end));
+            }
+
+            75% {
+                filter: drop-shadow(-10px 0 10px var(--shadow-start)) drop-shadow(10px 0 20px var(--shadow-end));
+            }
+
+            100% {
+                filter: drop-shadow(0 0 10px var(--shadow-start)) drop-shadow(0 0 20px var(--shadow-end));
+            }
+        }
+
+        .shadow-basic {
+            --shadow-start: #606060;
+            --shadow-end: #a0a0a0;
+            animation: rotatingShadow 3s infinite linear;
+        }
+
+        .shadow-gold {
+            --shadow-start: #ffa500;
+            --shadow-end: #daa520;
+            animation: rotatingShadow 3s infinite linear;
+        }
+
+        .shadow-rainbow {
+            --shadow-start: #cc0000;
+            --shadow-end: #4b0082;
+            animation: rotatingShadow 3s infinite linear;
+        }
+
+        .shadow-secret {
+            --shadow-start: #cc0000;
+            --shadow-end: #660000;
+            animation: rotatingShadow 3s infinite linear;
+        }
+
+        .rarity-card {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .full-card {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-140%, -100%);
+            z-index: 50;
+        }
+
+        @media (max-width: 750px) {
+            .full-card {
+                transform: translate(-50%, -50%) !important;
+            }
+        }
+
+        .rarity-card:hover .full-card,
+        .rarity-card:focus .full-card {
+            display: block;
+        }
+
+        .rarity-preview {
+            cursor: pointer;
+        }
+
+        .rarity-card {
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+            position: relative;
+        }
+
+        .rarity-card:hover {
+            z-index: 50;
+        }
+
+        .rarity-preview {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 min-h-screen">
+    <nav class="glass-effect fixed top-0 w-full z-50 px-6 py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-white text-2xl font-bold">
+                <i class="fas fa-dragon mr-2"></i>Anime Card Clash - Editor
+            </h1>
+            <!--<div class="flex gap-4">
+                 <button class="text-white hover:text-purple-400">
+                    <i class="fas fa-save mr-1"></i>Save
+                </button>
+                <button class="text-white hover:text-purple-400">
+                    <i class="fas fa-folder-open mr-1"></i>Load
+                </button>
+            </div> -->
+        </div>
+    </nav>
+
+    <div class="container mx-auto pt-24 px-6 pb-12">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="glass-effect rounded-xl p-6 space-y-6">
+                <h2 class="text-white text-xl font-bold mb-6">
+                    <i class="fas fa-edit mr-2"></i>Card Editor
+                </h2>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-purple-300 text-sm mb-2">
+                            <i class="fas fa-signature mr-2"></i>Name
+                        </label>
+                        <input id="name" type="text"
+                            class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 focus:border-purple-300 focus:ring-2 focus:ring-purple-300 outline-none"
+                            placeholder="Card name" oninput="updateCard()">
+                    </div>
+
+                    <div>
+                        <label class="block text-purple-300 text-sm mb-2">
+                            <i class="fas fa-bolt mr-2"></i>Capacity
+                        </label>
+                        <input id="skill" type="text"
+                            class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 focus:border-purple-300 focus:ring-2 focus:ring-purple-300 outline-none"
+                            placeholder="Capacity name" oninput="updateCard()">
+                    </div>
+
+                    <div>
+                        <label class="block text-purple-300 text-sm mb-2">
+                            <i class="fas fa-scroll mr-2"></i>Description
+                        </label>
+                        <textarea id="description"
+                            class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 focus:border-purple-300 focus:ring-2 focus:ring-purple-300 outline-none"
+                            rows="3" placeholder="Capacity description" oninput="updateCard()"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-purple-300 text-sm mb-2">
+                            <i class="fas fa-image mr-2"></i>Image
+                        </label>
+                        <div class="flex gap-2">
+                            <input id="image" type="url"
+                                class="flex-1 bg-gray-800 text-white rounded-lg p-3 border border-purple-500 focus:border-purple-300 focus:ring-2 focus:ring-purple-300 outline-none"
+                                placeholder="Image URL" oninput="updateCard()">
+                            <label class="cursor-pointer bg-purple-600 hover:bg-purple-500 text-white rounded-lg p-3">
+                                <i class="fas fa-upload"></i>
+                                <input id="image-upload" type="file" accept="image/*" class="hidden"
+                                    onchange="handleImageUpload()">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-purple-300 text-sm mb-2">
+                            <i class="fas fa-percentage mr-2"></i>Probability
+                        </label>
+                        <input id="probability" type="number" min="1"
+                            class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 focus:border-purple-300 focus:ring-2 focus:ring-purple-300 outline-none"
+                            placeholder="Card probability" oninput="updateCard()">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-purple-300 text-sm mb-2">
+                                <i class="fas fa-fire mr-2"></i>ATK
+                            </label>
+                            <input id="damage" type="number" min="0"
+                                class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 focus:border-purple-300 focus:ring-2 focus:ring-purple-300 outline-none"
+                                placeholder="Card ATK" oninput="updateCard()">
+                        </div>
+                        <div>
+                            <label class="block text-purple-300 text-sm mb-2">
+                                <i class="fas fa-heart mr-2"></i>HP
+                            </label>
+                            <input id="hp" type="number" min="0"
+                                class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 focus:border-purple-300 focus:ring-2 focus:ring-purple-300 outline-none"
+                                placeholder="Card HP" oninput="updateCard()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6 flex flex-col items-center">
+                <div class="gradient-border-basic p-2 shadow-basic">
+                    <div id="card" class="mx-auto relative w-80 ">
+                        <div class="gradient-content h-[500px] bg-black rounded-lg overflow-hidden">
+                            <img id="card-image" class="absolute inset-0 w-full h-full object-cover opacity-70"
+                                src="https://placehold.co/320x500" />
+                            <div
+                                class="absolute top-2 left-2 bg-gray-800 text-white text-xs font-bold px-2 py-1 rounded">
+                                <span id="card-rarity">BASIC</span>
+                            </div>
+                            <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
+                                <span id="card-name">???</span>
+                            </div>
+                            <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                                #0
+                            </div>
+                            <div class="absolute bottom-16 left-2 right-2 px-2">
+                                <p>
+                                    <span id="card-skill"
+                                        class="text-xl text-white font-bold text-linear-gradient">???</span>
+                                </p>
+                                <p class="mt-3 rounded-lg bg-gray-500 h-100 p-2 bg-opacity-70">
+                                    <span id="card-description"
+                                        class="text-xs text-white font-bold text-linear-gradient ">???</span>
+                                </p>
+                            </div>
+                            <div class="absolute bottom-2 w-full px-4 flex justify-between">
+                                <div class="stat-dmg font-bold text-lg">
+                                    ATK <span id="card-damage">0</span>
+                                </div>
+                                <div class="stat-hp font-bold text-lg">
+                                    HP <span id="card-hp">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-10">
+                    <div class="gradient-border-basic p-1 shadow-basic rarity-card" tabindex="0">
+                        <div class="rarity-preview">
+                            <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
+                                <img id="basic-image" alt="Basic rarity image"
+                                    class="absolute inset-0 w-full h-full object-cover"
+                                    src="https://placehold.co/160x160" />
+                                <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+                                <div
+                                    class="absolute top-2 left-2 bg-gray-800 text-white text-xs font-bold px-2 py-1 rounded">
+                                    BASIC</div>
+                                <div class="absolute bottom-2 right-2 text-white text-sm font-bold"
+                                    id="basic-probability"></div>
+                            </div>
+                        </div>
+                        <div class="full-card">
+                            <div class="gradient-border-basic p-2 shadow-basic">
+                                <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
+                                    <img id="basic-full-image" alt="Basic rarity full image"
+                                        class="absolute inset-0 w-full h-full object-cover opacity-70"
+                                        src="https://placehold.co/320x500" />
+                                    <div
+                                        class="absolute top-2 left-2 bg-gray-800 text-white text-xs font-bold px-2 py-1 rounded">
+                                        BASIC</div>
+                                    <div
+                                        class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
+                                        <span id="basic-full-name">???</span>
+                                    </div>
+                                    <div
+                                        class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                                        #0</div>
+                                    <div class="absolute bottom-16 left-2 right-2 px-2">
+                                        <p><span id="basic-full-skill"
+                                                class="text-xl text-white font-bold text-linear-gradient">???</span></p>
+                                        <p class="mt-3 mb-12 rounded-lg bg-gray-500 h-100 p-2 bg-opacity-70"><span
+                                                id="basic-full-description"
+                                                class="text-xs text-white font-bold text-linear-gradient">???</span></p>
+                                    </div>
+                                    <div class="absolute bottom-2 w-full px-4 flex justify-between">
+                                        <div class="stat-dmg font-bold text-lg">ATK <span
+                                                id="basic-full-damage">0</span>
+                                        </div>
+                                        <div class="stat-hp font-bold text-lg">HP <span id="basic-full-hp">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gradient-border-gold p-1 shadow-gold rarity-card" tabindex="0">
+                        <div class="rarity-preview">
+                            <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
+                                <img id="gold-image" alt="Gold rarity image"
+                                    class="absolute inset-0 w-full h-full object-cover"
+                                    src="https://placehold.co/160x160" />
+                                <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+                                <div
+                                    class="absolute top-2 left-2 bg-yellow-600 text-white text-xs font-bold px-2 py-1 rounded">
+                                    GOLD</div>
+                                <div class="absolute bottom-2 right-2 text-white text-sm font-bold"
+                                    id="gold-probability"></div>
+                            </div>
+                        </div>
+                        <div class="full-card">
+                            <div class="gradient-border-gold p-2 shadow-gold">
+                                <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
+                                    <img id="gold-full-image" alt="Gold rarity full image"
+                                        class="absolute inset-0 w-full h-full object-cover opacity-70"
+                                        src="https://placehold.co/320x500" />
+                                    <div
+                                        class="absolute top-2 left-2 bg-yellow-600 text-white text-xs font-bold px-2 py-1 rounded">
+                                        GOLD</div>
+                                    <div
+                                        class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
+                                        <span id="gold-full-name">???</span>
+                                    </div>
+                                    <div
+                                        class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                                        #0</div>
+                                    <div class="absolute bottom-16 left-2 right-2 px-2">
+                                        <p><span id="gold-full-skill"
+                                                class="text-xl text-white font-bold text-linear-gradient">???</span></p>
+                                        <p class="mt-3 mb-12 rounded-lg bg-gray-500 h-100 p-2 bg-opacity-70"><span
+                                                id="gold-full-description"
+                                                class="text-xs text-white font-bold text-linear-gradient">???</span></p>
+                                    </div>
+                                    <div class="absolute bottom-2 w-full px-4 flex justify-between">
+                                        <div class="stat-dmg font-bold text-lg">ATK <span id="gold-full-damage">0</span>
+                                        </div>
+                                        <div class="stat-hp font-bold text-lg">HP <span id="gold-full-hp">0</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gradient-border-rainbow p-1 shadow-rainbow rarity-card" tabindex="0">
+                        <div class="rarity-preview">
+                            <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
+                                <img id="rainbow-image" alt="Rainbow rarity image"
+                                    class="absolute inset-0 w-full h-full object-cover"
+                                    src="https://placehold.co/160x160" />
+                                <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+                                <div
+                                    class="absolute top-2 left-2 bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 text-white text-xs font-bold px-2 py-1 rounded">
+                                    RAINBOW</div>
+                                <div class="absolute bottom-2 right-2 text-white text-sm font-bold"
+                                    id="rainbow-probability"></div>
+                            </div>
+                        </div>
+                        <div class="full-card">
+                            <div class="gradient-border-rainbow p-2 shadow-rainbow">
+                                <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
+                                    <img id="rainbow-full-image" alt="Rainbow rarity full image"
+                                        class="absolute inset-0 w-full h-full object-cover opacity-70"
+                                        src="https://placehold.co/320x500" />
+                                    <div
+                                        class="absolute top-2 left-2 bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 text-white text-xs font-bold px-2 py-1 rounded">
+                                        RAINBOW</div>
+                                    <div
+                                        class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
+                                        <span id="rainbow-full-name">???</span>
+                                    </div>
+                                    <div
+                                        class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                                        #0</div>
+                                    <div class="absolute bottom-16 left-2 right-2 px-2">
+                                        <p><span id="rainbow-full-skill"
+                                                class="text-xl text-white font-bold text-linear-gradient">???</span></p>
+                                        <p class="mt-3 mb-12 rounded-lg bg-gray-500 h-100 p-2 bg-opacity-70"><span
+                                                id="rainbow-full-description"
+                                                class="text-xs text-white font-bold text-linear-gradient">???</span></p>
+                                    </div>
+                                    <div class="absolute bottom-2 w-full px-4 flex justify-between">
+                                        <div class="stat-dmg font-bold text-lg">ATK <span
+                                                id="rainbow-full-damage">0</span>
+                                        </div>
+                                        <div class="stat-hp font-bold text-lg">HP <span id="rainbow-full-hp">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="gradient-border-secret p-1 shadow-secret rarity-card" tabindex="0">
+                        <div class="rarity-preview">
+                            <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
+                                <img id="secret-image" alt="Secret rarity image"
+                                    class="absolute inset-0 w-full h-full object-cover"
+                                    src="https://placehold.co/160x160" />
+                                <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+                                <div
+                                    class="absolute top-2 left-2 bg-red-900 text-white text-xs font-bold px-2 py-1 rounded">
+                                    SECRET</div>
+                                <div class="absolute bottom-2 right-2 text-white text-sm font-bold"
+                                    id="secret-probability"></div>
+                            </div>
+                        </div>
+                        <div class="full-card">
+                            <div class="gradient-border-secret p-2 shadow-secret">
+                                <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
+                                    <img id="secret-full-image" alt="Secret rarity full image"
+                                        class="absolute inset-0 w-full h-full object-cover opacity-70"
+                                        src="https://placehold.co/320x500" />
+                                    <div
+                                        class="absolute top-2 left-2 bg-red-900 text-white text-xs font-bold px-2 py-1 rounded">
+                                        SECRET</div>
+                                    <div
+                                        class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
+                                        <span id="secret-full-name">???</span>
+                                    </div>
+                                    <div
+                                        class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                                        #0</div>
+                                    <div class="absolute bottom-16 left-2 right-2 px-2">
+                                        <p><span id="secret-full-skill"
+                                                class="text-xl text-white font-bold text-linear-gradient">???</span></p>
+                                        <p class="mt-3 mb-12 rounded-lg bg-gray-500 h-100 p-2 bg-opacity-70"><span
+                                                id="secret-full-description"
+                                                class="text-xs text-white font-bold text-linear-gradient">???</span></p>
+                                    </div>
+                                    <div class="absolute bottom-2 w-full px-4 flex justify-between">
+                                        <div class="stat-dmg font-bold text-lg">ATK <span
+                                                id="secret-full-damage">0</span>
+                                        </div>
+                                        <div class="stat-hp font-bold text-lg">HP <span id="secret-full-hp">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function formatNumberWithSuffix(num) {
+            if (num < 1000) return num;
+            const suffixes = [
+                '', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc',
+                'UDc', 'DDc', 'TDc', 'QaDc', 'QiDc', 'SxDc', 'SpDc', 'ODc', 'NDc',
+                'Vg', 'UVg', 'DVg', 'TVg', 'QaVg', 'QiVg', 'SxVg', 'SpVg', 'OVg', 'NVg',
+                'Tg', 'UTg', 'DTg', 'TTg', 'QaTg', 'QiTg', 'SxTg', 'SpTg', 'OTg', 'NTg',
+                'Qd', 'UQd', 'DQd', 'TQd', 'QaQd', 'QiQd', 'SxQd', 'SpQd', 'OQd', 'NQd',
+                'Qq', 'UQq', 'DQq', 'TQq', 'QaQq', 'QiQq', 'SxQq', 'SpQq', 'OQq', 'NQq',
+                'Sg', 'USg', 'DSg', 'TSg', 'QaSg', 'QiSg', 'SxSg', 'SpSg', 'OSg', 'NSg',
+                'St', 'USt', 'DSt', 'TSt', 'QaSt', 'QiSt', 'SxSt', 'SpSt', 'OSt', 'NSt',
+                'Og', 'UOg', 'DOg', 'TOg', 'QaOg', 'QiOg', 'SxOg', 'SpOg', 'OOg', 'NOg',
+                'Nn', 'UNn', 'DNn', 'TNn', 'QaNn', 'QiNn', 'SxNn', 'SpNn', 'ONn', 'NNn',
+                'Ce', 'UCe'
+            ];
+            const exp = Math.floor(Math.log10(num) / 3);
+            return (num / Math.pow(1000, exp)).toFixed(1) + suffixes[exp];
+        }
+
+        function handleImageUpload() {
+            const fileInput = document.getElementById('image-upload');
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imageUrl = e.target.result;
+                    updateAllImages(imageUrl);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function updateCard() {
+            const name = document.getElementById('name').value.trim() || '???';
+            const skill = document.getElementById('skill').value.trim() || '???';
+            const description = document.getElementById('description').value.trim() || '???';
+            const imageUrl = document.getElementById('image').value.trim();
+            const probability = parseFloat(document.getElementById('probability').value) || 1;
+            const damage = document.getElementById('damage').value || '0';
+            const hp = document.getElementById('hp').value || '0';
+
+            document.getElementById('card-name').innerText = name;
+            document.getElementById('card-skill').innerText = skill;
+            document.getElementById('card-description').innerText = description;
+            document.getElementById('card-damage').innerText = formatNumberWithSuffix(parseInt(damage));
+            document.getElementById('card-hp').innerText = formatNumberWithSuffix(parseInt(hp));
+
+            if (imageUrl) {
+                updateAllImages(imageUrl);
+            }
+
+            updateProbabilities(probability);
+            updateFullCards();
+        }
+
+        function updateFullCards() {
+            const name = document.getElementById('name').value.trim() || '???';
+            const skill = document.getElementById('skill').value.trim() || '???';
+            const description = document.getElementById('description').value.trim() || '???';
+            const damage = document.getElementById('damage').value || '0';
+            const hp = document.getElementById('hp').value || '0';
+
+            const rarities = ['basic', 'gold', 'rainbow', 'secret'];
+            const multipliers = [1, 4, 16, 64];
+
+            rarities.forEach((rarity, index) => {
+                const multiplier = multipliers[index];
+                document.getElementById(`${rarity}-full-name`).innerText = name;
+                document.getElementById(`${rarity}-full-skill`).innerText = skill;
+                document.getElementById(`${rarity}-full-description`).innerText = description;
+                document.getElementById(`${rarity}-full-damage`).innerText = formatNumberWithSuffix(parseInt(damage) * multiplier);
+                document.getElementById(`${rarity}-full-hp`).innerText = formatNumberWithSuffix(parseInt(hp) * multiplier);
+            });
+        }
+
+        function updateAllImages(imageUrl) {
+            const images = [
+                'card-image',
+                'basic-image', 'basic-full-image',
+                'gold-image', 'gold-full-image',
+                'rainbow-image', 'rainbow-full-image',
+                'secret-image', 'secret-full-image'
+            ];
+
+            images.forEach(id => {
+                document.getElementById(id).src = imageUrl;
+            });
+        }
+
+        function formatNumber(num) {
+            return num.toLocaleString();
+        }
+
+        function updateProbabilities(baseProbability) {
+            document.getElementById('basic-probability').innerText = formatNumber(baseProbability);
+            document.getElementById('gold-probability').innerText = formatNumber(baseProbability * 100);
+            document.getElementById('rainbow-probability').innerText = formatNumber(baseProbability * 10000);
+            document.getElementById('secret-probability').innerText = formatNumber(baseProbability * 1000000);
+        }
+
+        updateProbabilities(1);
+
+        document.addEventListener('DOMContentLoaded', function () {
+            updateCard();
+        });
+    </script>
+</body>
+
+</html>
