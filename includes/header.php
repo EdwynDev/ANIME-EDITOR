@@ -343,7 +343,8 @@ header("X-Content-Type-Options: nosniff");
     <nav class="glass-effect fixed top-0 w-full z-50 px-6 py-4">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-white text-2xl font-bold">
-                <i class="fas fa-dragon mr-2"></i>Anime Card Clash - <?= $pageTitle ?: "Editor" ?>
+                <i class="fas fa-dragon mr-2"></i>
+                <a href="collection.php" class="text-white hover:text-purple-400">Anime Card Clash</a> - <?= $pageTitle ?: "Editor" ?>
             </h1>
             <div class="flex gap-4">
                 <a href="collection.php" class="text-white hover:text-purple-400">
@@ -386,22 +387,22 @@ header("X-Content-Type-Options: nosniff");
     </div>
 
     <script>
-    function showModal(modalId, message) {
-        document.getElementById(modalId).style.display = 'block';
-        if (message) {
-            document.getElementById(modalId === 'successModal' ? 'successMessage' : 'confirmMessage').textContent = message;
+        function showModal(modalId, message) {
+            document.getElementById(modalId).style.display = 'block';
+            if (message) {
+                document.getElementById(modalId === 'successModal' ? 'successMessage' : 'confirmMessage').textContent = message;
+            }
         }
-    }
 
-    function closeModal(modalId) {
-        document.getElementById(modalId).style.display = 'none';
-    }
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
 
-    function showConfirm(message, callback) {
-        showModal('confirmModal', message);
-        document.getElementById('confirmYes').onclick = () => {
-            closeModal('confirmModal');
-            callback();
-        };
-    }
+        function showConfirm(message, callback) {
+            showModal('confirmModal', message);
+            document.getElementById('confirmYes').onclick = () => {
+                closeModal('confirmModal');
+                callback();
+            };
+        }
     </script>
