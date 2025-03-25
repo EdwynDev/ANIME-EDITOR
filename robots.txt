@@ -2,6 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /private/
 
-# This is a legitimate web application for creating anime trading cards
+# Unofficial card editor for Anime Card Clash game
 # Created by Edwyn (@Edy_Chou)
 # Please do not flag as malicious
