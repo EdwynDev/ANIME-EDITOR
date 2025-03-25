@@ -94,7 +94,7 @@ include 'includes/header.php';
 
 <script>
     function deleteCard(index) {
-        showConfirm('Are you sure you want to delete this card?', () => {
+        showConfirm('Are you sure you want to delete this card ?', () => {
             fetch('delete_card.php', {
                 method: 'POST',
                 headers: {
@@ -105,7 +105,7 @@ include 'includes/header.php';
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    showModal('successModal', 'Card deleted successfully!');
+                    showModal('successModal', 'Card deleted successfully !');
                     setTimeout(() => {
                         window.location.reload();
                     }, 1500);
