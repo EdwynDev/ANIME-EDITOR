@@ -96,10 +96,10 @@ include 'includes/header.php';
                 </div>
 
                 <div class="flex gap-4">
-                    <button class="text-white hover:text-purple-400">
+                    <button id="save-button" class="text-white hover:text-purple-400">
                         <i class="fas fa-save mr-1"></i>Save
                     </button>
-                    <button class="text-white hover:text-purple-400">
+                    <button id="load-button" class="text-white hover:text-purple-400">
                         <i class="fas fa-folder-open mr-1"></i>Load
                     </button>
                 </div>
