@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     loadButton.addEventListener('click', function () {
         const cardIndex = document.getElementById('card-select').value;
-        
+
         // Charger la carte via AJAX
         fetch('load_card.php?index=' + cardIndex)
             .then(response => response.json())
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
             hp: document.getElementById('hp').value || '0',
             cardType: document.getElementById('cardType').value
         };
-
+        console.log(cardData);
         fetch('save_card.php', {
             method: 'POST',
             headers: {
@@ -206,12 +206,9 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             body: JSON.stringify(cardData)
         })
-        .then(response => response.json())
-        .then(data => {
-            if(data.success) {
-                alert('Card saved successfully!');
-                window.location.reload();
-            }
-        });
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            });
     });
 });
