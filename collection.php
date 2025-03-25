@@ -27,7 +27,7 @@ include 'includes/header.php';
     </div>
 
     <div class="flex-col justify-between items-center mb-8 lg:flex">
-        <h1 class="text-3xl font-bold flex items-center text-purple-300">
+        <h1 class="text-3xl font-bold flex items-center text-purple-300 mb-2 lg:mb-0">
             <i class="far fa-bookmark mr-3"></i>Collection
         </h1>
         <div class="flex gap-4 justify-center">
