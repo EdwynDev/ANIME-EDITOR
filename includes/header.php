@@ -22,7 +22,7 @@ header("X-Content-Type-Options: nosniff");
     <meta name="verification" content="This is an unofficial editor tool for Anime Card Clash. Neopolyworks is just my domain name. I do not own Anime Card Clash. All rights reserved to the original creators. This tool is for educational purposes only. Please support the original game. Thank you.">
     <meta name="copyright" content="© 2025 Edwyn. All rights reserved.">
     <meta name="owner" content="Edwyn (@Edy_Chou)">
-    <title><?php echo $pageTitle || "Anime Card Clash - Editor" ?></title>
+    <title><?= $pageTitle ?: "Anime Card Clash - Editor" ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
