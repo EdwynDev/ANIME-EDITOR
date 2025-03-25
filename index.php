@@ -161,8 +161,10 @@ include 'includes/header.php';
                                         .then(response => response.json())
                                         .then(data => {
                                             if (data.success) {
-                                                alert('Card updated successfully!');
-                                                window.location.href = '/collection.php';
+                                                showModal('successModal', 'Card updated successfully !');
+                                                setTimeout(() => {
+                                                    window.location.href = '/collection.php';
+                                                }, 1500);
                                             }
                                         });
                                     });
@@ -194,7 +196,7 @@ include 'includes/header.php';
                                     .then(response => response.json())
                                     .then(data => {
                                         if (data.success) {
-                                            showModal('successModal', 'Card saved successfully!');
+                                            showModal('successModal', 'Card saved successfully !');
                                             setTimeout(() => {
                                                 window.location.href = '/collection.php';
                                             }, 1500);
