@@ -33,13 +33,22 @@ include 'includes/header.php';
         <div class="flex gap-4 justify-center">
             <button onclick="exportCollection()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition duration-200">
                 <i class="fas fa-download"></i>
+                <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
+                    Save your collection as a JSON file for backup
+                </span>
             </button>
             <label class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200 cursor-pointer">
                 <i class="fas fa-upload"></i>
+                <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
+                    Load a previously saved collection JSON file
+                </span>
                 <input type="file" accept=".json" onchange="importCollection(this)" class="hidden">
             </label>
             <button onclick="previewJSON()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition duration-200">
                 <i class="fas fa-code"></i>
+                <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
+                    View your collection data in JSON format
+                </span>
             </button>
         </div>
     </div>
