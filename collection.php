@@ -75,7 +75,7 @@ include 'includes/header.php';
             </div>
         </div>
     <?php else: ?>
-        <div class="flex flex-wrap gap-6 justify-between">
+        <div class="flex flex-wrap gap-6 justify-center">
             <?php foreach ($_SESSION['cards'] as $index => $card): ?>
                 <div class="relative flex flex-col items-center align-center gap-4">
                     <div class="gradient-border-<?php echo strtolower($card['rarity'] ?? 'basic'); ?> p-2 shadow-<?php echo strtolower($card['rarity'] ?? 'basic'); ?>">
