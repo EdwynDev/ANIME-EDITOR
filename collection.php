@@ -5,23 +5,24 @@ include 'includes/header.php';
 ?>
 
 <div class="container mx-auto pt-8 px-6 pb-12 mt-12">
-    <div class="bg-yellow-900/50 border-l-4 border-yellow-500 p-4 mb-8 rounded">
-        <div class="flex items-center">
-            <div class="flex-shrink-0">
+    <div class="bg-yellow-900/50 border-l-4 border-yellow-500 p-4 mb-8 rounded cursor-pointer" onclick="toggleSection('warning-content')">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
                 <i class="fas fa-exclamation-triangle text-yellow-500"></i>
+                <span class="ml-3 font-bold text-yellow-200">Local Storage Warning</span>
             </div>
-            <div class="ml-3 space-y-2">
-                <p class="text-sm text-yellow-200">
-                    <span class="font-bold">Local Storage Warning:</span> 
-                    Your collection is temporarily stored in your browser. To avoid data loss:
-                </p>
-                <ul class="text-sm text-yellow-200 list-disc pl-5 space-y-1">
-                    <li>Use the Export button regularly to backup your collection</li>
-                    <li>Import your saved collection JSON file to restore your cards</li>
-                    <li>Your cards will be lost if you clear browser data or close the session</li>
-                    <li>Preview your collection's JSON data using the Preview JSON button</li>
-                </ul>
-            </div>
+            <i class="fas fa-chevron-down text-yellow-500 transform transition-transform duration-200" id="warning-arrow"></i>
+        </div>
+        <div class="ml-3 space-y-2 hidden mt-4" id="warning-content">
+            <p class="text-sm text-yellow-200">
+                Your collection is temporarily stored in your browser. To avoid data loss:
+            </p>
+            <ul class="text-sm text-yellow-200 list-disc pl-5 space-y-1">
+                <li>Use the Export button regularly to backup your collection</li>
+                <li>Import your saved collection JSON file to restore your cards</li>
+                <li>Your cards will be lost if you clear browser data or close the session</li>
+                <li>Preview your collection's JSON data using the Preview JSON button</li>
+            </ul>
         </div>
     </div>
 
@@ -43,16 +44,21 @@ include 'includes/header.php';
         </div>
     </div>
 
-    <div class="bg-gray-800/50 p-4 rounded-lg mb-8">
-        <h3 class="text-purple-300 font-bold mb-2">
-            <i class="fas fa-info-circle mr-2"></i>Collection Management
-        </h3>
-        <ul class="text-white text-sm space-y-2">
-            <li><i class="fas fa-download text-blue-400 mr-2"></i>Export: Save your collection as a JSON file for backup</li>
-            <li><i class="fas fa-upload text-green-400 mr-2"></i>Import: Load a previously saved collection JSON file</li>
-            <li><i class="fas fa-code text-purple-400 mr-2"></i>Preview: View your collection data in JSON format</li>
-            <li class="text-yellow-200"><i class="fas fa-exclamation-triangle mr-2"></i>Note: Importing will replace your current collection</li>
-        </ul>
+    <div class="bg-gray-800/50 p-4 rounded-lg mb-8 cursor-pointer" onclick="toggleSection('management-content')">
+        <div class="flex items-center justify-between">
+            <h3 class="text-purple-300 font-bold">
+                <i class="fas fa-info-circle mr-2"></i>Collection Management
+            </h3>
+            <i class="fas fa-chevron-down text-purple-300 transform transition-transform duration-200" id="management-arrow"></i>
+        </div>
+        <div class="hidden mt-4" id="management-content">
+            <ul class="text-white text-sm space-y-2">
+                <li><i class="fas fa-download text-blue-400 mr-2"></i>Export: Save your collection as a JSON file for backup</li>
+                <li><i class="fas fa-upload text-green-400 mr-2"></i>Import: Load a previously saved collection JSON file</li>
+                <li><i class="fas fa-code text-purple-400 mr-2"></i>Preview: View your collection data in JSON format</li>
+                <li class="text-yellow-200"><i class="fas fa-exclamation-triangle mr-2"></i>Note: Importing will replace your current collection</li>
+            </ul>
+        </div>
     </div>
 
     <?php if (!isset($_SESSION['cards']) || empty($_SESSION['cards'])): ?>
@@ -69,7 +75,7 @@ include 'includes/header.php';
             </div>
         </div>
     <?php else: ?>
-        <div class="flex flex-wrap gap-6 justify-center">
+        <div class="flex flex-wrap gap-6 justify-between">
             <?php foreach ($_SESSION['cards'] as $index => $card): ?>
                 <div class="relative flex flex-col items-center align-center gap-4">
                     <div class="gradient-border-<?php echo strtolower($card['rarity'] ?? 'basic'); ?> p-2 shadow-<?php echo strtolower($card['rarity'] ?? 'basic'); ?>">
@@ -207,6 +213,19 @@ include 'includes/header.php';
         const collection = <?php echo json_encode($_SESSION['cards'] ?? []); ?>;
         document.getElementById('jsonPreview').textContent = JSON.stringify(collection, null, 2);
         showModal('jsonModal');
+    }
+
+    function toggleSection(contentId) {
+        const content = document.getElementById(contentId);
+        const arrow = document.getElementById(contentId.replace('content', 'arrow'));
+        
+        if (content.classList.contains('hidden')) {
+            content.classList.remove('hidden');
+            arrow.style.transform = 'rotate(180deg)';
+        } else {
+            content.classList.add('hidden');
+            arrow.style.transform = 'rotate(0deg)';
+        }
     }
 </script>
 </body>
