@@ -62,9 +62,10 @@ include 'includes/header.php';
                                         <?php echo htmlspecialchars($card['description']); ?></span></p>
                             </div>
                             <?php if ($card['cardType'] !== 'support'): ?>
-                                <div class="absolute bottom-2 w-full px-4 flex justify-between"></div>
-                                <div class="stat-dmg font-bold text-lg">DMG <span><?php echo htmlspecialchars($card['damage']); ?></span></div>
-                                <div class="stat-hp font-bold text-lg">HP <span><?php echo htmlspecialchars($card['hp']); ?></span></div>
+                                <div class="absolute bottom-2 w-full px-4 flex justify-between">
+                                    <div class="stat-dmg font-bold text-lg">DMG <span><?php echo htmlspecialchars($card['damage']); ?></span></div>
+                                    <div class="stat-hp font-bold text-lg">HP <span><?php echo htmlspecialchars($card['hp']); ?></span></div>
+                                </div>
                             <?php endif; ?>
                         </div>
                     </div>
