@@ -94,23 +94,24 @@ include 'includes/header.php';
 
 <script>
     function deleteCard(index) {
-        if (confirm('Are you sure you want to delete this card?')) {
+        showConfirm('Are you sure you want to delete this card?', () => {
             fetch('delete_card.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        index: index
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ index: index })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showModal('successModal', 'Card deleted successfully!');
+                    setTimeout(() => {
                         window.location.reload();
-                    }
-                });
-        }
+                    }, 1500);
+                }
+            });
+        });
     }
 
     function editCard(index) {

@@ -194,8 +194,10 @@ include 'includes/header.php';
                                     .then(response => response.json())
                                     .then(data => {
                                         if (data.success) {
-                                            alert('Card saved successfully!');
-                                            window.location.reload();
+                                            showModal('successModal', 'Card saved successfully!');
+                                            setTimeout(() => {
+                                                window.location.href = '/collection.php';
+                                            }, 1500);
                                         }
                                     });
                             } catch (error) {

@@ -27,6 +27,7 @@ header("X-Content-Type-Options: nosniff");
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/modal.css">
     <script></script>
     <style>
         body {
@@ -351,3 +352,58 @@ header("X-Content-Type-Options: nosniff");
             </div>
         </div>
     </nav>
+
+    <!-- Add modal templates at the end of header -->
+    <div id="successModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-content">
+                <i class="fas fa-check-circle text-4xl text-green-500 mb-4"></i>
+                <h2 class="text-xl text-white mb-4" id="successMessage">Success!</h2>
+                <div class="modal-buttons">
+                    <button onclick="closeModal('successModal')" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirmModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-content">
+                <i class="fas fa-question-circle text-4xl text-yellow-500 mb-4"></i>
+                <h2 class="text-xl text-white mb-4" id="confirmMessage">Are you sure?</h2>
+                <div class="modal-buttons">
+                    <button id="confirmYes" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded">
+                        Yes
+                    </button>
+                    <button onclick="closeModal('confirmModal')" class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded">
+                        No
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function showModal(modalId, message) {
+        document.getElementById(modalId).style.display = 'block';
+        if (message) {
+            document.getElementById(modalId === 'successModal' ? 'successMessage' : 'confirmMessage').textContent = message;
+        }
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+
+    function showConfirm(message, callback) {
+        showModal('confirmModal', message);
+        document.getElementById('confirmYes').onclick = () => {
+            closeModal('confirmModal');
+            callback();
+        };
+    }
+    </script>
+</body>
+</html>
