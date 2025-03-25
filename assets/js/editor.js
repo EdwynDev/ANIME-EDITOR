@@ -134,8 +134,14 @@ updateProbabilities(1);
 document.addEventListener('DOMContentLoaded', function () {
     updateCardType();
     updateCard();
-    
-    document.getElementById('save-button').addEventListener('click', function () {
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const saveButton = document.getElementById('save-button');
+    const loadButton = document.getElementById('load-button');
+
+    saveButton.addEventListener('click', function () {
+        // Code pour sauvegarder la carte
         const cardData = {
             name: document.getElementById('name').value.trim() || 'N/A',
             skill: document.getElementById('skill').value.trim() || 'N/A',
@@ -152,7 +158,8 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('cards', JSON.stringify(cards));
     });
 
-    document.getElementById('load-button').addEventListener('click', function () {
+    loadButton.addEventListener('click', function () {
+        // Code pour charger la carte
         const cardIndex = document.getElementById('card-select').value;
         const cards = JSON.parse(localStorage.getItem('cards')) || [];
         if (cardIndex >= 0 && cardIndex < cards.length) {
