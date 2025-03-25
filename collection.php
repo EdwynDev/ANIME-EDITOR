@@ -32,14 +32,14 @@ include 'includes/header.php';
         </h1>
         <div class="flex gap-4">
             <button onclick="exportCollection()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition duration-200">
-                <i class="fas fa-download mr-2"></i>Export Collection
+                <i class="fas fa-download mr-2"></i>Export
             </button>
             <label class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200 cursor-pointer">
-                <i class="fas fa-upload mr-2"></i>Import Collection
+                <i class="fas fa-upload mr-2"></i>Import
                 <input type="file" accept=".json" onchange="importCollection(this)" class="hidden">
             </label>
             <button onclick="previewJSON()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition duration-200">
-                <i class="fas fa-code mr-2"></i>Preview JSON
+                <i class="fas fa-code mr-2"></i>JSON
             </button>
         </div>
     </div>
