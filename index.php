@@ -104,13 +104,25 @@ include 'includes/header.php';
                         Save this card to view it later in your collection page
                     </span>
                 </button>
+                <button id="edit-button" 
+                    class="text-white hover:text-blue-400 group relative hidden">
+                    <i class="fas fa-edit mr-1"></i>Save Edit
+                    <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
+                        Update this card in your collection
+                    </span>
+                </button>
             </div>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
+                    const saveButton = document.getElementById('save-button');
+                    const editButton = document.getElementById('edit-button');
                     const urlParams = new URLSearchParams(window.location.search);
                     const editIndex = urlParams.get('edit');
                     
                     if (editIndex !== null) {
+                        saveButton.classList.add('hidden');
+                        editButton.classList.remove('hidden');
+                        
                         fetch(`load_card.php?index=${editIndex}`)
                             .then(response => response.json())
                             .then(data => {
@@ -125,17 +137,41 @@ include 'includes/header.php';
                                     document.getElementById('cardType').value = data.cardType;
                                     
                                     updateCard();
+                                    
+                                    editButton.addEventListener('click', function() {
+                                        const cardData = {
+                                            index: editIndex,
+                                            name: document.getElementById('name').value.trim() || 'N/A',
+                                            skill: document.getElementById('skill').value.trim() || 'N/A',
+                                            description: document.getElementById('description').value.trim() || 'N/A',
+                                            imageUrl: document.getElementById('image').value.trim(),
+                                            probability: parseFloat(document.getElementById('probability').value) || 1,
+                                            damage: document.getElementById('damage').value || '0',
+                                            hp: document.getElementById('hp').value || '0',
+                                            cardType: document.getElementById('cardType').value
+                                        };
+
+                                        fetch('update_card.php', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify(cardData)
+                                        })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.success) {
+                                                alert('Card updated successfully!');
+                                                window.location.href = '/collection.php';
+                                            }
+                                        });
+                                    });
                                 }
                             });
                     }
                     
-                    const saveButton = document.getElementById('save-button');
-                    console.log(document.getElementById('save-button'));
-
                     if (saveButton) {
-                        console.log('Bouton Save trouvé !');
                         saveButton.addEventListener('click', function() {
-                            console.log('Bouton Save cliqué !');
                             try {
                                 const cardData = {
                                     name: document.getElementById('name').value.trim() || 'N/A',
