@@ -65,19 +65,19 @@ include 'includes/header.php';
                                 <div class="absolute bottom-2 w-full px-4 flex justify-between"></div>
                                 <div class="stat-dmg font-bold text-lg">DMG <span><?php echo htmlspecialchars($card['damage']); ?></span></div>
                                 <div class="stat-hp font-bold text-lg">HP <span><?php echo htmlspecialchars($card['hp']); ?></span></div>
+                            <?php endif; ?>
                         </div>
-                    <?php endif; ?>
                     </div>
-                </div>
-                <div class="flex justify-center mt-2 gap-2">
-                    <button class="edit-card bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200"
-                        onclick="editCard(<?php echo $index; ?>)">
-                        <i class="fas fa-edit mr-2"></i>Edit
-                    </button>
-                    <button class="delete-card bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition duration-200"
-                        onclick="deleteCard(<?php echo $index; ?>)">
-                        <i class="fas fa-trash-alt mr-2"></i>Delete
-                    </button>
+                    <div class="flex justify-center mt-2 gap-2">
+                        <button class="edit-card bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200"
+                            onclick="editCard(<?php echo $index; ?>)">
+                            <i class="fas fa-edit mr-2"></i>Edit
+                        </button>
+                        <button class="delete-card bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition duration-200"
+                            onclick="deleteCard(<?php echo $index; ?>)">
+                            <i class="fas fa-trash-alt mr-2"></i>Delete
+                        </button>
+                    </div>
                 </div>
         </div>
     <?php endforeach; ?>
