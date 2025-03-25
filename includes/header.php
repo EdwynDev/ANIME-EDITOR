@@ -27,6 +27,7 @@ header("X-Content-Type-Options: nosniff");
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap" rel="stylesheet">
+    <script></script>
     <style>
         body {
             font-family: 'Electrolize';
@@ -343,13 +344,10 @@ header("X-Content-Type-Options: nosniff");
             <h1 class="text-white text-2xl font-bold">
                 <i class="fas fa-dragon mr-2"></i>Anime Card Clash - Editor
             </h1>
-            <!--<div class="flex gap-4">
-                 <button class="text-white hover:text-purple-400">
-                    <i class="fas fa-save mr-1"></i>Save
-                </button>
-                <button class="text-white hover:text-purple-400">
-                    <i class="fas fa-folder-open mr-1"></i>Load
-                </button>
-            </div> -->
+            <div class="flex gap-4">
+                <a href="collection.php" class="text-white hover:text-purple-400">
+                    <i class="fas fa-dragon mr-1"></i>Collection
+                </a>
+            </div>
         </div>
     </nav>
