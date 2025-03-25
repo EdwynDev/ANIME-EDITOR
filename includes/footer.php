@@ -23,9 +23,6 @@
                 <a href="mailto:contact.edwyn@gmail.com" title="Email" class="footer-link">
                     <i class="fas fa-envelope"></i>
                 </a>
-                <a href="https://github.com/EdwynDev" target="_blank" rel="noopener" title="GitHub" class="footer-link">
-                    <i class="fab fa-github"></i>
-                </a>
                 <a href="https://www.roblox.com/users/profile" target="_blank" rel="noopener" title="Roblox" class="footer-link">
                     <i class="fas fa-gamepad"></i>
                 </a>
