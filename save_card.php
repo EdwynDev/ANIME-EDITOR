@@ -1,20 +1,20 @@
 <?php
 session_start();
 
-// Récupérer les données JSON
-$json = file_get_contents('php://input');
-$cardData = json_decode($json, true);
+header('Content-Type: application/json');
 
-// Initialiser le tableau des cartes s'il n'existe pas
-if (!isset($_SESSION['cards'])) {
-    $_SESSION['cards'] = [];
+try {
+    $json = file_get_contents('php://input');
+    $cardData = json_decode($json, true);
+
+    if (!isset($_SESSION['cards'])) {
+        $_SESSION['cards'] = array();
+    }
+
+    $_SESSION['cards'][] = $cardData;
+    
+    echo json_encode(['success' => true]);
+} catch (Exception $e) {
+    echo json_encode(['success' => false, 'error' => $e->getMessage()]);
 }
-
-// Ajouter la nouvelle carte
-$_SESSION['cards'][] = $cardData;
-
-// Sauvegarder dans la session
-$_SESSION['cards'] = $_SESSION['cards'];
-
-echo json_encode(['success' => true]);
 ?>
