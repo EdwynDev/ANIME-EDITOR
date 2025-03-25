@@ -107,6 +107,28 @@ include 'includes/header.php';
             </div>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const editIndex = urlParams.get('edit');
+                    
+                    if (editIndex !== null) {
+                        fetch(`load_card.php?index=${editIndex}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data) {
+                                    document.getElementById('name').value = data.name;
+                                    document.getElementById('skill').value = data.skill;
+                                    document.getElementById('description').value = data.description;
+                                    document.getElementById('image').value = data.imageUrl;
+                                    document.getElementById('probability').value = data.probability || '';
+                                    document.getElementById('damage').value = data.damage || '';
+                                    document.getElementById('hp').value = data.hp || '';
+                                    document.getElementById('cardType').value = data.cardType;
+                                    
+                                    updateCard();
+                                }
+                            });
+                    }
+                    
                     const saveButton = document.getElementById('save-button');
                     console.log(document.getElementById('save-button'));
 
