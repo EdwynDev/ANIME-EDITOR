@@ -5,10 +5,6 @@ include 'includes/header.php';
 ?>
 
 <div class="container mx-auto pt-8 px-6 pb-12 mt-12">
-    <h1 class="text-3xl font-bold mb-8 flex items-center text-purple-300">
-        <i class="fas fa-dragon mr-3"></i>Collection
-    </h1>
-
     <div class="bg-yellow-900/50 border-l-4 border-yellow-500 p-4 mb-8 rounded">
         <div class="flex items-center">
             <div class="flex-shrink-0">
@@ -16,13 +12,17 @@ include 'includes/header.php';
             </div>
             <div class="ml-3">
                 <p class="text-sm text-yellow-200">
-                    <span class="font-bold">Warning:</span> Your collection is stored in your browser's session storage. 
-                    Clearing your browser data or session will result in data loss. Please be aware that this is a demo application 
+                    <span class="font-bold">Warning:</span> Your collection is stored in your browser's session storage.
+                    Clearing your browser data or session will result in data loss. Please be aware that this is a demo application
                     and no permanent storage is implemented.
                 </p>
             </div>
         </div>
     </div>
+
+    <h1 class="text-3xl font-bold mb-8 flex items-center text-purple-300">
+        <i class="far fa-bookmark mr-3"></i>Collection
+    </h1>
 
     <?php if (!isset($_SESSION['cards']) || empty($_SESSION['cards'])): ?>
         <div class="text-white text-center space-y-4">
@@ -63,29 +63,29 @@ include 'includes/header.php';
                             </div>
                             <?php if ($card['cardType'] !== 'support'): ?>
                                 <div class="absolute bottom-2 w-full px-4 flex justify-between"></div>
-                                    <div class="stat-dmg font-bold text-lg">DMG <span><?php echo htmlspecialchars($card['damage']); ?></span></div>
-                                    <div class="stat-hp font-bold text-lg">HP <span><?php echo htmlspecialchars($card['hp']); ?></span></div>
-                                </div>
-                            <?php endif; ?>
+                                <div class="stat-dmg font-bold text-lg">DMG <span><?php echo htmlspecialchars($card['damage']); ?></span></div>
+                                <div class="stat-hp font-bold text-lg">HP <span><?php echo htmlspecialchars($card['hp']); ?></span></div>
                         </div>
-                    </div>
-                    <div class="flex justify-center mt-2 gap-2">
-                        <button class="edit-card bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200"
-                            onclick="editCard(<?php echo $index; ?>)">
-                            <i class="fas fa-edit mr-2"></i>Edit
-                        </button>
-                        <button class="delete-card bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition duration-200"
-                            onclick="deleteCard(<?php echo $index; ?>)">
-                            <i class="fas fa-trash-alt mr-2"></i>Delete
-                        </button>
+                    <?php endif; ?>
                     </div>
                 </div>
-            <?php endforeach; ?>
+                <div class="flex justify-center mt-2 gap-2">
+                    <button class="edit-card bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200"
+                        onclick="editCard(<?php echo $index; ?>)">
+                        <i class="fas fa-edit mr-2"></i>Edit
+                    </button>
+                    <button class="delete-card bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition duration-200"
+                        onclick="deleteCard(<?php echo $index; ?>)">
+                        <i class="fas fa-trash-alt mr-2"></i>Delete
+                    </button>
+                </div>
         </div>
-    <?php endif; ?>
-    <a href="/" class="inline-flex items-center text-purple-400 hover:text-purple-300 mb-8 mt-8">
-        <i class="fas fa-arrow-left mr-2"></i>Back to Editor
-    </a>
+    <?php endforeach; ?>
+</div>
+<?php endif; ?>
+<a href="/" class="inline-flex items-center text-purple-400 hover:text-purple-300 mb-8 mt-8">
+    <i class="fas fa-arrow-left mr-2"></i>Back to Editor
+</a>
 </div>
 </body>
 
