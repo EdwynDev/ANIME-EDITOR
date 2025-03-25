@@ -38,6 +38,19 @@
             transform: translateY(-2px);
             color: #c4b5fd;
         }
+        
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+        }
 
         .footer-social {
             display: flex;
@@ -65,7 +78,7 @@
 
 <body class="bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 min-h-screen">
     <div class="container mx-auto pt-8 px-6 pb-12">
-        <div class="glass-effect rounded-xl p-8 mb-8">
+        <div class="glass-effect rounded-xl p-8 mb-8 container">
             <h1 class="text-3xl font-bold mb-8 flex items-center">
                 <i class="fas fa-shield-alt mr-3"></i>Privacy Policy
             </h1>
