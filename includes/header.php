@@ -346,7 +346,7 @@ header("X-Content-Type-Options: nosniff");
             </h1>
             <div class="flex gap-4">
                 <a href="collection.php" class="text-white hover:text-purple-400">
-                    <i class="fas fa-dragon mr-1"></i>Collection
+                <i class="far fa-bookmark"></i>Collection
                 </a>
             </div>
         </div>
