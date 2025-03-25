@@ -30,7 +30,7 @@ include 'includes/header.php';
         <h1 class="text-3xl font-bold flex items-center text-purple-300">
             <i class="far fa-bookmark mr-3"></i>Collection
         </h1>
-        <div class="flex gap-4 justify-between">
+        <div class="flex gap-4 justify-center">
             <button onclick="exportCollection()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition duration-200">
                 <i class="fas fa-download mr-2"></i>Export
             </button>
