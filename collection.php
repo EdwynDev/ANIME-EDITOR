@@ -14,7 +14,7 @@ include 'includes/header.php';
             <p>No cards in your collection yet.</p>
         </div>
     <?php else: ?>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
             <?php foreach ($_SESSION['cards'] as $index => $card): ?>
                 <div class="gradient-border-<?php echo strtolower($card['rarity'] ?? 'basic'); ?> p-2 shadow-<?php echo strtolower($card['rarity'] ?? 'basic'); ?>">
                     <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
