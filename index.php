@@ -101,7 +101,7 @@ include 'includes/header.php';
                     </button>
                 </div>
                 <div class="flex gap-4">
-                    <select id="card-select" class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 focus:border-purple-300 focus:ring-2 focus:ring-purple-300 outline-none">
+                    <select id="card-select" class="w-50 bg-gray-800 text-white rounded-lg p-3 border border-purple-500 focus:border-purple-300 focus:ring-2 focus:ring-purple-300 outline-none">
                         <?php
                         session_start();
                         $cards = isset($_SESSION['cards']) ? json_decode($_SESSION['cards'], true) : [];
