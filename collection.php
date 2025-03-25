@@ -25,8 +25,17 @@ include 'includes/header.php';
     </div>
 
     <?php if (!isset($_SESSION['cards']) || empty($_SESSION['cards'])): ?>
-        <div class="text-white text-center">
+        <div class="text-white text-center space-y-4">
             <p>No cards in your collection yet.</p>
+            <div class="bg-gray-800/50 p-4 rounded-lg max-w-lg mx-auto">
+                <h3 class="text-purple-300 font-bold mb-2">How to add cards:</h3>
+                <ol class="text-left text-sm space-y-2">
+                    <li><i class="fas fa-arrow-left text-purple-400 mr-2"></i>Click on "Back to Editor"</li>
+                    <li><i class="fas fa-edit text-purple-400 mr-2"></i>Fill in the card details in the editor</li>
+                    <li><i class="fas fa-wand-magic-sparkles text-purple-400 mr-2"></i>Preview different card rarities</li>
+                    <li><i class="fas fa-save text-purple-400 mr-2"></i>Click "Save in your collection" to add the card</li>
+                </ol>
+            </div>
         </div>
     <?php else: ?>
         <div class="flex flex-wrap gap-6">
@@ -53,7 +62,7 @@ include 'includes/header.php';
                                         <?php echo htmlspecialchars($card['description']); ?></span></p>
                             </div>
                             <?php if ($card['cardType'] !== 'support'): ?>
-                                <div class="absolute bottom-2 w-full px-4 flex justify-between">
+                                <div class="absolute bottom-2 w-full px-4 flex justify-between"></div>
                                     <div class="stat-dmg font-bold text-lg">DMG <span><?php echo htmlspecialchars($card['damage']); ?></span></div>
                                     <div class="stat-hp font-bold text-lg">HP <span><?php echo htmlspecialchars($card['hp']); ?></span></div>
                                 </div>
