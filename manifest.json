@@ -1,0 +1,21 @@
+{
+  "name": "Anime Card Clash Editor",
+  "short_name": "ACC Editor",
+  "description": "Official card editor for Anime Card Clash game",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#4A1D96",
+  "theme_color": "#4A1D96",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "author": {
+    "name": "Edwyn",
+    "website": "https://github.com/Edy_Chou"
+  },
+  "version": "1.0.0"
+}
