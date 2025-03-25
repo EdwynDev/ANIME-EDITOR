@@ -101,6 +101,50 @@ include 'includes/header.php';
                     <i class="fas fa-save mr-1"></i>Save
                 </button>
             </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const saveButton = document.getElementById('save-button');
+                    console.log(document.getElementById('save-button'));
+
+                    if (saveButton) {
+                        console.log('Bouton Save trouvé !');
+                        saveButton.addEventListener('click', function() {
+                            console.log('Bouton Save cliqué !');
+                            try {
+                                const cardData = {
+                                    name: document.getElementById('name').value.trim() || 'N/A',
+                                    skill: document.getElementById('skill').value.trim() || 'N/A',
+                                    description: document.getElementById('description').value.trim() || 'N/A',
+                                    imageUrl: document.getElementById('image').value.trim(),
+                                    probability: parseFloat(document.getElementById('probability').value) || 1,
+                                    damage: document.getElementById('damage').value || '0',
+                                    hp: document.getElementById('hp').value || '0',
+                                    cardType: document.getElementById('cardType').value
+                                };
+
+                                fetch('save_card.php', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify(cardData)
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.success) {
+                                            alert('Card saved successfully!');
+                                            window.location.reload();
+                                        }
+                                    });
+                            } catch (error) {
+                                console.log('Erreur : ' + error.message);
+                            }
+                        });
+                    } else {
+                        console.log('Bouton Save non trouvé !');
+                    }
+                });
+            </script>
         </div>
 
         <div class="space-y-6 flex flex-col items-center">
