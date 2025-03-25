@@ -26,9 +26,9 @@ include 'includes/header.php';
         </div>
     </div>
 
-    <div class="flex-col justify-between items-center mb-8 lg:flex">
+    <div class="flex justify-between items-center mb-8">
         <h1 class="text-3xl font-bold flex items-center text-purple-300 mb-2 lg:mb-0">
-            <i class="far fa-bookmark mr-3"></i>Collection
+            <i class="far fa-bookmark mr-3"></i>
         </h1>
         <div class="flex gap-4 justify-center">
             <button onclick="exportCollection()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition duration-200">
