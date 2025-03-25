@@ -80,37 +80,35 @@ include 'includes/header.php';
                         </button>
                     </div>
                 </div>
+            <?php endforeach; ?>
         </div>
-    <?php endforeach; ?>
+    <?php endif; ?>
 </div>
-<?php endif; ?>
 <a href="/" class="inline-flex items-center text-purple-400 hover:text-purple-300 mb-8 mt-8">
     <i class="fas fa-arrow-left mr-2"></i>Back to Editor
 </a>
 </div>
-</body>
-
-</html>
-
 <script>
     function deleteCard(index) {
         showConfirm('Are you sure you want to delete this card ?', () => {
             fetch('delete_card.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ index: index })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    showModal('successModal', 'Card deleted successfully !');
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1500);
-                }
-            });
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        index: index
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showModal('successModal', 'Card deleted successfully !');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
+                    }
+                });
         });
     }
 
@@ -118,3 +116,6 @@ include 'includes/header.php';
         window.location.href = `/?edit=${index}`;
     }
 </script>
+</body>
+
+</html>
