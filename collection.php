@@ -10,12 +10,17 @@ include 'includes/header.php';
             <div class="flex-shrink-0">
                 <i class="fas fa-exclamation-triangle text-yellow-500"></i>
             </div>
-            <div class="ml-3">
+            <div class="ml-3 space-y-2">
                 <p class="text-sm text-yellow-200">
-                    <span class="font-bold">Warning:</span> Your collection is stored in your browser's session storage.
-                    Clearing your browser data or session will result in data loss. Please be aware that this is a demo application
-                    and no permanent storage is implemented.
+                    <span class="font-bold">Local Storage Warning:</span> 
+                    Your collection is temporarily stored in your browser. To avoid data loss:
                 </p>
+                <ul class="text-sm text-yellow-200 list-disc pl-5 space-y-1">
+                    <li>Use the Export button regularly to backup your collection</li>
+                    <li>Import your saved collection JSON file to restore your cards</li>
+                    <li>Your cards will be lost if you clear browser data or close the session</li>
+                    <li>Preview your collection's JSON data using the Preview JSON button</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -64,7 +69,7 @@ include 'includes/header.php';
             </div>
         </div>
     <?php else: ?>
-        <div class="flex flex-wrap gap-6">
+        <div class="flex flex-wrap gap-6 justify-between">
             <?php foreach ($_SESSION['cards'] as $index => $card): ?>
                 <div class="relative flex flex-col items-center align-center gap-4">
                     <div class="gradient-border-<?php echo strtolower($card['rarity'] ?? 'basic'); ?> p-2 shadow-<?php echo strtolower($card['rarity'] ?? 'basic'); ?>">
