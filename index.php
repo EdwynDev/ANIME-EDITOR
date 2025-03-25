@@ -101,6 +101,22 @@ include 'includes/header.php';
                     <i class="fas fa-save mr-1"></i>Save
                 </button>
             </div>
+            <div class="flex gap-4">
+                <select id="card-select" class="w-50 bg-gray-800 text-white rounded-lg p-3 border border-purple-500 focus:border-purple-300 focus:ring-2 focus:ring-purple-300 outline-none">
+                    <?php
+                    session_start();
+                    $cards = isset($_SESSION['cards']) ? json_decode($_SESSION['cards'], true) : [];
+                    foreach ($cards as $index => $card) {
+                    ?>
+                        <option value="<?php echo $index; ?>"><?php echo $card['name']; ?></option>
+                    <?php
+                    }
+                    ?>
+                </select>
+                <button class="text-white hover:text-purple-400" id="load-button">
+                    <i class="fas fa-folder-open mr-1"></i>Load
+                </button>
+            </div>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const saveButton = document.getElementById('save-button');
