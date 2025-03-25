@@ -104,45 +104,50 @@ include 'includes/header.php';
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const saveButton = document.getElementById('save-button');
-                    console.log(document.getElementById('save-button'));
+                    const loadButton = document.getElementById('load-button');
 
-                    if (saveButton) {
-                        console.log('Bouton Save trouvé !');
-                        saveButton.addEventListener('click', function() {
-                            console.log('Bouton Save cliqué !');
-                            try {
-                                const cardData = {
-                                    name: document.getElementById('name').value.trim() || 'N/A',
-                                    skill: document.getElementById('skill').value.trim() || 'N/A',
-                                    description: document.getElementById('description').value.trim() || 'N/A',
-                                    imageUrl: document.getElementById('image').value.trim(),
-                                    probability: parseFloat(document.getElementById('probability').value) || 1,
-                                    damage: document.getElementById('damage').value || '0',
-                                    hp: document.getElementById('hp').value || '0',
-                                    cardType: document.getElementById('cardType').value
-                                };
+                    saveButton.addEventListener('click', function() {
+                        const cardData = {
+                            name: document.getElementById('name').value.trim() || 'N/A',
+                            skill: document.getElementById('skill').value.trim() || 'N/A',
+                            description: document.getElementById('description').value.trim() || 'N/A',
+                            imageUrl: document.getElementById('image').value.trim(),
+                            probability: parseFloat(document.getElementById('probability').value) || 1,
+                            damage: document.getElementById('damage').value || '0',
+                            hp: document.getElementById('hp').value || '0',
+                            cardType: document.getElementById('cardType').value
+                        };
 
-                                fetch('save_card.php', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                        },
-                                        body: JSON.stringify(cardData)
-                                    })
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        if (data.success) {
-                                            alert('Card saved successfully!');
-                                            window.location.reload();
-                                        }
-                                    });
-                            } catch (error) {
-                                console.log('Erreur : ' + error.message);
-                            }
+                        // Envoyer les données via AJAX
+                        fetch('save_card.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(cardData)
                         });
-                    } else {
-                        console.log('Bouton Save non trouvé !');
-                    }
+                    });
+
+                    loadButton.addEventListener('click', function() {
+                        const cardIndex = document.getElementById('card-select').value;
+
+                        // Charger la carte via AJAX
+                        fetch('load_card.php?index=' + cardIndex)
+                            .then(response => response.json())
+                            .then(cardData => {
+                                if (cardData) {
+                                    document.getElementById('name').value = cardData.name;
+                                    document.getElementById('skill').value = cardData.skill;
+                                    document.getElementById('description').value = cardData.description;
+                                    document.getElementById('image').value = cardData.imageUrl;
+                                    document.getElementById('probability').value = cardData.probability;
+                                    document.getElementById('damage').value = cardData.damage;
+                                    document.getElementById('hp').value = cardData.hp;
+                                    document.getElementById('cardType').value = cardData.cardType;
+                                    updateCard();
+                                }
+                            });
+                    });
                 });
             </script>
         </div>
