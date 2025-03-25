@@ -8,13 +8,13 @@
             <p class="mt-1 text-sm text-gray-400">This is an unofficial editor tool</p>
 
             <div class="footer-links">
-                <a href="/privacy.html" class="footer-link">
+                <a href="/privacy.php" class="footer-link">
                     <i class="fas fa-shield-alt mr-2"></i>
                 </a>
-                <a href="/terms.html" class="footer-link">
+                <a href="/terms.php" class="footer-link">
                     <i class="fas fa-gavel mr-2"></i>
                 </a>
-                <a href="/security.html" class="footer-link">
+                <a href="/security.php" class="footer-link">
                     <i class="fas fa-lock mr-2"></i>
                 </a>
             </div>
