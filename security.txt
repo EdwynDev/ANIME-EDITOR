@@ -1,8 +1,0 @@
-Contact: mailto:security@animecardclash.com
-Expires: 2025-12-31T23:59:59.000Z
-Encryption: https://animecardclash.com/pgp-key.txt
-Acknowledgments: https://animecardclash.com/security/hall-of-fame
-Preferred-Languages: en
-Canonical: https://animecardclash.com/.well-known/security.txt
-Policy: https://animecardclash.com/security-policy
-Hiring: https://animecardclash.com/security/jobs
