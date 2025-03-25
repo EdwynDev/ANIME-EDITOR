@@ -341,10 +341,10 @@ header("X-Content-Type-Options: nosniff");
 
 <body class="bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 min-h-screen">
     <nav class="glass-effect fixed top-0 w-full z-50 px-6 py-4">
-        <div class="container mx-auto flex-col justify-between items-center lg:flex-row">
+        <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-white text-2xl font-bold">
                 <i class="fas fa-dragon mr-2"></i>
-                <a href="/" class="text-white hover:text-purple-400">Anime Card Clash</a> - <?= $pageTitle ?: "Editor" ?>
+                <a href="/" class="text-white hover:text-purple-400">ACC</a> - <?= $pageTitle ?: "Editor" ?>
             </h1>
             <div class="flex gap-4">
                 <a href="collection.php" class="text-white hover:text-purple-400 mt-2 lg:mt-0">
