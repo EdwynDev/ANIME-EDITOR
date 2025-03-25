@@ -9,6 +9,21 @@ include 'includes/header.php';
         <i class="fas fa-dragon mr-3"></i>Collection
     </h1>
 
+    <div class="bg-yellow-900/50 border-l-4 border-yellow-500 p-4 mb-8 rounded">
+        <div class="flex items-center">
+            <div class="flex-shrink-0">
+                <i class="fas fa-exclamation-triangle text-yellow-500"></i>
+            </div>
+            <div class="ml-3">
+                <p class="text-sm text-yellow-200">
+                    <span class="font-bold">Warning:</span> Your collection is stored in your browser's session storage. 
+                    Clearing your browser data or session will result in data loss. Please be aware that this is a demo application 
+                    and no permanent storage is implemented.
+                </p>
+            </div>
+        </div>
+    </div>
+
     <?php if (!isset($_SESSION['cards']) || empty($_SESSION['cards'])): ?>
         <div class="text-white text-center">
             <p>No cards in your collection yet.</p>
