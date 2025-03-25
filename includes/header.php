@@ -347,7 +347,7 @@ header("X-Content-Type-Options: nosniff");
                 <a href="/" class="text-white hover:text-purple-400">Anime Card Clash</a> - <?= $pageTitle ?: "Editor" ?>
             </h1>
             <div class="flex gap-4">
-                <a href="collection.php" class="text-white hover:text-purple-400">
+                <a href="collection.php" class="text-white hover:text-purple-400 mt-2 lg:mt-0">
                     <i class="far fa-bookmark mr-1"></i>Collection
                 </a>
             </div>
