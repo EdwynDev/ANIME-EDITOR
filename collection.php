@@ -59,7 +59,7 @@ include 'includes/header.php';
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
-    <a href="/" class="inline-flex items-center text-purple-400 hover:text-purple-300 mb-8">
+    <a href="/" class="inline-flex items-center text-purple-400 hover:text-purple-300 mb-8 mt-8">
         <i class="fas fa-arrow-left mr-2"></i>Back to Editor
     </a>
 </div>
