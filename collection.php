@@ -22,7 +22,7 @@ include 'includes/header.php';
                             <img src="<?php echo htmlspecialchars($card['imageUrl']); ?>" alt="Card Image" />
                         </div>
                         <div class="absolute top-2 left-2 bg-<?php echo strtolower($card['rarity'] ?? 'basic'); ?> text-black text-xs font-bold px-2 py-1 rounded">
-                            <?php echo htmlspecialchars($card['cardType']); ?>
+                            <?php echo strtoupper($card['rarity'] ?? 'basic'); ?>
                         </div>
                         <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
                             <span class="text-stroke-bolder"><?php echo htmlspecialchars($card['name']); ?></span>
