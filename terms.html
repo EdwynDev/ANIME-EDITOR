@@ -14,6 +14,50 @@
         body {
             font-family: 'Electrolize';
         }
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .footer-link {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            color: #c4b5fd;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-social a {
+            padding: 0.5rem;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            color: #c4b5fd;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 min-h-screen">
@@ -48,8 +92,39 @@
         </a>
     </div>
 
-    <footer class="glass-effect mt-8 py-4 px-6">
-        // ...existing footer code...
+    <footer class="glass-effect mt-8 py-6 px-6">
+        <div class="container mx-auto text-center text-white">
+            <div class="flex items-center justify-center gap-2 text-xl font-bold">
+                <i class="fas fa-dragon text-purple-400"></i>
+                <span>Anime Card Clash Editor</span>
+            </div>
+            <p class="mt-2 text-gray-300">© 2024 Created by Edwyn (@Edy_Chou)</p>
+            <p class="mt-1 text-sm text-gray-400">This is an unofficial editor tool</p>
+            
+            <div class="footer-links">
+                <a href="/privacy.html" class="footer-link">
+                    <i class="fas fa-shield-alt mr-2"></i>Privacy Policy
+                </a>
+                <a href="/terms.html" class="footer-link">
+                    <i class="fas fa-gavel mr-2"></i>Terms
+                </a>
+                <a href="/security.html" class="footer-link">
+                    <i class="fas fa-lock mr-2"></i>Security
+                </a>
+            </div>
+
+            <div class="footer-social">
+                <a href="mailto:contact.edwyn@gmail.com" title="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="https://github.com/EdwynDev" target="_blank" rel="noopener" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.roblox.com/users/profile" target="_blank" rel="noopener" title="Roblox">
+                    <i class="fas fa-gamepad"></i>
+                </a>
+            </div>
+        </div>
     </footer>
 </body>
 </html>
