@@ -141,7 +141,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const loadButton = document.getElementById('load-button');
 
     saveButton.addEventListener('click', function () {
-        // Code pour sauvegarder la carte
         const cardData = {
             name: document.getElementById('name').value.trim() || 'N/A',
             skill: document.getElementById('skill').value.trim() || 'N/A',
@@ -153,28 +152,34 @@ document.addEventListener('DOMContentLoaded', function () {
             cardType: document.getElementById('cardType').value
         };
 
-        const cards = JSON.parse(localStorage.getItem('cards')) || [];
-        cards.push(cardData);
-        localStorage.setItem('cards', JSON.stringify(cards));
+        // Envoyer les données via AJAX
+        fetch('save_card.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(cardData)
+        });
     });
 
     loadButton.addEventListener('click', function () {
-        // Code pour charger la carte
         const cardIndex = document.getElementById('card-select').value;
-        const cards = JSON.parse(localStorage.getItem('cards')) || [];
-        if (cardIndex >= 0 && cardIndex < cards.length) {
-            const cardData = cards[cardIndex];
-            document.getElementById('name').value = cardData.name;
-            document.getElementById('skill').value = cardData.skill;
-            document.getElementById('description').value = cardData.description;
-            document.getElementById('image').value = cardData.imageUrl;
-            document.getElementById('probability').value = cardData.probability;
-            document.getElementById('damage').value = cardData.damage;
-            document.getElementById('hp').value = cardData.hp;
-            document.getElementById('cardType').value = cardData.cardType;
-            updateCard();
-        } else {
-            alert('Index de carte invalide');
-        }
+        
+        // Charger la carte via AJAX
+        fetch('load_card.php?index=' + cardIndex)
+            .then(response => response.json())
+            .then(cardData => {
+                if (cardData) {
+                    document.getElementById('name').value = cardData.name;
+                    document.getElementById('skill').value = cardData.skill;
+                    document.getElementById('description').value = cardData.description;
+                    document.getElementById('image').value = cardData.imageUrl;
+                    document.getElementById('probability').value = cardData.probability;
+                    document.getElementById('damage').value = cardData.damage;
+                    document.getElementById('hp').value = cardData.hp;
+                    document.getElementById('cardType').value = cardData.cardType;
+                    updateCard();
+                }
+            });
     });
 });
