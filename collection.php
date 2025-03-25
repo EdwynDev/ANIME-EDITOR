@@ -84,7 +84,7 @@ include 'includes/header.php';
         </div>
     <?php endif; ?>
 </div>
-<a href="/" class="inline-flex items-center text-purple-400 hover:text-purple-300 mb-8 mt-8 ml-6">
+<a href="/" class="inline-flex items-center text-purple-400 hover:text-purple-300 mb-8 mt-8 ml-12">
     <i class="fas fa-arrow-left mr-2"></i>Back to Editor
 </a>
 </div>
