@@ -57,4 +57,6 @@ A web-based card editor for creating anime-style collectible cards with differen
 
 ## 📝 License
 
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
 This project is a fan-made tool for educational purposes only. Not affiliated with any official game or product.
