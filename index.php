@@ -97,8 +97,13 @@ include 'includes/header.php';
 
             </div>
             <div class="flex gap-4">
-                <button id="save-button" class="text-white hover:text-purple-400">
-                    <i class="fas fa-save mr-1"></i>Save
+                <button id="save-button" 
+                    class="text-white hover:text-purple-400 group relative"
+                    title="Save this card to view it later in your collection">
+                    <i class="fas fa-save mr-1"></i>Save in your collection
+                    <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
+                        Save this card to view it later in your collection page
+                    </span>
                 </button>
             </div>
             <script>
