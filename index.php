@@ -101,69 +101,48 @@ include 'includes/header.php';
                     <i class="fas fa-save mr-1"></i>Save
                 </button>
             </div>
-            <div class="flex gap-4">
-                <select id="card-select" class="w-50 bg-gray-800 text-white rounded-lg p-3 border border-purple-500 focus:border-purple-300 focus:ring-2 focus:ring-purple-300 outline-none">
-                    <?php
-                    session_start();
-                    $cards = isset($_SESSION['cards']) ? json_decode($_SESSION['cards'], true) : [];
-                    foreach ($cards as $index => $card) {
-                    ?>
-                        <option value="<?php echo $index; ?>"><?php echo $card['name']; ?></option>
-                    <?php
-                    }
-                    ?>
-                </select>
-                <button class="text-white hover:text-purple-400" id="load-button">
-                    <i class="fas fa-folder-open mr-1"></i>Load
-                </button>
-            </div>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const saveButton = document.getElementById('save-button');
-                    const loadButton = document.getElementById('load-button');
+                    console.log(document.getElementById('save-button'));
 
-                    saveButton.addEventListener('click', function() {
-                        const cardData = {
-                            name: document.getElementById('name').value.trim() || 'N/A',
-                            skill: document.getElementById('skill').value.trim() || 'N/A',
-                            description: document.getElementById('description').value.trim() || 'N/A',
-                            imageUrl: document.getElementById('image').value.trim(),
-                            probability: parseFloat(document.getElementById('probability').value) || 1,
-                            damage: document.getElementById('damage').value || '0',
-                            hp: document.getElementById('hp').value || '0',
-                            cardType: document.getElementById('cardType').value
-                        };
+                    if (saveButton) {
+                        console.log('Bouton Save trouvé !');
+                        saveButton.addEventListener('click', function() {
+                            console.log('Bouton Save cliqué !');
+                            try {
+                                const cardData = {
+                                    name: document.getElementById('name').value.trim() || 'N/A',
+                                    skill: document.getElementById('skill').value.trim() || 'N/A',
+                                    description: document.getElementById('description').value.trim() || 'N/A',
+                                    imageUrl: document.getElementById('image').value.trim(),
+                                    probability: parseFloat(document.getElementById('probability').value) || 1,
+                                    damage: document.getElementById('damage').value || '0',
+                                    hp: document.getElementById('hp').value || '0',
+                                    cardType: document.getElementById('cardType').value
+                                };
 
-                        // Envoyer les données via AJAX
-                        fetch('save_card.php', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify(cardData)
+                                fetch('save_card.php', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify(cardData)
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.success) {
+                                            alert('Card saved successfully!');
+                                            window.location.reload();
+                                        }
+                                    });
+                            } catch (error) {
+                                console.log('Erreur : ' + error.message);
+                            }
                         });
-                    });
-
-                    loadButton.addEventListener('click', function() {
-                        const cardIndex = document.getElementById('card-select').value;
-
-                        // Charger la carte via AJAX
-                        fetch('load_card.php?index=' + cardIndex)
-                            .then(response => response.json())
-                            .then(cardData => {
-                                if (cardData) {
-                                    document.getElementById('name').value = cardData.name;
-                                    document.getElementById('skill').value = cardData.skill;
-                                    document.getElementById('description').value = cardData.description;
-                                    document.getElementById('image').value = cardData.imageUrl;
-                                    document.getElementById('probability').value = cardData.probability;
-                                    document.getElementById('damage').value = cardData.damage;
-                                    document.getElementById('hp').value = cardData.hp;
-                                    document.getElementById('cardType').value = cardData.cardType;
-                                    updateCard();
-                                }
-                            });
-                    });
+                    } else {
+                        console.log('Bouton Save non trouvé !');
+                    }
                 });
             </script>
         </div>
