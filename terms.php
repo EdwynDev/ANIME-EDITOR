@@ -11,21 +11,38 @@ include 'includes/header.php';
         <div class="space-y-6 text-lg">
             <div class="glass-effect p-4 rounded-lg">
                 <h2 class="text-xl font-bold mb-3 text-purple-300">
-                    <i class="fas fa-user mr-2"></i>Fan Use
+                    <i class="fas fa-gamepad mr-2"></i>Editor Usage
                 </h2>
-                <p class="text-white">This editor is provided for fan use only. Created cards are not official game content.</p>
+                <ul class="list-disc pl-6 text-white space-y-1">
+                    <li>This is a fan-made card editor tool</li>
+                    <li>Not affiliated with any official game</li>
+                    <li>Created cards are for personal use only</li>
+                    <li>Not for commercial purposes</li>
+                </ul>
             </div>
+
             <div class="glass-effect p-4 rounded-lg">
                 <h2 class="text-xl font-bold mb-3 text-purple-300">
-                    <i class="fas fa-copyright mr-2"></i>Copyright
+                    <i class="fas fa-copyright mr-2"></i>Image Usage
                 </h2>
-                <p class="text-white">Users must respect copyright and intellectual property rights when uploading images.</p>
+                <ul class="list-disc pl-6 text-white space-y-1">
+                    <li>Only use images you have rights to</li>
+                    <li>Respect copyright laws</li>
+                    <li>No illegal or inappropriate content</li>
+                    <li>We are not responsible for user-uploaded content</li>
+                </ul>
             </div>
+
             <div class="glass-effect p-4 rounded-lg">
                 <h2 class="text-xl font-bold mb-3 text-purple-300">
-                    <i class="fas fa-exclamation-circle mr-2"></i>Disclaimer
+                    <i class="fas fa-exclamation-circle mr-2"></i>Data Management
                 </h2>
-                <p class="text-white">The editor is provided "as is" without any warranties.</p>
+                <ul class="list-disc pl-6 text-white space-y-1">
+                    <li>Your data is stored locally only</li>
+                    <li>No guarantee of data persistence</li>
+                    <li>Make your own backups if needed</li>
+                    <li>We are not responsible for data loss</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -33,5 +50,4 @@ include 'includes/header.php';
         <i class="fas fa-arrow-left mr-2"></i>Back to Editor
     </a>
 </div>
-
 <?php include 'includes/footer.php'; ?>

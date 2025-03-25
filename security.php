@@ -11,27 +11,38 @@ include 'includes/header.php';
         <div class="space-y-6 text-lg">
             <div class="glass-effect p-4 rounded-lg">
                 <h2 class="text-xl font-bold mb-3 text-purple-300">
-                    <i class="fas fa-headset mr-2"></i>Contact Security Team
+                    <i class="fas fa-database mr-2"></i>Data Storage
                 </h2>
-                <p class="text-white">For security concerns, please contact: <a href="mailto:contact.edwyn@gmail.com" class="text-purple-400 hover:text-purple-300">contact.edwyn@gmail.com</a></p>
-            </div>
-            <div class="glass-effect p-4 rounded-lg">
-                <h2 class="text-xl font-bold mb-3 text-purple-300">
-                    <i class="fas fa-shield-alt mr-2"></i>Security Features
-                </h2>
-                <ul class="list-none space-y-2 text-white">
-                    <li><i class="fas fa-check-circle text-green-500 mr-2"></i>All data processing is done locally in your browser</li>
-                    <li><i class="fas fa-check-circle text-green-500 mr-2"></i>No sensitive information is collected or stored</li>
-                    <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Images are processed client-side only</li>
-                    <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Strong Content Security Policy (CSP) implementation</li>
-                    <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Regular security audits and updates</li>
+                <p class="text-white mb-2">Your card collection is stored in:</p>
+                <ul class="list-disc pl-6 text-white space-y-1">
+                    <li>Browser session storage only</li>
+                    <li>No server-side storage</li>
+                    <li>Data is cleared when closing browser</li>
+                    <li>Regular backups recommended</li>
                 </ul>
             </div>
+
             <div class="glass-effect p-4 rounded-lg">
                 <h2 class="text-xl font-bold mb-3 text-purple-300">
-                    <i class="fas fa-bug mr-2"></i>Responsible Disclosure
+                    <i class="fas fa-shield-alt mr-2"></i>Local Processing
                 </h2>
-                <p class="text-white">If you discover a security vulnerability, please report it to our security team. We appreciate your help in keeping our application secure.</p>
+                <ul class="list-none space-y-2 text-white">
+                    <li><i class="fas fa-check-circle text-green-500 mr-2"></i>All card creation is processed locally</li>
+                    <li><i class="fas fa-check-circle text-green-500 mr-2"></i>No data transmission to external servers</li>
+                    <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Images are handled in-browser only</li>
+                </ul>
+            </div>
+
+            <div class="glass-effect p-4 rounded-lg">
+                <h2 class="text-xl font-bold mb-3 text-purple-300">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>Important Notice
+                </h2>
+                <p class="text-white">Please be aware that:</p>
+                <ul class="list-disc pl-6 text-white space-y-1">
+                    <li>Browser data clearing will erase your collection</li>
+                    <li>Session expiration results in data loss</li>
+                    <li>No recovery option available</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -39,5 +50,4 @@ include 'includes/header.php';
         <i class="fas fa-arrow-left mr-2"></i>Back to Editor
     </a>
 </div>
-
 <?php include 'includes/footer.php'; ?>
