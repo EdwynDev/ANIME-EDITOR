@@ -19,7 +19,7 @@ header("X-Content-Type-Options: nosniff");
     <meta name="author" content="Edwyn">
     <meta name="theme-color" content="#4A1D96">
     <!-- Trust Signals -->
-    <meta name="verification" content="This is an unofficial editor tool for Anime Card Clash. Criticall is just my domain name. I do not own Anime Card Clash. All rights reserved to the original creators. This tool is for educational purposes only. Please support the original game. Thank you.">
+    <meta name="verification" content="This is an unofficial editor tool for Anime Card Clash. Neopolyworks is just my domain name. I do not own Anime Card Clash. All rights reserved to the original creators. This tool is for educational purposes only. Please support the original game. Thank you.">
     <meta name="copyright" content="© 2025 Edwyn. All rights reserved.">
     <meta name="owner" content="Edwyn (@Edy_Chou)">
     <title>Anime Card Clash - Editor</title>
