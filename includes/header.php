@@ -344,10 +344,10 @@ header("X-Content-Type-Options: nosniff");
             <h1 class="text-white text-2xl font-bold">
                 <i class="fas fa-dragon mr-2"></i>Anime Card Clash - Editor
             </h1>
-            <!-- <div class="flex gap-4">
+            <div class="flex gap-4">
                 <a href="collection.php" class="text-white hover:text-purple-400">
                     <i class="fas fa-dragon mr-1"></i>Collection
                 </a>
-            </div> -->
+            </div>
         </div>
     </nav>

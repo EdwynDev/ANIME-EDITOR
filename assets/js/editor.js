@@ -134,43 +134,40 @@ updateProbabilities(1);
 document.addEventListener('DOMContentLoaded', function () {
     updateCardType();
     updateCard();
-});
+    
+    document.getElementById('save-button').addEventListener('click', function () {
+        const cardData = {
+            name: document.getElementById('name').value.trim() || 'N/A',
+            skill: document.getElementById('skill').value.trim() || 'N/A',
+            description: document.getElementById('description').value.trim() || 'N/A',
+            imageUrl: document.getElementById('image').value.trim(),
+            probability: parseFloat(document.getElementById('probability').value) || 1,
+            damage: document.getElementById('damage').value || '0',
+            hp: document.getElementById('hp').value || '0',
+            cardType: document.getElementById('cardType').value
+        };
 
+        const cards = JSON.parse(localStorage.getItem('cards')) || [];
+        cards.push(cardData);
+        localStorage.setItem('cards', JSON.stringify(cards));
+    });
 
-
-
-document.getElementById('save-button').addEventListener('click', function () {
-    const cardData = {
-        name: document.getElementById('name').value.trim() || 'N/A',
-        skill: document.getElementById('skill').value.trim() || 'N/A',
-        description: document.getElementById('description').value.trim() || 'N/A',
-        imageUrl: document.getElementById('image').value.trim(),
-        probability: parseFloat(document.getElementById('probability').value) || 1,
-        damage: document.getElementById('damage').value || '0',
-        hp: document.getElementById('hp').value || '0',
-        cardType: document.getElementById('cardType').value
-    };
-
-    const cards = JSON.parse(localStorage.getItem('cards')) || [];
-    cards.push(cardData);
-    localStorage.setItem('cards', JSON.stringify(cards));
-});
-
-document.getElementById('load-button').addEventListener('click', function () {
-    const cards = JSON.parse(localStorage.getItem('cards')) || [];
-    const cardIndex = prompt('Entrez l\'index de la carte à charger (0 pour la première carte, 1 pour la deuxième carte, etc.)');
-    if (cardIndex >= 0 && cardIndex < cards.length) {
-        const cardData = cards[cardIndex];
-        document.getElementById('name').value = cardData.name;
-        document.getElementById('skill').value = cardData.skill;
-        document.getElementById('description').value = cardData.description;
-        document.getElementById('image').value = cardData.imageUrl;
-        document.getElementById('probability').value = cardData.probability;
-        document.getElementById('damage').value = cardData.damage;
-        document.getElementById('hp').value = cardData.hp;
-        document.getElementById('cardType').value = cardData.cardType;
-        updateCard();
-    } else {
-        alert('Index de carte invalide');
-    }
+    document.getElementById('load-button').addEventListener('click', function () {
+        const cardIndex = document.getElementById('card-select').value;
+        const cards = JSON.parse(localStorage.getItem('cards')) || [];
+        if (cardIndex >= 0 && cardIndex < cards.length) {
+            const cardData = cards[cardIndex];
+            document.getElementById('name').value = cardData.name;
+            document.getElementById('skill').value = cardData.skill;
+            document.getElementById('description').value = cardData.description;
+            document.getElementById('image').value = cardData.imageUrl;
+            document.getElementById('probability').value = cardData.probability;
+            document.getElementById('damage').value = cardData.damage;
+            document.getElementById('hp').value = cardData.hp;
+            document.getElementById('cardType').value = cardData.cardType;
+            updateCard();
+        } else {
+            alert('Index de carte invalide');
+        }
+    });
 });

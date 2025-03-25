@@ -45,8 +45,8 @@ include 'includes/header.php';
                             </div>
                         </div>cla                   </div>
             <?php
-                    echo ob_get_clean();
-                    ?>`)
+            echo ob_get_clean();
+            ?>`)
                 });
             </script>
             ?>
@@ -56,5 +56,6 @@ include 'includes/header.php';
         <div class="swiper-button-next"></div>
     </div>
 </div>
+</body>
 
-<?php include 'includes/footer.php'; ?>
+</html>
