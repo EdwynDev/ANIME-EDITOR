@@ -8,7 +8,7 @@ $index = $data['index'] ?? null;
 
 if ($index !== null && isset($_SESSION['cards'][$index])) {
     unset($_SESSION['cards'][$index]);
-    $_SESSION['cards'] = array_values($_SESSION['cards']); // Réindexer le tableau
+    $_SESSION['cards'] = array_values($_SESSION['cards']);
     echo json_encode(['success' => true]);
 } else {
     echo json_encode(['success' => false, 'error' => 'Card not found']);
