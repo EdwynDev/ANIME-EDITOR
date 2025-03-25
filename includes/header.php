@@ -320,10 +320,13 @@ header("X-Content-Type-Options: nosniff");
         }
 
         .footer-social a {
-            padding: 0.5rem;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            color: #fff;
             transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .footer-social a:hover {
