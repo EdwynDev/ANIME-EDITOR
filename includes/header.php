@@ -343,7 +343,7 @@ header("X-Content-Type-Options: nosniff");
     <nav class="glass-effect fixed top-0 w-full z-50 px-6 py-4">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-white text-2xl font-bold">
-                <i class="fas fa-dragon mr-2"></i>Anime Card Clash - Editor
+                <i class="fas fa-dragon mr-2"></i>Anime Card Clash - <?= $pageTitle ?: "Editor" ?>
             </h1>
             <div class="flex gap-4">
                 <a href="collection.php" class="text-white hover:text-purple-400">
