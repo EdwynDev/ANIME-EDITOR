@@ -5,7 +5,7 @@
                 <span>Anime Card Clash Editor</span>
             </div>
             <p class="mt-2 text-gray-300">© 2025 Created by Edwyn (@Edy_Chou)</p>
-            <p class="mt-1 text-sm text-gray-400">This is an unofficial editor tool</p>
+            <p class="mt-1 text-sm text-gray-400">This is an unofficial editor tool.</p>
 
             <div class="footer-links">
                 <a href="/privacy.php" class="footer-link">
