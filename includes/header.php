@@ -341,7 +341,7 @@ header("X-Content-Type-Options: nosniff");
 
 <body class="bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 min-h-screen">
     <nav class="glass-effect fixed top-0 w-full z-50 px-6 py-4">
-        <div class="container mx-auto flex justify-between items-center md:flex-col">
+        <div class="container mx-auto flex-col justify-between items-center lg:flex">
             <h1 class="text-white text-2xl font-bold">
                 <i class="fas fa-dragon mr-2"></i>
                 <a href="/" class="text-white hover:text-purple-400">Anime Card Clash</a> - <?= $pageTitle ?: "Editor" ?>
