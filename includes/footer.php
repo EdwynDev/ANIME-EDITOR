@@ -9,13 +9,13 @@
 
             <div class="footer-links">
                 <a href="/privacy.php" class="footer-link">
-                    <i class="fas fa-shield-alt mr-2"></i>
+                    <i class="fas fa-shield-alt"></i>
                 </a>
                 <a href="/terms.php" class="footer-link">
-                    <i class="fas fa-gavel mr-2"></i>
+                    <i class="fas fa-gavel"></i>
                 </a>
                 <a href="/security.php" class="footer-link">
-                    <i class="fas fa-lock mr-2"></i>
+                    <i class="fas fa-lock"></i>
                 </a>
             </div>
 
