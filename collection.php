@@ -8,7 +8,7 @@ include 'includes/header.php';
     <h1 class="text-3xl font-bold mb-8 flex items-center text-purple-300">
         <i class="fas fa-dragon mr-3"></i>Collection
     </h1>
-    
+
     <?php if (!isset($_SESSION['cards']) || empty($_SESSION['cards'])): ?>
         <div class="text-white text-center">
             <p>No cards in your collection yet.</p>
@@ -19,7 +19,7 @@ include 'includes/header.php';
                 <div class="gradient-border-basic p-2 shadow-basic">
                     <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
                         <div class="card-image-box">
-                            <img src="<?php echo htmlspecialchars($card['imageUrl']); ?>" alt="Card Image"/>
+                            <img src="<?php echo htmlspecialchars($card['imageUrl']); ?>" alt="Card Image" />
                         </div>
                         <div class="absolute top-2 left-2 bg-basic text-black text-xs font-bold px-2 py-1 rounded">
                             <?php echo htmlspecialchars($card['cardType']); ?>
@@ -29,9 +29,9 @@ include 'includes/header.php';
                         </div>
                         <div class="absolute bottom-16 left-2 right-2 px-2">
                             <p><span class="text-xl text-white font-bold text-linear-gradient text-stroke">
-                                <?php echo htmlspecialchars($card['skill']); ?></span></p>
+                                    <?php echo htmlspecialchars($card['skill']); ?></span></p>
                             <p class="mt-3 mb-12"><span class="text-xs text-white font-bold text-linear-gradient text-stroke">
-                                <?php echo htmlspecialchars($card['description']); ?></span></p>
+                                    <?php echo htmlspecialchars($card['description']); ?></span></p>
                         </div>
                         <?php if ($card['cardType'] !== 'support'): ?>
                             <div class="absolute bottom-2 w-full px-4 flex justify-between">
@@ -44,6 +44,9 @@ include 'includes/header.php';
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
+    <a href="/" class="inline-flex items-center text-purple-400 hover:text-purple-300 mb-8">
+        <i class="fas fa-arrow-left mr-2"></i>Back to Editor
+    </a>
 </div>
 </body>
 
