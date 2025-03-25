@@ -6,7 +6,7 @@ include 'includes/header.php';
 <div class="container mx-auto pt-8 px-6 pb-12 mt-12">
     <div class="glass-effect rounded-xl p-8 mb-8 container">
         <h1 class="text-3xl font-bold mb-8 flex items-center text-purple-300">
-            <i class="fas fa-shield-alt mr-3"></i>
+            <i class="fas fa-lock mr-3"></i>
         </h1>
         <div class="space-y-6 text-lg">
             <div class="glass-effect p-4 rounded-lg">
