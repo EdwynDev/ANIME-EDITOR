@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             if(data.success) {
                 alert('Card saved successfully!');
-                window.location.reload(); // Recharge la page pour mettre à jour la liste
+                window.location.reload();
             }
         });
     });

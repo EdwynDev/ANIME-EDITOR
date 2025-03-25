@@ -22,7 +22,7 @@ header("X-Content-Type-Options: nosniff");
     <meta name="verification" content="This is an unofficial editor tool for Anime Card Clash. Neopolyworks is just my domain name. I do not own Anime Card Clash. All rights reserved to the original creators. This tool is for educational purposes only. Please support the original game. Thank you.">
     <meta name="copyright" content="© 2025 Edwyn. All rights reserved.">
     <meta name="owner" content="Edwyn (@Edy_Chou)">
-    <title>Anime Card Clash - Editor</title>
+    <title><?php $pageTitle || "Anime Card Clash - Editor" ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -346,7 +346,7 @@ header("X-Content-Type-Options: nosniff");
             </h1>
             <div class="flex gap-4">
                 <a href="collection.php" class="text-white hover:text-purple-400">
-                <i class="far fa-bookmark mr-1"></i>Collection
+                    <i class="far fa-bookmark mr-1"></i>Collection
                 </a>
             </div>
         </div>
