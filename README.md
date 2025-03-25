@@ -24,12 +24,12 @@ A web-based card editor for creating anime-style collectible cards with differen
 
 ## 🚀 Usage
 
-1. **Creating Cards**
+- **Creating Cards**
    - Fill in the card details in the editor
    - Preview different rarities
    - Click "Save in your collection" to keep your card
 
-2. **Managing Collection**
+- **Managing Collection**
    - Access your collection from the navigation menu
    - Edit or delete cards as needed
    - View all your created cards in one place
