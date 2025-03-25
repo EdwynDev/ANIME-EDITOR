@@ -20,9 +20,35 @@ include 'includes/header.php';
         </div>
     </div>
 
-    <h1 class="text-3xl font-bold mb-8 flex items-center text-purple-300">
-        <i class="far fa-bookmark mr-3"></i>Collection
-    </h1>
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold flex items-center text-purple-300">
+            <i class="far fa-bookmark mr-3"></i>Collection
+        </h1>
+        <div class="flex gap-4">
+            <button onclick="exportCollection()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition duration-200">
+                <i class="fas fa-download mr-2"></i>Export Collection
+            </button>
+            <label class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200 cursor-pointer">
+                <i class="fas fa-upload mr-2"></i>Import Collection
+                <input type="file" accept=".json" onchange="importCollection(this)" class="hidden">
+            </label>
+            <button onclick="previewJSON()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition duration-200">
+                <i class="fas fa-code mr-2"></i>Preview JSON
+            </button>
+        </div>
+    </div>
+
+    <div class="bg-gray-800/50 p-4 rounded-lg mb-8">
+        <h3 class="text-purple-300 font-bold mb-2">
+            <i class="fas fa-info-circle mr-2"></i>Collection Management
+        </h3>
+        <ul class="text-white text-sm space-y-2">
+            <li><i class="fas fa-download text-blue-400 mr-2"></i>Export: Save your collection as a JSON file for backup</li>
+            <li><i class="fas fa-upload text-green-400 mr-2"></i>Import: Load a previously saved collection JSON file</li>
+            <li><i class="fas fa-code text-purple-400 mr-2"></i>Preview: View your collection data in JSON format</li>
+            <li class="text-yellow-200"><i class="fas fa-exclamation-triangle mr-2"></i>Note: Importing will replace your current collection</li>
+        </ul>
+    </div>
 
     <?php if (!isset($_SESSION['cards']) || empty($_SESSION['cards'])): ?>
         <div class="text-white text-center space-y-4">
@@ -87,6 +113,22 @@ include 'includes/header.php';
         <i class="fas fa-arrow-left mr-2"></i>Back to Editor
     </a>
 </div>
+
+<!-- Add JSON Preview Modal -->
+<div id="jsonModal" class="modal-overlay">
+    <div class="modal" style="width: 90%; max-width: 800px;">
+        <div class="modal-content">
+            <h2 class="text-xl text-white mb-4">Collection JSON Preview</h2>
+            <pre id="jsonPreview" class="bg-gray-900 p-4 rounded-lg text-green-400 text-sm overflow-auto max-h-96 text-left"></pre>
+            <div class="modal-buttons">
+                <button onclick="closeModal('jsonModal')" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     function deleteCard(index) {
         showConfirm('Are you sure you want to delete this card ?', () => {
@@ -113,6 +155,53 @@ include 'includes/header.php';
 
     function editCard(index) {
         window.location.href = `/?edit=${index}`;
+    }
+
+    function exportCollection() {
+        const collection = <?php echo json_encode($_SESSION['cards'] ?? []); ?>;
+        const dataStr = JSON.stringify(collection, null, 2);
+        const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+        const exportName = 'anime_card_collection_' + new Date().toISOString().slice(0,10) + '.json';
+
+        const linkElement = document.createElement('a');
+        linkElement.setAttribute('href', dataUri);
+        linkElement.setAttribute('download', exportName);
+        linkElement.click();
+    }
+
+    function importCollection(input) {
+        const file = input.files[0];
+        if (file) {
+            showConfirm('Importing will replace your current collection. Continue?', () => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const collection = JSON.parse(e.target.result);
+                        fetch('save_import.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(collection)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showModal('successModal', 'Collection imported successfully!');
+                                setTimeout(() => window.location.reload(), 1500);
+                            }
+                        });
+                    } catch (error) {
+                        showModal('successModal', 'Error: Invalid JSON file');
+                    }
+                };
+                reader.readAsText(file);
+            });
+        }
+    }
+
+    function previewJSON() {
+        const collection = <?php echo json_encode($_SESSION['cards'] ?? []); ?>;
+        document.getElementById('jsonPreview').textContent = JSON.stringify(collection, null, 2);
+        showModal('jsonModal');
     }
 </script>
 </body>
