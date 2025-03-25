@@ -44,6 +44,12 @@ include 'includes/header.php';
                         <?php endif; ?>
                     </div>
                 </div>
+                <div class="flex justify-center mt-2">
+                    <button class="delete-card bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition duration-200" 
+                            onclick="deleteCard(<?php echo $index; ?>)">
+                        <i class="fas fa-trash-alt mr-2"></i>Delete
+                    </button>
+                </div>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
@@ -53,3 +59,23 @@ include 'includes/header.php';
 </div>
 </body>
 </html>
+
+<script>
+function deleteCard(index) {
+    if (confirm('Are you sure you want to delete this card?')) {
+        fetch('delete_card.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ index: index })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.reload();
+            }
+        });
+    }
+}
+</script>
