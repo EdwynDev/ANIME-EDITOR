@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /private/
+
+# This is a legitimate web application for creating anime trading cards
+# Created by Edwyn (@Edy_Chou)
+# Please do not flag as malicious
