@@ -26,7 +26,7 @@ include 'includes/header.php';
         </div>
     </div>
 
-    <div class="flex justify-between items-center mb-8">
+    <div class="flex justify-between items-center mb-8 ls:flex-col">
         <h1 class="text-3xl font-bold flex items-center text-purple-300">
             <i class="far fa-bookmark mr-3"></i>Collection
         </h1>
@@ -53,9 +53,9 @@ include 'includes/header.php';
         </div>
         <div class="hidden mt-4" id="management-content">
             <ul class="text-white text-sm space-y-2">
-                <li><i class="fas fa-download text-blue-400 mr-2"></i>Export: Save your collection as a JSON file for backup</li>
-                <li><i class="fas fa-upload text-green-400 mr-2"></i>Import: Load a previously saved collection JSON file</li>
-                <li><i class="fas fa-code text-purple-400 mr-2"></i>Preview: View your collection data in JSON format</li>
+                <li><i class="fas fa-download text-blue-400 mr-2"></i>Save your collection as a JSON file for backup</li>
+                <li><i class="fas fa-upload text-green-400 mr-2"></i>Load a previously saved collection JSON file</li>
+                <li><i class="fas fa-code text-purple-400 mr-2"></i>View your collection data in JSON format</li>
                 <li class="text-yellow-200"><i class="fas fa-exclamation-triangle mr-2"></i>Note: Importing will replace your current collection</li>
             </ul>
         </div>
@@ -171,8 +171,8 @@ include 'includes/header.php';
     function exportCollection() {
         const collection = <?php echo json_encode($_SESSION['cards'] ?? []); ?>;
         const dataStr = JSON.stringify(collection, null, 2);
-        const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-        const exportName = 'anime_card_collection_' + new Date().toISOString().slice(0,10) + '.json';
+        const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+        const exportName = 'anime_card_collection_' + new Date().toISOString().slice(0, 10) + '.json';
 
         const linkElement = document.createElement('a');
         linkElement.setAttribute('href', dataUri);
@@ -189,17 +189,19 @@ include 'includes/header.php';
                     try {
                         const collection = JSON.parse(e.target.result);
                         fetch('save_import.php', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(collection)
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                showModal('successModal', 'Collection imported successfully!');
-                                setTimeout(() => window.location.reload(), 1500);
-                            }
-                        });
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(collection)
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    showModal('successModal', 'Collection imported successfully!');
+                                    setTimeout(() => window.location.reload(), 1500);
+                                }
+                            });
                     } catch (error) {
                         showModal('successModal', 'Error: Invalid JSON file');
                     }
@@ -218,7 +220,7 @@ include 'includes/header.php';
     function toggleSection(contentId) {
         const content = document.getElementById(contentId);
         const arrow = document.getElementById(contentId.replace('content', 'arrow'));
-        
+
         if (content.classList.contains('hidden')) {
             content.classList.remove('hidden');
             arrow.style.transform = 'rotate(180deg)';
