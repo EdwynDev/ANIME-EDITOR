@@ -290,16 +290,25 @@ include 'includes/header.php';
                     });
                 });
 
+                let fontLoadTimeout;
+
+                function debounceFontLoad(callback, delay = 500) {
+                    clearTimeout(fontLoadTimeout);
+                    fontLoadTimeout = setTimeout(callback, delay);
+                }
+
                 function updateFonts() {
                     const elements = ['name', 'skill', 'desc', 'stats'];
                     elements.forEach(type => {
                         const select = document.getElementById(`${type}Font`);
                         const customInput = document.getElementById(`custom${type}Font`);
-
+                        
                         if (select.value === 'custom') {
                             customInput.classList.remove('hidden');
                             if (!customInput.hasAttribute('data-has-listener')) {
-                                customInput.addEventListener('input', loadCustomFont);
+                                customInput.addEventListener('input', () => {
+                                    debounceFontLoad(() => loadCustomFont(customInput));
+                                });
                                 customInput.setAttribute('data-has-listener', 'true');
                             }
                         } else {
@@ -309,51 +318,32 @@ include 'includes/header.php';
                     });
                 }
 
-                function loadCustomFont(e) {
-                    const fontName = e.target.value;
+                function loadCustomFont(inputElement) {
+                    const fontName = inputElement.value.trim();
                     if (!fontName) return;
 
+                    const existingLink = document.querySelector(`link[href*="${fontName}"]`);
+                    if (existingLink) return; // Avoid duplicate links
+
+                    const link = document.createElement('link');
                     if (fontName.includes('fonts.googleapis.com')) {
-                        const link = document.createElement('link');
                         link.href = fontName;
-                        link.rel = 'stylesheet';
-                        document.head.appendChild(link);
-
-                        const familyMatch = fontName.match(/family=([^&:]+)/);
-                        if (familyMatch) {
-                            const fontFamily = familyMatch[1].replace('+', ' ');
-                            const type = e.target.id.replace('custom', '').replace('Font', '').toLowerCase();
-                            applyFont(type, fontFamily);
-                        }
                     } else {
-
-                        const link = document.createElement('link');
                         link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontName)}&display=swap`;
-                        link.rel = 'stylesheet';
-                        document.head.appendChild(link);
-
-                        const type = e.target.id.replace('custom', '').replace('Font', '').toLowerCase();
-                        applyFont(type, fontName);
                     }
+                    link.rel = 'stylesheet';
+                    document.head.appendChild(link);
+
+                    const type = inputElement.id.replace('custom', '').replace('Font', '').toLowerCase();
+                    applyFont(type, fontName);
                 }
 
                 function applyFont(type, fontFamily) {
                     const cardData = {
-                        name: {
-                            element: 'card-name',
-                            style: 'text-stroke-bolder'
-                        },
-                        skill: {
-                            element: 'card-skill',
-                            style: 'text-stroke'
-                        },
-                        desc: {
-                            element: 'card-description',
-                            style: 'text-stroke'
-                        },
-                        stats: {
-                            element: ['card-damage', 'card-hp']
-                        }
+                        name: { element: 'card-name', style: 'text-stroke-bolder' },
+                        skill: { element: 'card-skill', style: 'text-stroke' },
+                        desc: { element: 'card-description', style: 'text-stroke' },
+                        stats: { element: ['card-damage', 'card-hp'] }
                     };
 
                     if (Array.isArray(cardData[type].element)) {
