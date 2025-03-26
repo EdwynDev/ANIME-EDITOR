@@ -116,13 +116,17 @@ include 'includes/header.php';
                                 <div class="absolute bottom-2 w-full px-4 flex justify-between">
                                     <div class="stat-dmg font-bold text-lg" 
                                          style="font-family: '<?php echo $card['fonts']['statsFont'] ?? 'Lilita One'; ?>', sans-serif;">
-                                        DMG <span><?php echo htmlspecialchars($card['damage']); ?></span>
+                                        DMG <span id="stat-dmg-<?php echo $index; ?>"></span>
                                     </div>
                                     <div class="stat-hp font-bold text-lg"
                                          style="font-family: '<?php echo $card['fonts']['statsFont'] ?? 'Lilita One'; ?>', sans-serif;">
-                                        HP <span><?php echo htmlspecialchars($card['hp']); ?></span>
+                                        HP <span id="stat-hp-<?php echo $index; ?>"></span>
                                     </div>
                                 </div>
+                                <script>
+                                    document.getElementById('stat-dmg-<?php echo $index; ?>').innerText = formatNumberWithSuffix(<?php echo intval($card['damage']); ?>);
+                                    document.getElementById('stat-hp-<?php echo $index; ?>').innerText = formatNumberWithSuffix(<?php echo intval($card['hp']); ?>);
+                                </script>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -249,6 +253,7 @@ include 'includes/header.php';
         }
     }
 </script>
+<script src="assets/js/editor.js"></script>
 </body>
 
 </html>
