@@ -114,8 +114,8 @@ function updateFullCards() {
         document.getElementById(`${rarity}-full-name`).innerText = name;
         document.getElementById(`${rarity}-full-skill`).innerText = skill;
         document.getElementById(`${rarity}-full-description`).innerText = description;
-        document.getElementById(`${rarity}-full-damage`).innerText = formatNumberWithSuffix(parseInt(damage) * multiplier);
-        document.getElementById(`${rarity}-full-hp`).innerText = formatNumberWithSuffix(parseInt(hp) * multiplier);
+        document.getElementById(`${rarity}-full-damage`).innerText = `DMG ${formatNumberWithSuffix(parseInt(damage) * multiplier)}`;
+        document.getElementById(`${rarity}-full-hp`).innerText = `HP ${formatNumberWithSuffix(parseInt(hp) * multiplier)}`;
     });
 }
 
