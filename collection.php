@@ -187,29 +187,39 @@ include 'includes/header.php';
 <script>
     function downloadCard(index) {
         const div = document.querySelector(`.card-${index}`);
-        const scale = 2; // Augmente la qualité
+        // Attendre que les polices soient chargées
+        document.fonts.ready.then(() => {
+            // Calculer les stats avant la capture
+            const dmgSpan = document.getElementById(`stat-dmg-${index}`);
+            const hpSpan = document.getElementById(`stat-hp-${index}`);
+            if (dmgSpan) dmgSpan.style.visibility = 'visible';
+            if (hpSpan) hpSpan.style.visibility = 'visible';
 
-        const style = {
-            transform: 'scale(' + scale + ')',
-            transformOrigin: 'top left',
-            width: div.offsetWidth + "px",
-            height: div.offsetHeight + "px"
-        };
-
-        domtoimage.toPng(div, {
-            quality: 1,
-            width: div.offsetWidth * scale,
-            height: div.offsetHeight * scale,
-            style: style
-        })
-        .then(function (dataUrl) {
-            const link = document.createElement('a');
-            link.download = `anime_card_${index}.png`;
-            link.href = dataUrl;
-            link.click();
-        })
-        .catch(function (error) {
-            console.error('Error downloading card:', error);
+            domtoimage.toBlob(div, {
+                quality: 1,
+                bgcolor: 'transparent',
+                height: div.offsetHeight,
+                width: div.offsetWidth,
+                style: {
+                    transform: 'scale(2)',
+                    transformOrigin: 'top left',
+                },
+                filter: (node) => {
+                    // S'assurer que tous les éléments sont capturés
+                    return true;
+                }
+            })
+            .then(function(blob) {
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.download = `anime_card_${index}.png`;
+                link.href = url;
+                link.click();
+                URL.revokeObjectURL(url);
+            })
+            .catch(function(error) {
+                console.error('Error downloading card:', error);
+            });
         });
     }
 
