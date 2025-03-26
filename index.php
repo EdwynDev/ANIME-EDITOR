@@ -574,7 +574,7 @@ include 'includes/header.php';
                                         </span>
                                     </p>
                                 </div>
-                                <div class="absolute bottom-2 w-full px-4 flex justify-between">
+                                <div id="stats-container" class="absolute bottom-2 w-full px-4 flex justify-between">
                                     <div class="stat-dmg font-bold text-lg" id="basic-full-damage">
                                         DMG <span>0</span>
                                     </div>
@@ -635,7 +635,7 @@ include 'includes/header.php';
                                         </span>
                                     </p>
                                 </div>
-                                <div class="absolute bottom-2 w-full px-4 flex justify-between">
+                                <div id="stats-container" class="absolute bottom-2 w-full px-4 flex justify-between">
                                     <div class="stat-dmg font-bold text-lg" id="gold-full-damage">
                                         DMG <span>0</span>
                                     </div>
@@ -698,7 +698,7 @@ include 'includes/header.php';
                                         </span>
                                     </p>
                                 </div>
-                                <div class="absolute bottom-2 w-full px-4 flex justify-between">
+                                <div id="stats-container" class="absolute bottom-2 w-full px-4 flex justify-between">
                                     <div class="stat-dmg font-bold text-lg" id="rainbow-full-damage">
                                         DMG <span>0</span>
                                     </div>
@@ -761,7 +761,7 @@ include 'includes/header.php';
                                         </span>
                                     </p>
                                 </div>
-                                <div class="absolute bottom-2 w-full px-4 flex justify-between">
+                                <div id="stats-container" class="absolute bottom-2 w-full px-4 flex justify-between">
                                     <div class="stat-dmg font-bold text-lg" id="secret-full-damage">
                                         DMG <span>0</span>
                                     </div>
