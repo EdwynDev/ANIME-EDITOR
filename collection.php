@@ -190,7 +190,7 @@ include 'includes/header.php';
         const originalDiv = document.querySelector(`.card-${index}`);
         const img = originalDiv.querySelector('img');
 
-        // Force DMG/HP update
+        // Update stats
         if (card.cardType !== 'support') {
             const dmgValue = formatNumberWithSuffix(card.damage);
             const hpValue = formatNumberWithSuffix(card.hp);
@@ -201,45 +201,41 @@ include 'includes/header.php';
         }
 
         if (img.src.toLowerCase().endsWith('.gif')) {
-            // Créer le GIF avec les paramètres optimisés
-            const gif = new GIF({
-                workers: 2,
-                quality: 10,
-                width: originalDiv.offsetWidth * 2,
-                height: originalDiv.offsetHeight * 2,
-                workerScript: 'https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js'
-            });
-
-            // D'abord convertir en canvas avec html-to-image
+            // First convert to canvas
             htmlToImage.toCanvas(originalDiv, {
+                quality: 1,
                 pixelRatio: 2,
                 skipAutoScale: true,
-                quality: 1,
-                width: originalDiv.offsetWidth * 2,
-                height: originalDiv.offsetHeight * 2
+                backgroundColor: null,
+                filter: (node) => {
+                    return (!node.classList ||
+                        (!node.classList.contains('download-card') &&
+                         !node.classList.contains('edit-card') &&
+                         !node.classList.contains('delete-card')))
+                }
             })
             .then(canvas => {
-                gif.addFrame(canvas, { delay: 100, copy: true });
-                gif.render();
-            });
-
-            gif.on('finished', function(blob) {
-                const url = URL.createObjectURL(blob);
+                // Create and download as PNG instead
                 const link = document.createElement('a');
-                link.download = `anime_card_${index}.gif`;
-                link.href = url;
+                link.download = `anime_card_${index}.png`;
+                link.href = canvas.toDataURL('image/png');
                 link.click();
-                URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                console.error('Error:', error);
             });
         } else {
-            // PNG normal pour les images statiques
+            // Standard PNG capture
             htmlToImage.toPng(originalDiv, {
                 quality: 1,
                 pixelRatio: 2,
                 skipAutoScale: true,
-                cacheBust: true,
-                style: {
-                    transformOrigin: 'top left',
+                backgroundColor: null,
+                filter: (node) => {
+                    return (!node.classList ||
+                        (!node.classList.contains('download-card') &&
+                         !node.classList.contains('edit-card') &&
+                         !node.classList.contains('delete-card')))
                 }
             })
             .then(function (dataUrl) {
