@@ -421,5 +421,3 @@ header("X-Content-Type-Options: nosniff");
             };
         }
     </script>
-</body>
-</html>
