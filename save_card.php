@@ -6,6 +6,11 @@ header('Content-Type: application/json');
 try {
     $data = json_decode(file_get_contents('php://input'), true);
 
+    // Validation de l'URL de l'image
+    if (empty($data['imageUrl'])) {
+        $data['imageUrl'] = 'https://placehold.co/320x500';
+    }
+
     // Add fonts to the card data
     $data['fonts'] = [
         'nameFont' => $_POST['nameFont'] ?? 'Electrolize',
