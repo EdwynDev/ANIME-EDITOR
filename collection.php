@@ -188,60 +188,63 @@ include 'includes/header.php';
     function downloadCard(index) {
         const card = <?php echo json_encode($_SESSION['cards'] ?? []); ?>[index];
         const originalDiv = document.querySelector(`.card-${index}`);
-        
-        // Créer un conteneur temporaire
-        const container = document.createElement('div');
-        container.style.cssText = 'position: fixed; left: -9999px; top: 0; z-index: -1;';
-        
-        // Cloner la carte
-        const clonedDiv = originalDiv.cloneNode(true);
-        container.appendChild(clonedDiv);
-        document.body.appendChild(container);
 
-        // Forcer les valeurs DMG/HP dans le clone
+        const tempContainer = document.createElement('div');
+        tempContainer.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: ${originalDiv.offsetWidth}px;
+            height: ${originalDiv.offsetHeight}px;
+            background: transparent;
+            z-index: -9999;
+            pointer-events: none;
+        `;
+
+        const cardClone = originalDiv.cloneNode(true);
+        tempContainer.appendChild(cardClone);
+        document.body.appendChild(tempContainer);
+
+        const computedStyle = window.getComputedStyle(originalDiv);
+        Object.values(computedStyle).forEach(prop => {
+            try {
+                cardClone.style[prop] = computedStyle[prop];
+            } catch (e) {}
+        });
+
         if (card.cardType !== 'support') {
-            const dmgValue = formatNumberWithSuffix(card.damage);
-            const hpValue = formatNumberWithSuffix(card.hp);
-            clonedDiv.querySelector('.stat-dmg').innerHTML = `DMG <span>${dmgValue}</span>`;
-            clonedDiv.querySelector('.stat-hp').innerHTML = `HP <span>${hpValue}</span>`;
-            
-            // Forcer les polices
-            Array.from(clonedDiv.querySelectorAll('[style*="font-family"]')).forEach(el => {
-                el.style.fontFamily = window.getComputedStyle(el).fontFamily;
+            const dmgSpan = cardClone.querySelector(`#stat-dmg-${index}`);
+            const hpSpan = cardClone.querySelector(`#stat-hp-${index}`);
+            if (dmgSpan) dmgSpan.textContent = formatNumberWithSuffix(card.damage);
+            if (hpSpan) hpSpan.textContent = formatNumberWithSuffix(card.hp);
+
+            cardClone.querySelectorAll('*[style*="font-family"]').forEach(el => {
+                const fontFamily = window.getComputedStyle(el).fontFamily;
+                el.style.setProperty('font-family', fontFamily, 'important');
             });
         }
 
-        // Attendre le chargement complet
         Promise.all([
             document.fonts.ready,
-            ...Array.from(clonedDiv.querySelectorAll('img')).map(img => 
-                new Promise(resolve => {
-                    if (img.complete) resolve();
-                    else img.onload = () => resolve();
+            ...Array.from(cardClone.querySelectorAll('img')).map(img => 
+                img.complete ? Promise.resolve() : new Promise(resolve => {
+                    img.onload = img.onerror = resolve;
                 })
             )
         ]).then(() => {
-            // Petit délai pour s'assurer du rendu
             setTimeout(() => {
-                domtoimage.toPng(clonedDiv, {
-                    quality: 1,
-                    width: originalDiv.offsetWidth * 2,
-                    height: originalDiv.offsetHeight * 2,
-                    style: {
-                        transform: 'scale(2)',
-                        transformOrigin: 'top left'
-                    }
-                })
-                .then(dataUrl => {
+                html2canvas(cardClone, {
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: null,
+                    logging: false
+                }).then(canvas => {
                     const link = document.createElement('a');
                     link.download = `anime_card_${index}.png`;
-                    link.href = dataUrl;
+                    link.href = canvas.toDataURL('image/png');
                     link.click();
-                    document.body.removeChild(container);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.body.removeChild(container);
+                    document.body.removeChild(tempContainer);
                 });
             }, 100);
         });

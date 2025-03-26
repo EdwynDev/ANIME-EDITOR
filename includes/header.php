@@ -32,6 +32,7 @@ header("X-Content-Type-Options: nosniff");
     <link rel="stylesheet" href="assets/css/modal.css">
     <script src="https://cdn.jsdelivr.net/npm/dom-to-image@2.6.0/dist/dom-to-image.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/dom-to-image@2.6.0/bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
         body {
             font-family: 'Electrolize';
