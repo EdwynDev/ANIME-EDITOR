@@ -187,19 +187,30 @@ include 'includes/header.php';
 <script>
     function downloadCard(index) {
         const div = document.querySelector(`.card-${index}`);
-        const scale = 2;
+        const dmgElement = document.getElementById(`stat-dmg-${index}`);
+        const hpElement = document.getElementById(`stat-hp-${index}`);
 
+        // Forcer le rendu des valeurs DMG et HP
+        const dmgValue = dmgElement.innerText;
+        const hpValue = hpElement.innerText;
+
+        // Appliquer les styles dynamiques
         const style = {
-            transform: 'scale(' + scale + ')',
+            transform: 'scale(2)',
             transformOrigin: 'top left',
             width: div.offsetWidth + "px",
-            height: div.offsetHeight + "px"
+            height: div.offsetHeight + "px",
+            fontFamily: window.getComputedStyle(div).fontFamily,
         };
+
+        // Ajouter les valeurs DMG et HP dans le DOM avant la capture
+        dmgElement.innerText = dmgValue;
+        hpElement.innerText = hpValue;
 
         domtoimage.toPng(div, {
             quality: 1,
-            width: div.offsetWidth * scale,
-            height: div.offsetHeight * scale,
+            width: div.offsetWidth * 2,
+            height: div.offsetHeight * 2,
             style: style
         })
         .then(function (dataUrl) {
