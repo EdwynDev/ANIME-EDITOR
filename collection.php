@@ -192,8 +192,11 @@ include 'includes/header.php';
         // Forcer le rendu des valeurs DMG et HP
         const dmgElement = clonedDiv.querySelector(`#stat-dmg-${index}`);
         const hpElement = clonedDiv.querySelector(`#stat-hp-${index}`);
-        dmgElement.innerText = document.getElementById(`stat-dmg-${index}`).innerText;
-        hpElement.innerText = document.getElementById(`stat-hp-${index}`).innerText;
+        const originalDmgValue = document.getElementById(`stat-dmg-${index}`).innerText;
+        const originalHpValue = document.getElementById(`stat-hp-${index}`).innerText;
+
+        dmgElement.innerText = originalDmgValue;
+        hpElement.innerText = originalHpValue;
 
         // Créer un conteneur temporaire pour le clone
         const container = document.createElement('div');
