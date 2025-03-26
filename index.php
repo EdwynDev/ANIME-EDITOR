@@ -1,6 +1,6 @@
 <?php
 $pageTitle = "Card Editor";
-$extraScripts = '<script src="assets/js/editor.js"></script><script src="assets/js/html2canvas.js"></script>';
+$extraScripts = '<script src="assets/js/editor.js"></script>';
 include 'includes/header.php';
 ?>
 
