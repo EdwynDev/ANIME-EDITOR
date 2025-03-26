@@ -32,18 +32,7 @@ function handleImageUpload() {
 
 function updateCardType() {
     const statsContainer = document.getElementById('stats-container');
-    const goldCard = document.querySelector('.gradient-border-gold').parentElement;
-    const rainbowCard = document.querySelector('.gradient-border-rainbow').parentElement;
-    const secretCard = document.querySelector('.gradient-border-secret').parentElement;
-    const statsDisplays = document.querySelectorAll('.bottom-2.w-full.px-4.flex.justify-between');
-
-    statsContainer.style.display = 'grid';
-    goldCard.style.display = 'grid';
-    rainbowCard.style.display = 'grid';
-    secretCard.style.display = 'grid';
-    statsDisplays.forEach(display => {
-        display.style.display = 'flex';
-    });
+    statsContainer.style.display = cardType === 'support' ? 'none' : 'grid';
     updateCard();
 }
 
