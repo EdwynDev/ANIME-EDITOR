@@ -151,6 +151,8 @@ include 'includes/header.php';
 </div>
 
 <script>
+    import html2canvas from 'html2canvas';
+    
     function deleteCard(index) {
         showConfirm('Are you sure you want to delete this card ?', () => {
             fetch('delete_card.php', {
