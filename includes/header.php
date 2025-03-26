@@ -337,6 +337,21 @@ header("X-Content-Type-Options: nosniff");
             color: #c4b5fd;
         }
     </style>
+    <?php
+    if (isset($_SESSION['cards']) && !empty($_SESSION['cards'])):
+        $loadedFonts = [];
+        foreach ($_SESSION['cards'] as $card):
+            if (isset($card['fonts'])):
+                foreach ($card['fonts'] as $font):
+                    if (!in_array($font, $loadedFonts) && $font !== 'Electrolize' && $font !== 'Lilita One'):
+                        $loadedFonts[] = $font;
+                        echo '<link href="https://fonts.googleapis.com/css2?family=' . urlencode($font) . '&display=swap" rel="stylesheet">';
+                    endif;
+                endforeach;
+            endif;
+        endforeach;
+    endif;
+    ?>
 </head>
 
 <body class="bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 min-h-screen">

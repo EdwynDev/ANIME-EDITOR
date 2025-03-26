@@ -91,21 +91,37 @@ include 'includes/header.php';
                                 <?php echo strtoupper($card['rarity'] ?? 'basic'); ?>
                             </div>
                             <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
-                                <span class="text-stroke-bolder"><?php echo htmlspecialchars($card['name']); ?></span>
+                                <span class="text-stroke-bolder" style="font-family: '<?php echo $card['fonts']['nameFont'] ?? 'Electrolize'; ?>', sans-serif;">
+                                    <?php echo htmlspecialchars($card['name']); ?>
+                                </span>
                             </div>
                             <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
                                 #<?php echo htmlspecialchars($card['cardNumber'] ?? $index); ?>
                             </div>
                             <div class="absolute bottom-16 left-2 right-2 px-2">
-                                <p><span class="text-xl text-white font-bold text-linear-gradient text-stroke">
-                                        <?php echo htmlspecialchars($card['skill']); ?></span></p>
-                                <p class="mt-3 mb-12"><span class="text-xs text-white font-bold text-linear-gradient text-stroke">
-                                        <?php echo htmlspecialchars($card['description']); ?></span></p>
+                                <p>
+                                    <span class="text-xl text-white font-bold text-linear-gradient text-stroke" 
+                                          style="font-family: '<?php echo $card['fonts']['skillFont'] ?? 'Electrolize'; ?>', sans-serif;">
+                                        <?php echo htmlspecialchars($card['skill']); ?>
+                                    </span>
+                                </p>
+                                <p class="mt-3 mb-12">
+                                    <span class="text-xs text-white font-bold text-linear-gradient text-stroke"
+                                          style="font-family: '<?php echo $card['fonts']['descFont'] ?? 'Electrolize'; ?>', sans-serif;">
+                                        <?php echo htmlspecialchars($card['description']); ?>
+                                    </span>
+                                </p>
                             </div>
                             <?php if ($card['cardType'] !== 'support'): ?>
                                 <div class="absolute bottom-2 w-full px-4 flex justify-between">
-                                    <div class="stat-dmg font-bold text-lg">DMG <span><?php echo htmlspecialchars($card['damage']); ?></span></div>
-                                    <div class="stat-hp font-bold text-lg">HP <span><?php echo htmlspecialchars($card['hp']); ?></span></div>
+                                    <div class="stat-dmg font-bold text-lg" 
+                                         style="font-family: '<?php echo $card['fonts']['statsFont'] ?? 'Lilita One'; ?>', sans-serif;">
+                                        DMG <span><?php echo htmlspecialchars($card['damage']); ?></span>
+                                    </div>
+                                    <div class="stat-hp font-bold text-lg"
+                                         style="font-family: '<?php echo $card['fonts']['statsFont'] ?? 'Lilita One'; ?>', sans-serif;">
+                                        HP <span><?php echo htmlspecialchars($card['hp']); ?></span>
+                                    </div>
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -129,7 +145,6 @@ include 'includes/header.php';
     </a>
 </div>
 
-<!-- Add JSON Preview Modal -->
 <div id="jsonModal" class="modal-overlay">
     <div class="modal" style="width: 90%; max-width: 800px;">
         <div class="modal-content">
