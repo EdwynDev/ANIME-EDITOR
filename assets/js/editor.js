@@ -43,7 +43,6 @@ function formatCardNumber(num) {
 }
 
 function updateCard() {
-    const cardType = document.getElementById('cardType').value;
     const name = document.getElementById('name').value.trim() || 'N/A';
     const skill = document.getElementById('skill').value.trim() || 'N/A';
     const description = document.getElementById('description').value.trim() || 'N/A';
@@ -72,12 +71,6 @@ function updateCard() {
 
     updateProbabilities(probability);
     updateFullCards();
-
-    if (cardType === 'support') {
-       dmgElement.parentElement.style.display = 'none';
-    } else {
-       dmgElement.parentElement.style.display = 'flex';
-    }
 }
 
 function updateFullCards() {
