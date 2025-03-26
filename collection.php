@@ -189,34 +189,55 @@ include 'includes/header.php';
         const card = <?php echo json_encode($_SESSION['cards'] ?? []); ?>[index];
         const originalDiv = document.querySelector(`.card-${index}`);
 
-        if (card.cardType !== 'support') {
-            const dmgValue = formatNumberWithSuffix(card.damage);
-            const hpValue = formatNumberWithSuffix(card.hp);
+        // Wait for fonts to load first
+        document.fonts.ready.then(() => {
+            // Create a clone of the card to avoid modifying the original
+            const clonedDiv = originalDiv.cloneNode(true);
             
-            const dmgSpan = originalDiv.querySelector(`#stat-dmg-${index}`);
-            const hpSpan = originalDiv.querySelector(`#stat-hp-${index}`);
-            
-            dmgSpan.innerText = dmgValue;
-            hpSpan.innerText = hpValue;
-        }
-
-        htmlToImage.toPng(originalDiv, {
-            quality: 1,
-            pixelRatio: 2,
-            skipAutoScale: true,
-            cacheBust: true,
-            style: {
-                transformOrigin: 'top left',
+            // If it's not a support card, update the stats
+            if (card.cardType !== 'support') {
+                const dmgSpan = clonedDiv.querySelector(`#stat-dmg-${index}`);
+                const hpSpan = clonedDiv.querySelector(`#stat-hp-${index}`);
+                
+                if (dmgSpan && hpSpan) {
+                    dmgSpan.innerText = formatNumberWithSuffix(card.damage);
+                    hpSpan.innerText = formatNumberWithSuffix(card.hp);
+                }
             }
-        })
-        .then(function (dataUrl) {
-            const link = document.createElement('a');
-            link.download = `anime_card_${index}.png`;
-            link.href = dataUrl;
-            link.click();
-        })
-        .catch(function (error) {
-            console.error('Error:', error);
+
+            // Add inline styles for external fonts
+            const style = document.createElement('style');
+            style.textContent = `
+                @import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
+                @import url('https://fonts.googleapis.com/css2?family=Electrolize&display=swap');
+            `;
+            clonedDiv.appendChild(style);
+
+            // Configure html-to-image options
+            const options = {
+                quality: 1,
+                pixelRatio: 2,
+                skipAutoScale: true,
+                cacheBust: true,
+                includeQueryParams: true,
+                fontEmbedCSS: true,
+                style: {
+                    transformOrigin: 'top left',
+                }
+            };
+
+            // Attempt to generate image
+            htmlToImage.toPng(clonedDiv, options)
+                .then(function (dataUrl) {
+                    const link = document.createElement('a');
+                    link.download = `anime_card_${card.name || index}.png`;
+                    link.href = dataUrl;
+                    link.click();
+                })
+                .catch(function (error) {
+                    console.error('Download error:', error);
+                    showModal('errorModal', 'Failed to download card. Please try again.');
+                });
         });
     }
 
