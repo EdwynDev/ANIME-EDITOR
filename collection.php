@@ -188,47 +188,69 @@ include 'includes/header.php';
     function downloadCard(index) {
         const card = <?php echo json_encode($_SESSION['cards'] ?? []); ?>[index];
         const originalDiv = document.querySelector(`.card-${index}`);
-        
-        // Créer une copie de la carte
-        const container = document.createElement('div');
-        container.style.position = 'fixed';
-        container.style.left = '-9999px';
-        container.style.top = '0';
-        document.body.appendChild(container);
 
-        const cardClone = originalDiv.cloneNode(true);
-        container.appendChild(cardClone);
+        document.fonts.ready.then(() => {
+            const container = document.createElement('div');
+            container.style.cssText = `
+                position: fixed;
+                left: -9999px;
+                top: 0;
+                z-index: -9999;
+                background: transparent;
+            `;
+            document.body.appendChild(container);
 
-        if (card.cardType !== 'support') {
-            const dmgSpan = cardClone.querySelector(`#stat-dmg-${index}`);
-            const hpSpan = cardClone.querySelector(`#stat-hp-${index}`);
-            dmgSpan.textContent = formatNumberWithSuffix(card.damage);
-            hpSpan.textContent = formatNumberWithSuffix(card.hp);
-        }
+            const cardClone = originalDiv.cloneNode(true);
+            container.appendChild(cardClone);
 
-        domtoimage.toPng(cardClone, {
-            quality: 1,
-            bgcolor: 'transparent',
-            style: {
-                'transform-origin': 'top left',
-            },
-            filter: (node) => {
-                return (node.tagName !== 'BUTTON' &&
-                    !node.classList?.contains('edit-card') &&
-                    !node.classList?.contains('delete-card') &&
-                    !node.classList?.contains('download-card'));
+            if (card.cardType !== 'support') {
+                const dmgValue = formatNumberWithSuffix(card.damage);
+                const hpValue = formatNumberWithSuffix(card.hp);
+                
+                const dmgSpan = cardClone.querySelector('.stat-dmg');
+                const hpSpan = cardClone.querySelector('.stat-hp');
+                
+                if (dmgSpan) {
+                    dmgSpan.innerHTML = `DMG <span style="font-family: '${card.fonts.statsFont}', 'Lilita One', sans-serif;">${dmgValue}</span>`;
+                    dmgSpan.style.setProperty('font-family', `'${card.fonts.statsFont}', 'Lilita One', sans-serif`, 'important');
+                }
+                
+                if (hpSpan) {
+                    hpSpan.innerHTML = `HP <span style="font-family: '${card.fonts.statsFont}', 'Lilita One', sans-serif;">${hpValue}</span>`;
+                    hpSpan.style.setProperty('font-family', `'${card.fonts.statsFont}', 'Lilita One', sans-serif`, 'important');
+                }
             }
-        })
-        .then(function (dataUrl) {
-            const link = document.createElement('a');
-            link.download = `anime_card_${index}.png`;
-            link.href = dataUrl;
-            link.click();
-            document.body.removeChild(container);
-        })
-        .catch(function (error) {
-            console.error('Error:', error);
-            document.body.removeChild(container);
+
+            const styles = window.getComputedStyle(originalDiv);
+            Object.values(styles).forEach(prop => {
+                try {
+                    cardClone.style[prop] = styles[prop];
+                } catch (e) {}
+            });
+
+            setTimeout(() => {
+                domtoimage.toPng(cardClone, {
+                    quality: 1,
+                    width: originalDiv.offsetWidth * 2,
+                    height: originalDiv.offsetHeight * 2,
+                    style: {
+                        transform: 'scale(2)',
+                        transformOrigin: 'top left',
+                    },
+                    fontEmbedCSSRules: true
+                })
+                .then(function (dataUrl) {
+                    const link = document.createElement('a');
+                    link.download = `anime_card_${index}.png`;
+                    link.href = dataUrl;
+                    link.click();
+                    document.body.removeChild(container);
+                })
+                .catch(function (error) {
+                    console.error('Error:', error);
+                    document.body.removeChild(container);
+                });
+            }, 100);
         });
     }
 
