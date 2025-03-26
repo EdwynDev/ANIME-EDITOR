@@ -189,6 +189,7 @@ include 'includes/header.php';
         const card = <?php echo json_encode($_SESSION['cards'] ?? []); ?>[index];
         const originalDiv = document.querySelector(`.card-${index}`);
 
+        // Force DMG/HP update
         if (card.cardType !== 'support') {
             const dmgValue = formatNumberWithSuffix(card.damage);
             const hpValue = formatNumberWithSuffix(card.hp);
@@ -200,16 +201,15 @@ include 'includes/header.php';
             hpSpan.innerText = hpValue;
         }
 
+        // Capture avec html-to-image
         htmlToImage.toPng(originalDiv, {
             quality: 1,
-            pixelRatio: 3, 
-            backgroundColor: 'transparent',
+            pixelRatio: 2,
             skipAutoScale: true,
             cacheBust: true,
             style: {
                 transformOrigin: 'top left',
-            },
-            fontEmbedCSS: true
+            }
         })
         .then(function (dataUrl) {
             const link = document.createElement('a');
