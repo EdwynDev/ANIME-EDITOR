@@ -187,33 +187,26 @@ include 'includes/header.php';
 <script>
     function downloadCard(index) {
         const div = document.querySelector(`.card-${index}`);
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-
-        canvas.width = div.offsetWidth;
-        canvas.height = div.offsetHeight;
-
-        html2canvas(div).then(canvas => {
-            const img = canvas.toDataURL();
-            if (img.includes('image/gif')) {
-                const gif = new GIF({
-                    workers: 2,
-                    quality: 10,
-                });
-                gif.addFrame(canvas);
-                gif.on('finished', function(blob) {
-                    const link = document.createElement('a');
-                    link.href = URL.createObjectURL(blob);
-                    link.download = 'carte_' + index + '.gif';
-                    link.click();
-                });
-                gif.render();
-            } else {
-                const link = document.createElement('a');
-                link.href = img;
-                link.download = 'carte_' + index + '.png';
-                link.click();
+        html2canvas(div, {
+            allowTaint: true,
+            useCORS: true,
+            backgroundColor: null,
+            scale: 2, // Better quality
+            logging: false,
+            onclone: function(clonedDoc) {
+                // Ensure fonts are loaded in the cloned document
+                const card = clonedDoc.querySelector(`.card-${index}`);
+                if (card) {
+                    card.style.width = '320px';
+                    card.style.height = '500px';
+                }
             }
+        }).then(canvas => {
+            const img = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.href = img;
+            link.download = `anime_card_${index}.png`;
+            link.click();
         });
     }
 
