@@ -43,6 +43,7 @@ function formatCardNumber(num) {
 }
 
 function updateCard() {
+    const cardType = document.getElementById('cardType').value;
     const name = document.getElementById('name').value.trim() || 'N/A';
     const skill = document.getElementById('skill').value.trim() || 'N/A';
     const description = document.getElementById('description').value.trim() || 'N/A';
@@ -55,12 +56,13 @@ function updateCard() {
     document.getElementById('card-name').innerText = name;
     document.getElementById('card-skill').innerText = skill;
     document.getElementById('card-description').innerText = description;
-
-    const dmgElement = document.getElementById('card-damage');
-    const hpElement = document.getElementById('card-hp');
-
-    dmgElement.innerHTML = `DMG <span>${formatNumberWithSuffix(parseInt(damage))}</span>`;
-    hpElement.innerHTML = `HP <span>${formatNumberWithSuffix(parseInt(hp))}</span>`;
+    if (cardType != 'support') {
+        const dmgElement = document.getElementById('card-damage');
+        const hpElement = document.getElementById('card-hp');
+    
+        dmgElement.innerHTML = `DMG <span>${formatNumberWithSuffix(parseInt(damage))}</span>`;
+        hpElement.innerHTML = `HP <span>${formatNumberWithSuffix(parseInt(hp))}</span>`;
+    }
 
     const formattedNumber = formatCardNumber(cardNumber);
     document.getElementById('card-preview-number').innerText = `#${formattedNumber}`;
@@ -74,6 +76,7 @@ function updateCard() {
 }
 
 function updateFullCards() {
+    const cardType = document.getElementById('cardType').value;
     const name = document.getElementById('name').value.trim() || 'N/A';
     const skill = document.getElementById('skill').value.trim() || 'N/A';
     const description = document.getElementById('description').value.trim() || 'N/A';
@@ -91,12 +94,13 @@ function updateFullCards() {
         document.getElementById(`${rarity}-full-name`).innerText = name;
         document.getElementById(`${rarity}-full-skill`).innerText = skill;
         document.getElementById(`${rarity}-full-description`).innerText = description;
-
-        const dmgElement = document.getElementById(`${rarity}-full-damage`);
-        const hpElement = document.getElementById(`${rarity}-full-hp`);
-
-        dmgElement.innerHTML = `DMG <span>${formatNumberWithSuffix(parseInt(damage) * multiplier)}</span>`;
-        hpElement.innerHTML = `HP <span>${formatNumberWithSuffix(parseInt(hp) * multiplier)}</span>`;
+        if (cardType === 'support') {
+            const dmgElement = document.getElementById(`${rarity}-full-damage`);
+            const hpElement = document.getElementById(`${rarity}-full-hp`);
+    
+            dmgElement.innerHTML = `DMG <span>${formatNumberWithSuffix(parseInt(damage) * multiplier)}</span>`;
+            hpElement.innerHTML = `HP <span>${formatNumberWithSuffix(parseInt(hp) * multiplier)}</span>`;
+        }
     });
 }
 
