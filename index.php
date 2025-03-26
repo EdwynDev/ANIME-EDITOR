@@ -266,7 +266,7 @@ include 'includes/header.php';
                                     name: document.getElementById('name').value.trim() || 'N/A',
                                     skill: document.getElementById('skill').value.trim() || 'N/A',
                                     description: document.getElementById('description').value.trim() || 'N/A',
-                                    imageUrl: document.getElementById('image').value.trim(),
+                                    imageUrl: document.getElementById('image').value.trim() || document.getElementById('image-upload').value.trim(),
                                     probability: parseFloat(document.getElementById('probability').value) || 1,
                                     damage: document.getElementById('damage').value || '0',
                                     hp: document.getElementById('hp').value || '0',
