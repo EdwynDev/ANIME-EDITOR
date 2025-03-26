@@ -246,10 +246,18 @@ include 'includes/header.php';
                                             cardType: document.getElementById('cardType').value,
                                             cardNumber: parseInt(document.getElementById('cardNumber').value) || 0,
                                             fonts: {
-                                                nameFont: document.getElementById('nameFont').value,
-                                                skillFont: document.getElementById('skillFont').value,
-                                                descFont: document.getElementById('descFont').value,
-                                                statsFont: document.getElementById('statsFont').value
+                                                nameFont: document.getElementById('nameFont').value === 'custom' 
+                                                    ? document.getElementById('customnameFont').value || 'Electrolize'
+                                                    : document.getElementById('nameFont').value,
+                                                skillFont: document.getElementById('skillFont').value === 'custom'
+                                                    ? document.getElementById('customskillFont').value || 'Electrolize'
+                                                    : document.getElementById('skillFont').value,
+                                                descFont: document.getElementById('descFont').value === 'custom'
+                                                    ? document.getElementById('customdescFont').value || 'Electrolize'
+                                                    : document.getElementById('descFont').value,
+                                                statsFont: document.getElementById('statsFont').value === 'custom'
+                                                    ? document.getElementById('customstatsFont').value || 'Lilita One'
+                                                    : document.getElementById('statsFont').value
                                             }
                                         };
 
@@ -289,10 +297,18 @@ include 'includes/header.php';
                                     cardType: document.getElementById('cardType').value,
                                     cardNumber: parseInt(document.getElementById('cardNumber').value) || 0,
                                     fonts: {
-                                        nameFont: document.getElementById('nameFont').value,
-                                        skillFont: document.getElementById('skillFont').value,
-                                        descFont: document.getElementById('descFont').value,
-                                        statsFont: document.getElementById('statsFont').value
+                                        nameFont: document.getElementById('nameFont').value === 'custom' 
+                                            ? document.getElementById('customnameFont').value || 'Electrolize'
+                                            : document.getElementById('nameFont').value,
+                                        skillFont: document.getElementById('skillFont').value === 'custom'
+                                            ? document.getElementById('customskillFont').value || 'Electrolize'
+                                            : document.getElementById('skillFont').value,
+                                        descFont: document.getElementById('descFont').value === 'custom'
+                                            ? document.getElementById('customdescFont').value || 'Electrolize'
+                                            : document.getElementById('descFont').value,
+                                        statsFont: document.getElementById('statsFont').value === 'custom'
+                                            ? document.getElementById('customstatsFont').value || 'Lilita One'
+                                            : document.getElementById('statsFont').value
                                     }
                                 };
 
