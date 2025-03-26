@@ -298,7 +298,6 @@ include 'includes/header.php';
                         
                         if (select.value === 'custom') {
                             customInput.classList.remove('hidden');
-                            // Ajouter l'event listener uniquement si pas déjà présent
                             if (!customInput.hasAttribute('data-has-listener')) {
                                 customInput.addEventListener('input', loadCustomFont);
                                 customInput.setAttribute('data-has-listener', 'true');
@@ -312,16 +311,14 @@ include 'includes/header.php';
 
                 function loadCustomFont(e) {
                     const fontName = e.target.value;
-                    if (!fontName) return; // Ne rien faire si le champ est vide
+                    if (!fontName) return;
 
                     if (fontName.includes('fonts.googleapis.com')) {
-                        // Handle Google Fonts URL
                         const link = document.createElement('link');
                         link.href = fontName;
                         link.rel = 'stylesheet';
                         document.head.appendChild(link);
-                        
-                        // Extraire le nom de la police de l'URL
+
                         const familyMatch = fontName.match(/family=([^&:]+)/);
                         if (familyMatch) {
                             const fontFamily = familyMatch[1].replace('+', ' ');
@@ -329,7 +326,7 @@ include 'includes/header.php';
                             applyFont(type, fontFamily);
                         }
                     } else {
-                        // Handle Google Fonts name
+                        
                         const link = document.createElement('link');
                         link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontName)}&display=swap`;
                         link.rel = 'stylesheet';
