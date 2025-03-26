@@ -31,21 +31,19 @@ function handleImageUpload() {
 }
 
 function updateCardType() {
-    const cardType = document.getElementById('cardType').value;
     const statsContainer = document.getElementById('stats-container');
+    const goldCard = document.querySelector('.gradient-border-gold').parentElement;
+    const rainbowCard = document.querySelector('.gradient-border-rainbow').parentElement;
+    const secretCard = document.querySelector('.gradient-border-secret').parentElement;
     const statsDisplays = document.querySelectorAll('.bottom-2.w-full.px-4.flex.justify-between');
 
-    if (cardType === 'support') {
-        statsContainer.style.display = 'none';
-        statsDisplays.forEach(display => {
-            display.style.display = 'none';
-        });
-    } else {
-        statsContainer.style.display = 'grid';
-        statsDisplays.forEach(display => {
-            display.style.display = 'flex';
-        });
-    }
+    statsContainer.style.display = 'grid';
+    goldCard.style.display = 'grid';
+    rainbowCard.style.display = 'grid';
+    secretCard.style.display = 'grid';
+    statsDisplays.forEach(display => {
+        display.style.display = 'flex';
+    });
     updateCard();
 }
 
@@ -67,13 +65,13 @@ function updateCard() {
     document.getElementById('card-name').innerText = name;
     document.getElementById('card-skill').innerText = skill;
     document.getElementById('card-description').innerText = description;
-    
+
     const dmgElement = document.getElementById('card-damage');
     const hpElement = document.getElementById('card-hp');
-    
+
     dmgElement.innerHTML = `DMG <span>${formatNumberWithSuffix(parseInt(damage))}</span>`;
     hpElement.innerHTML = `HP <span>${formatNumberWithSuffix(parseInt(hp))}</span>`;
-    
+
     const formattedNumber = formatCardNumber(cardNumber);
     document.getElementById('card-preview-number').innerText = `#${formattedNumber}`;
 
@@ -109,11 +107,11 @@ function updateFullCards() {
         document.getElementById(`${rarity}-full-name`).innerText = name;
         document.getElementById(`${rarity}-full-skill`).innerText = skill;
         document.getElementById(`${rarity}-full-description`).innerText = description;
-        
+
         // Mise à jour des stats avec la structure DMG/HP + valeur
         const dmgElement = document.getElementById(`${rarity}-full-damage`);
         const hpElement = document.getElementById(`${rarity}-full-hp`);
-        
+
         dmgElement.innerHTML = `DMG <span>${formatNumberWithSuffix(parseInt(damage) * multiplier)}</span>`;
         hpElement.innerHTML = `HP <span>${formatNumberWithSuffix(parseInt(hp) * multiplier)}</span>`;
     });
