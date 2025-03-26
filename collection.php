@@ -81,11 +81,10 @@ include 'includes/header.php';
                     <div class="gradient-border-<?php echo strtolower($card['rarity'] ?? 'basic'); ?> p-2 shadow-<?php echo strtolower($card['rarity'] ?? 'basic'); ?>">
                         <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
                             <div class="card-image-box">
-                                <img src="<?php echo !empty($card['imageUrl']) ? htmlspecialchars($card['imageUrl']) : 'https://placehold.co/320x500'; ?>" 
-                                    alt="Card Image" 
+                                <img src="<?php echo !empty($card['imageUrl']) ? htmlspecialchars($card['imageUrl']) : 'https://placehold.co/320x500'; ?>"
+                                    alt="Card Image"
                                     class="absolute inset-0 w-full h-full object-cover"
-                                    onerror="this.src='https://placehold.co/320x500'"
-                                />
+                                    onerror="this.src='https://placehold.co/320x500'" />
                             </div>
                             <div class="absolute top-2 left-2 bg-<?php echo strtolower($card['rarity'] ?? 'basic'); ?> text-black text-xs font-bold px-2 py-1 rounded">
                                 <?php echo strtoupper($card['rarity'] ?? 'basic'); ?>
@@ -100,30 +99,48 @@ include 'includes/header.php';
                             </div>
                             <div class="absolute bottom-16 left-2 right-2 px-2">
                                 <p>
-                                    <span class="text-xl text-white font-bold text-linear-gradient text-stroke" 
-                                          style="font-family: '<?php echo $card['fonts']['skillFont'] ?? 'Electrolize'; ?>', sans-serif;">
+                                    <span class="text-xl text-white font-bold text-linear-gradient text-stroke"
+                                        style="font-family: '<?php echo $card['fonts']['skillFont'] ?? 'Electrolize'; ?>', sans-serif;">
                                         <?php echo htmlspecialchars($card['skill']); ?>
                                     </span>
                                 </p>
                                 <p class="mt-3 mb-12">
                                     <span class="text-xs text-white font-bold text-linear-gradient text-stroke"
-                                          style="font-family: '<?php echo $card['fonts']['descFont'] ?? 'Electrolize'; ?>', sans-serif;">
+                                        style="font-family: '<?php echo $card['fonts']['descFont'] ?? 'Electrolize'; ?>', sans-serif;">
                                         <?php echo htmlspecialchars($card['description']); ?>
                                     </span>
                                 </p>
                             </div>
                             <?php if ($card['cardType'] !== 'support'): ?>
                                 <div class="absolute bottom-2 w-full px-4 flex justify-between">
-                                    <div class="stat-dmg font-bold text-lg" 
-                                         style="font-family: '<?php echo $card['fonts']['statsFont'] ?? 'Lilita One'; ?>', sans-serif;">
+                                    <div class="stat-dmg font-bold text-lg"
+                                        style="font-family: '<?php echo $card['fonts']['statsFont'] ?? 'Lilita One'; ?>', sans-serif;">
                                         DMG <span id="stat-dmg-<?php echo $index; ?>"></span>
                                     </div>
                                     <div class="stat-hp font-bold text-lg"
-                                         style="font-family: '<?php echo $card['fonts']['statsFont'] ?? 'Lilita One'; ?>', sans-serif;">
+                                        style="font-family: '<?php echo $card['fonts']['statsFont'] ?? 'Lilita One'; ?>', sans-serif;">
                                         HP <span id="stat-hp-<?php echo $index; ?>"></span>
                                     </div>
                                 </div>
                                 <script>
+                                    function formatNumberWithSuffix(num) {
+                                        if (num < 1000) return num;
+                                        const suffixes = [
+                                            '', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc',
+                                            'UDc', 'DDc', 'TDc', 'QaDc', 'QiDc', 'SxDc', 'SpDc', 'ODc', 'NDc',
+                                            'Vg', 'UVg', 'DVg', 'TVg', 'QaVg', 'QiVg', 'SxVg', 'SpVg', 'OVg', 'NVg',
+                                            'Tg', 'UTg', 'DTg', 'TTg', 'QaTg', 'QiTg', 'SxTg', 'SpTg', 'OTg', 'NTg',
+                                            'Qd', 'UQd', 'DQd', 'TQd', 'QaQd', 'QiQd', 'SxQd', 'SpQd', 'OQd', 'NQd',
+                                            'Qq', 'UQq', 'DQq', 'TQq', 'QaQq', 'QiQq', 'SxQq', 'SpQq', 'OQq', 'NQq',
+                                            'Sg', 'USg', 'DSg', 'TSg', 'QaSg', 'QiSg', 'SxSg', 'SpSg', 'OSg', 'NSg',
+                                            'St', 'USt', 'DSt', 'TSt', 'QaSt', 'QiSt', 'SxSt', 'SpSt', 'OSt', 'NSt',
+                                            'Og', 'UOg', 'DOg', 'TOg', 'QaOg', 'QiOg', 'SxOg', 'SpOg', 'OOg', 'NOg',
+                                            'Nn', 'UNn', 'DNn', 'TNn', 'QaNn', 'QiNn', 'SxNn', 'SpNn', 'ONn', 'NNn',
+                                            'Ce', 'UCe'
+                                        ];
+                                        const exp = Math.floor(Math.log10(num) / 3);
+                                        return (num / Math.pow(1000, exp)).toFixed(2) + suffixes[exp];
+                                    }
                                     document.getElementById('stat-dmg-<?php echo $index; ?>').innerText = formatNumberWithSuffix(<?php echo intval($card['damage']); ?>);
                                     document.getElementById('stat-hp-<?php echo $index; ?>').innerText = formatNumberWithSuffix(<?php echo intval($card['hp']); ?>);
                                 </script>
