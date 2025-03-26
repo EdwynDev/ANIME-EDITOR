@@ -74,8 +74,22 @@ function updateCard() {
     document.getElementById('card-description').innerText = description;
     document.getElementById('card-damage').innerText = formatNumberWithSuffix(parseInt(damage));
     document.getElementById('card-hp').innerText = formatNumberWithSuffix(parseInt(hp));
-    document.querySelectorAll('.card-number').forEach(el => {
-        el.innerText = `#10`;
+    
+    console.log('Card Number:', cardNumber);
+    const cardNumberElements = document.querySelectorAll('.card-number');
+    console.log('Found elements:', cardNumberElements.length);
+    
+    cardNumberElements.forEach(el => {
+        el.innerText = `#${cardNumber}`;
+        console.log('Updated element:', el);
+    });
+
+    const rarities = ['basic', 'gold', 'rainbow', 'secret'];
+    rarities.forEach(rarity => {
+        const fullCardNumber = document.querySelector(`#${rarity}-full .card-number`);
+        if (fullCardNumber) {
+            fullCardNumber.innerText = `#${cardNumber}`;
+        }
     });
 
     if (imageUrl) {
@@ -109,6 +123,13 @@ function updateFullCards() {
         document.getElementById(`${rarity}-full-description`).innerText = description;
         document.getElementById(`${rarity}-full-damage`).innerText = formatNumberWithSuffix(parseInt(damage) * multiplier);
         document.getElementById(`${rarity}-full-hp`).innerText = formatNumberWithSuffix(parseInt(hp) * multiplier);
+        
+        // Add card number update here too
+        const cardNumber = document.getElementById('cardNumber').value || '0';
+        const cardNumberEl = document.querySelector(`#${rarity}-full .card-number`);
+        if (cardNumberEl) {
+            cardNumberEl.innerText = `#${cardNumber}`;
+        }
     });
 }
 
