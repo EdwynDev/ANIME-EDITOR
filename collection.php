@@ -186,38 +186,41 @@ include 'includes/header.php';
 
 <script>
     function downloadCard(index) {
-        const div = document.querySelector(`.card-${index}`);
-        const dmgElement = document.getElementById(`stat-dmg-${index}`);
-        const hpElement = document.getElementById(`stat-hp-${index}`);
+        const originalDiv = document.querySelector(`.card-${index}`);
+        const clonedDiv = originalDiv.cloneNode(true);
 
-        const dmgValue = dmgElement.innerText;
-        const hpValue = hpElement.innerText;
+        const dmgElement = clonedDiv.querySelector(`#stat-dmg-${index}`);
+        const hpElement = clonedDiv.querySelector(`#stat-hp-${index}`);
+        dmgElement.innerText = document.getElementById(`stat-dmg-${index}`).innerText;
+        hpElement.innerText = document.getElementById(`stat-hp-${index}`).innerText;
 
-        const style = {
-            transform: 'scale(2)',
-            transformOrigin: 'top left',
-            width: div.offsetWidth + "px",
-            height: div.offsetHeight + "px",
-            fontFamily: window.getComputedStyle(div).fontFamily,
-        };
+        clonedDiv.style.fontFamily = window.getComputedStyle(originalDiv).fontFamily;
 
-        dmgElement.innerText = dmgValue;
-        hpElement.innerText = hpValue;
+        document.body.appendChild(clonedDiv);
+        clonedDiv.style.position = 'absolute';
+        clonedDiv.style.left = '-9999px';
 
-        domtoimage.toPng(div, {
+        domtoimage.toPng(clonedDiv, {
             quality: 1,
-            width: div.offsetWidth * 2,
-            height: div.offsetHeight * 2,
-            style: style
+            width: originalDiv.offsetWidth * 2,
+            height: originalDiv.offsetHeight * 2,
+            style: {
+                transform: 'scale(2)',
+                transformOrigin: 'top left',
+            }
         })
         .then(function (dataUrl) {
             const link = document.createElement('a');
             link.download = `anime_card_${index}.png`;
             link.href = dataUrl;
             link.click();
+
+            document.body.removeChild(clonedDiv);
         })
         .catch(function (error) {
             console.error('Error downloading card:', error);
+
+            document.body.removeChild(clonedDiv);
         });
     }
 
