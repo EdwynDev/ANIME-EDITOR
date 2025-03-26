@@ -244,7 +244,13 @@ include 'includes/header.php';
                                             damage: document.getElementById('damage').value || '0',
                                             hp: document.getElementById('hp').value || '0',
                                             cardType: document.getElementById('cardType').value,
-                                            cardNumber: parseInt(document.getElementById('cardNumber').value) || 0
+                                            cardNumber: parseInt(document.getElementById('cardNumber').value) || 0,
+                                            fonts: {
+                                                nameFont: document.getElementById('nameFont').value,
+                                                skillFont: document.getElementById('skillFont').value,
+                                                descFont: document.getElementById('descFont').value,
+                                                statsFont: document.getElementById('statsFont').value
+                                            }
                                         };
 
                                         fetch('update_card.php', {
@@ -281,7 +287,13 @@ include 'includes/header.php';
                                     damage: document.getElementById('damage').value || '0',
                                     hp: document.getElementById('hp').value || '0',
                                     cardType: document.getElementById('cardType').value,
-                                    cardNumber: parseInt(document.getElementById('cardNumber').value) || 0
+                                    cardNumber: parseInt(document.getElementById('cardNumber').value) || 0,
+                                    fonts: {
+                                        nameFont: document.getElementById('nameFont').value,
+                                        skillFont: document.getElementById('skillFont').value,
+                                        descFont: document.getElementById('descFont').value,
+                                        statsFont: document.getElementById('statsFont').value
+                                    }
                                 };
 
                                 fetch('save_card.php', {
