@@ -222,7 +222,6 @@ include 'includes/header.php';
                                     document.getElementById('cardType').value = data.cardType;
                                     document.getElementById('cardNumber').value = data.cardNumber || '0';
 
-                                    // Mise à jour des polices
                                     if (data.fonts) {
                                         ['name', 'skill', 'desc', 'stats'].forEach(type => {
                                             const fontKey = `${type}Font`;
@@ -231,7 +230,6 @@ include 'includes/header.php';
                                             const applyButton = document.getElementById(`apply-${fontKey}`);
                                             const fontValue = data.fonts[fontKey];
                                             
-                                            // Vérifie si c'est une police par défaut
                                             const isDefaultFont = type === 'stats' 
                                                 ? fontValue === 'Lilita One'
                                                 : fontValue === 'Electrolize';
@@ -245,7 +243,6 @@ include 'includes/header.php';
                                                 fontSelect.value = fontValue;
                                             }
                                             
-                                            // Applique la police
                                             applyFontToCard(type, fontValue);
                                         });
                                     }

@@ -95,9 +95,9 @@ function updateCard() {
     updateFullCards();
 
     if (cardType === 'support') {
-        document.getElementById('card-damage').parentElement.parentElement.style.display = 'none';
+        document.getElementById('card-damage').parentElement.style.display = 'none';
     } else {
-        document.getElementById('card-damage').parentElement.parentElement.style.display = 'flex';
+        document.getElementById('card-damage').parentElement.style.display = 'flex';
     }
 }
 
