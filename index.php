@@ -215,14 +215,23 @@ include 'includes/header.php';
                                     document.getElementById('name').value = data.name;
                                     document.getElementById('skill').value = data.skill;
                                     document.getElementById('description').value = data.description;
-                                    document.getElementById('image').value = data.imageUrl;
+                                    document.getElementById('image').value = data.imageUrl || '';
                                     document.getElementById('probability').value = data.probability || '';
                                     document.getElementById('damage').value = data.damage || '';
                                     document.getElementById('hp').value = data.hp || '';
                                     document.getElementById('cardType').value = data.cardType;
                                     document.getElementById('cardNumber').value = data.cardNumber || '0';
 
+                                    // Mise à jour des polices
+                                    if (data.fonts) {
+                                        document.getElementById('nameFont').value = data.fonts.nameFont || 'Electrolize';
+                                        document.getElementById('skillFont').value = data.fonts.skillFont || 'Electrolize';
+                                        document.getElementById('descFont').value = data.fonts.descFont || 'Electrolize';
+                                        document.getElementById('statsFont').value = data.fonts.statsFont || 'Lilita One';
+                                    }
+
                                     updateCard();
+                                    updateFonts();
 
                                     editButton.addEventListener('click', function() {
                                         const cardData = {

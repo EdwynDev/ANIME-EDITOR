@@ -11,11 +11,17 @@ if (isset($_GET['index']) && isset($_SESSION['cards'])) {
             'name' => 'N/A',
             'skill' => 'N/A',
             'description' => 'N/A',
-            'imageUrl' => '',
+            'imageUrl' => 'https://placehold.co/320x500',
             'probability' => 1,
             'damage' => '0',
             'hp' => '0',
-            'cardType' => 'character'
+            'cardType' => 'character',
+            'fonts' => [
+                'nameFont' => 'Electrolize',
+                'skillFont' => 'Electrolize',
+                'descFont' => 'Electrolize',
+                'statsFont' => 'Lilita One'
+            ]
         ], $card);
         
         echo json_encode($card);
