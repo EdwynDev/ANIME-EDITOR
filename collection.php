@@ -188,65 +188,48 @@ include 'includes/header.php';
     function downloadCard(index) {
         const card = <?php echo json_encode($_SESSION['cards'] ?? []); ?>[index];
         const originalDiv = document.querySelector(`.card-${index}`);
-
-        const tempContainer = document.createElement('div');
-        tempContainer.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: ${originalDiv.offsetWidth}px;
-            height: ${originalDiv.offsetHeight}px;
-            background: transparent;
-            z-index: -9999;
-            pointer-events: none;
-        `;
+        
+        // Créer une copie de la carte
+        const container = document.createElement('div');
+        container.style.position = 'fixed';
+        container.style.left = '-9999px';
+        container.style.top = '0';
+        document.body.appendChild(container);
 
         const cardClone = originalDiv.cloneNode(true);
-        tempContainer.appendChild(cardClone);
-        document.body.appendChild(tempContainer);
-
-        const computedStyle = window.getComputedStyle(originalDiv);
-        Object.values(computedStyle).forEach(prop => {
-            try {
-                cardClone.style[prop] = computedStyle[prop];
-            } catch (e) {}
-        });
+        container.appendChild(cardClone);
 
         if (card.cardType !== 'support') {
             const dmgSpan = cardClone.querySelector(`#stat-dmg-${index}`);
             const hpSpan = cardClone.querySelector(`#stat-hp-${index}`);
-            if (dmgSpan) dmgSpan.textContent = formatNumberWithSuffix(card.damage);
-            if (hpSpan) hpSpan.textContent = formatNumberWithSuffix(card.hp);
-
-            cardClone.querySelectorAll('*[style*="font-family"]').forEach(el => {
-                const fontFamily = window.getComputedStyle(el).fontFamily;
-                el.style.setProperty('font-family', fontFamily, 'important');
-            });
+            dmgSpan.textContent = formatNumberWithSuffix(card.damage);
+            hpSpan.textContent = formatNumberWithSuffix(card.hp);
         }
 
-        Promise.all([
-            document.fonts.ready,
-            ...Array.from(cardClone.querySelectorAll('img')).map(img => 
-                img.complete ? Promise.resolve() : new Promise(resolve => {
-                    img.onload = img.onerror = resolve;
-                })
-            )
-        ]).then(() => {
-            setTimeout(() => {
-                html2canvas(cardClone, {
-                    scale: 2,
-                    useCORS: true,
-                    allowTaint: true,
-                    backgroundColor: null,
-                    logging: false
-                }).then(canvas => {
-                    const link = document.createElement('a');
-                    link.download = `anime_card_${index}.png`;
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                    document.body.removeChild(tempContainer);
-                });
-            }, 100);
+        domtoimage.toPng(cardClone, {
+            quality: 1,
+            bgcolor: 'transparent',
+            style: {
+                'transform': 'scale(2)',
+                'transform-origin': 'top left',
+            },
+            filter: (node) => {
+                return (node.tagName !== 'BUTTON' &&
+                    !node.classList?.contains('edit-card') &&
+                    !node.classList?.contains('delete-card') &&
+                    !node.classList?.contains('download-card'));
+            }
+        })
+        .then(function (dataUrl) {
+            const link = document.createElement('a');
+            link.download = `anime_card_${index}.png`;
+            link.href = dataUrl;
+            link.click();
+            document.body.removeChild(container);
+        })
+        .catch(function (error) {
+            console.error('Error:', error);
+            document.body.removeChild(container);
         });
     }
 
