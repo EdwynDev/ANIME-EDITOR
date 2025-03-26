@@ -196,13 +196,6 @@ include 'includes/header.php';
                         Update this card in your collection
                     </span>
                 </button>
-                <button onclick="downloadPreview()"
-                    class="text-white hover:text-green-400 group relative">
-                    <i class="fas fa-download mr-1"></i>Download Preview
-                    <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
-                        Download the current card preview as image
-                    </span>
-                </button>
             </div>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
@@ -236,10 +229,10 @@ include 'includes/header.php';
                                             const customInput = document.getElementById(`custom${fontKey}`);
                                             const applyButton = document.getElementById(`apply-${fontKey}`);
                                             const fontValue = data.fonts[fontKey];
-
-                                            const isDefaultFont = type === 'stats' ?
-                                                fontValue === 'Lilita One' :
-                                                fontValue === 'Electrolize';
+                                            
+                                            const isDefaultFont = type === 'stats' 
+                                                ? fontValue === 'Lilita One'
+                                                : fontValue === 'Electrolize';
 
                                             if (!isDefaultFont) {
                                                 fontSelect.value = 'custom';
@@ -249,7 +242,7 @@ include 'includes/header.php';
                                             } else {
                                                 fontSelect.value = fontValue;
                                             }
-
+                                            
                                             applyFontToCard(type, fontValue);
                                         });
                                     }
@@ -270,14 +263,18 @@ include 'includes/header.php';
                                             cardType: document.getElementById('cardType').value,
                                             cardNumber: parseInt(document.getElementById('cardNumber').value) || 0,
                                             fonts: {
-                                                nameFont: document.getElementById('nameFont').value === 'custom' ?
-                                                    document.getElementById('customnameFont').value || 'Electrolize' : document.getElementById('nameFont').value,
-                                                skillFont: document.getElementById('skillFont').value === 'custom' ?
-                                                    document.getElementById('customskillFont').value || 'Electrolize' : document.getElementById('skillFont').value,
-                                                descFont: document.getElementById('descFont').value === 'custom' ?
-                                                    document.getElementById('customdescFont').value || 'Electrolize' : document.getElementById('descFont').value,
-                                                statsFont: document.getElementById('statsFont').value === 'custom' ?
-                                                    document.getElementById('customstatsFont').value || 'Lilita One' : document.getElementById('statsFont').value
+                                                nameFont: document.getElementById('nameFont').value === 'custom' 
+                                                    ? document.getElementById('customnameFont').value || 'Electrolize'
+                                                    : document.getElementById('nameFont').value,
+                                                skillFont: document.getElementById('skillFont').value === 'custom'
+                                                    ? document.getElementById('customskillFont').value || 'Electrolize'
+                                                    : document.getElementById('skillFont').value,
+                                                descFont: document.getElementById('descFont').value === 'custom'
+                                                    ? document.getElementById('customdescFont').value || 'Electrolize'
+                                                    : document.getElementById('descFont').value,
+                                                statsFont: document.getElementById('statsFont').value === 'custom'
+                                                    ? document.getElementById('customstatsFont').value || 'Lilita One'
+                                                    : document.getElementById('statsFont').value
                                             }
                                         };
 
@@ -317,14 +314,18 @@ include 'includes/header.php';
                                     cardType: document.getElementById('cardType').value,
                                     cardNumber: parseInt(document.getElementById('cardNumber').value) || 0,
                                     fonts: {
-                                        nameFont: document.getElementById('nameFont').value === 'custom' ?
-                                            document.getElementById('customnameFont').value || 'Electrolize' : document.getElementById('nameFont').value,
-                                        skillFont: document.getElementById('skillFont').value === 'custom' ?
-                                            document.getElementById('customskillFont').value || 'Electrolize' : document.getElementById('skillFont').value,
-                                        descFont: document.getElementById('descFont').value === 'custom' ?
-                                            document.getElementById('customdescFont').value || 'Electrolize' : document.getElementById('descFont').value,
-                                        statsFont: document.getElementById('statsFont').value === 'custom' ?
-                                            document.getElementById('customstatsFont').value || 'Lilita One' : document.getElementById('statsFont').value
+                                        nameFont: document.getElementById('nameFont').value === 'custom' 
+                                            ? document.getElementById('customnameFont').value || 'Electrolize'
+                                            : document.getElementById('nameFont').value,
+                                        skillFont: document.getElementById('skillFont').value === 'custom'
+                                            ? document.getElementById('customskillFont').value || 'Electrolize'
+                                            : document.getElementById('skillFont').value,
+                                        descFont: document.getElementById('descFont').value === 'custom'
+                                            ? document.getElementById('customdescFont').value || 'Electrolize'
+                                            : document.getElementById('descFont').value,
+                                        statsFont: document.getElementById('statsFont').value === 'custom'
+                                            ? document.getElementById('customstatsFont').value || 'Lilita One'
+                                            : document.getElementById('statsFont').value
                                     }
                                 };
 
@@ -434,366 +435,301 @@ include 'includes/header.php';
                         document.getElementById(cardData[type].element).style.fontFamily = `"${fontFamily}", sans-serif`;
                     }
                 }
-
-                // Ajout de la fonction de téléchargement
-                function downloadPreview() {
-                    const spinner = document.getElementById('downloadSpinner');
-                    spinner.classList.remove('hidden');
-                    spinner.classList.add('flex');
-
-                    const previewCard = document.getElementById('card');
-
-                    if (document.getElementById('cardType').value !== 'support') {
-                        const dmgValue = formatNumberWithSuffix(parseInt(document.getElementById('damage').value) || 0);
-                        const hpValue = formatNumberWithSuffix(parseInt(document.getElementById('hp').value) || 0);
-
-                        const dmgSpan = previewCard.querySelector('#card-damage span');
-                        const hpSpan = previewCard.querySelector('#card-hp span');
-
-                        dmgSpan.innerText = dmgValue;
-                        hpSpan.innerText = hpValue;
-                    }
-
-                    htmlToImage.toPng(previewCard, {
-                            quality: 1,
-                            pixelRatio: 2,
-                            skipAutoScale: true,
-                            cacheBust: true,
-                            style: {
-                                transformOrigin: 'top left',
-                            }
-                        })
-                        .then(function(dataUrl) {
-                            const link = document.createElement('a');
-                            const cardName = document.getElementById('name').value.trim() || 'card';
-                            link.download = `anime_card_${cardName}.png`;
-                            link.href = dataUrl;
-                            link.click();
-                            spinner.classList.remove('flex');
-                            spinner.classList.add('hidden');
-                        })
-                        .catch(function(error) {
-                            console.error('Error:', error);
-                            spinner.classList.remove('flex');
-                            spinner.classList.add('hidden');
-                            showModal('errorModal', 'Error downloading card');
-                        });
-                }
-
-                function formatNumberWithSuffix(num) {
-                    if (num < 1000) return num;
-                    const suffixes = [
-                        '', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc',
-                        'UDc', 'DDc', 'TDc', 'QaDc', 'QiDc', 'SxDc', 'SpDc', 'ODc', 'NDc',
-                        'Vg', 'UVg', 'DVg', 'TVg', 'QaVg', 'QiVg', 'SxVg', 'SpVg', 'OVg', 'NVg',
-                        'Tg', 'UTg', 'DTg', 'TTg', 'QaTg', 'QiTg', 'SxTg', 'SpTg', 'OTg', 'NTg'
-                    ];
-                    const exp = Math.floor(Math.log10(num) / 3);
-                    return (num / Math.pow(1000, exp)).toFixed(2) + suffixes[exp];
-                }
             </script>
         </div>
-    </div>
-</div>
 
-<!-- Ajout du spinner de téléchargement -->
-<div id="downloadSpinner" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
-    <div class="text-center">
-        <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
-        <p class="text-white mt-4">Downloading card...</p>
-    </div>
-</div>
-
-<div class="space-y-6 flex flex-col items-center">
-    <div class="gradient-border-basic p-2 shadow-basic">
-        <div id="card" class="mx-auto relative w-80 ">
-            <div class="gradient-content h-[500px] bg-black rounded-lg overflow-hidden">
-                <div class="card-image-box">
-                    <img id="card-image" src="https://placehold.co/320x500" />
-                </div>
-                <div class="absolute top-2 left-2 bg-basic text-black text-xs font-bold px-2 py-1 rounded">
-                    <span id="card-rarity">
-                        BASIC
-                    </span>
-                </div>
-                <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
-                    <span id="card-name" class="text-stroke-bolder">
-                        N/A
-                    </span>
-                </div>
-                <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
-                    <span id="card-preview-number">
-                        #0
-                    </span>
-                </div>
-                <div class="absolute bottom-16 left-2 right-2 px-2">
-                    <p>
-                        <span id="card-skill" class="text-xl text-white font-bold text-linear-gradient text-stroke">
-                            N/A
-                        </span>
-                    </p>
-                    <p class="mt-3">
-                        <span id="card-description" class="text-xs text-white font-bold text-linear-gradient text-stroke">
-                            N/A
-                        </span>
-                    </p>
-                </div>
-                <div class="absolute bottom-2 w-full px-4 flex justify-between">
-                    <div class="stat-dmg font-bold text-lg" id="card-damage">
-                        DMG <span>0</span>
-                    </div>
-                    <div class="stat-hp font-bold text-lg" id="card-hp">
-                        HP <span>0</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="grid grid-cols-2 gap-10">
-        <div class="gradient-border-basic p-1 shadow-basic rarity-card" tabindex="0">
-            <div class="rarity-preview">
-                <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
-                    <div class="card-image-box">
-                        <img id="basic-image" alt="Basic rarity image"
-                            class="absolute inset-0 w-full h-full object-cover opacity-80"
-                            src="https://placehold.co/160x160" />
-                    </div>
-                    <div class="absolute inset-0 bg-black bg-opacity-40">
-
-                    </div>
-                    <div class="absolute top-2 left-2 bg-basic text-black text-xs font-bold px-2 py-1 rounded">
-                        BASIC
-                    </div>
-                    <div class="absolute bottom-2 right-2 text-white text-sm font-bold text-stroke-bolder" id="basic-probability">
-
-                    </div>
-                </div>
-            </div>
-            <div class="full-card">
-                <div class="gradient-border-basic p-2 shadow-basic">
-                    <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
+        <div class="space-y-6 flex flex-col items-center">
+            <div class="gradient-border-basic p-2 shadow-basic">
+                <div id="card" class="mx-auto relative w-80 ">
+                    <div class="gradient-content h-[500px] bg-black rounded-lg overflow-hidden">
                         <div class="card-image-box">
-                            <img id="basic-full-image" src="https://placehold.co/320x500" />
+                            <img id="card-image" src="https://placehold.co/320x500" />
                         </div>
                         <div class="absolute top-2 left-2 bg-basic text-black text-xs font-bold px-2 py-1 rounded">
-                            BASIC
+                            <span id="card-rarity">
+                                BASIC
+                            </span>
                         </div>
                         <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
-                            <span id="basic-full-name" class="text-stroke-bolder">
+                            <span id="card-name" class="text-stroke-bolder">
                                 N/A
                             </span>
                         </div>
                         <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
-                            <span id="card-basic-number">
+                            <span id="card-preview-number">
                                 #0
                             </span>
                         </div>
                         <div class="absolute bottom-16 left-2 right-2 px-2">
                             <p>
-                                <span id="basic-full-skill" class="text-xl text-white font-bold text-linear-gradient text-stroke">
+                                <span id="card-skill" class="text-xl text-white font-bold text-linear-gradient text-stroke">
                                     N/A
                                 </span>
                             </p>
-                            <p class="mt-3 mb-12">
-                                <span id="basic-full-description" class="text-xs text-white font-bold text-linear-gradient text-stroke">
+                            <p class="mt-3">
+                                <span id="card-description" class="text-xs text-white font-bold text-linear-gradient text-stroke">
                                     N/A
                                 </span>
                             </p>
                         </div>
                         <div class="absolute bottom-2 w-full px-4 flex justify-between">
-                            <div class="stat-dmg font-bold text-lg" id="basic-full-damage">
+                            <div class="stat-dmg font-bold text-lg" id="card-damage">
                                 DMG <span>0</span>
                             </div>
-                            <div class="stat-hp font-bold text-lg" id="basic-full-hp">
+                            <div class="stat-hp font-bold text-lg" id="card-hp">
                                 HP <span>0</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="gradient-border-gold p-1 shadow-gold rarity-card" tabindex="0">
-            <div class="rarity-preview">
-                <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
-                    <div class="card-image-box">
-                        <img id="gold-image" alt="Gold rarity image"
-                            class="absolute inset-0 w-full h-full object-cover opacity-80"
-                            src="https://placehold.co/160x160" />
-                    </div>
-                    <div class="absolute inset-0 bg-black bg-opacity-40">
-
-                    </div>
-                    <div class="absolute top-2 left-2 bg-gold text-black text-xs font-bold px-2 py-1 rounded">
-                        GOLD
-                    </div>
-                    <div class="absolute bottom-2 right-2 text-white text-sm font-bold text-stroke-bolder" id="gold-probability">
-
-                    </div>
-                </div>
-            </div>
-            <div class="full-card">
-                <div class="gradient-border-gold p-2 shadow-gold">
-                    <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
-                        <div class="card-image-box">
-                            <img id="gold-full-image" src="https://placehold.co/320x500" />
-                        </div>
-                        <div class="absolute top-2 left-2 bg-gold text-black text-xs font-bold px-2 py-1 rounded">
-                            GOLD
-                        </div>
-                        <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
-                            <span id="gold-full-name" class="text-stroke-bolder">
-                                N/A
-                            </span>
-                        </div>
-                        <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
-                            <span id="card-gold-number">
-                                #0
-                            </span>
-                        </div>
-                        <div class="absolute bottom-16 left-2 right-2 px-2">
-                            <p><span id="gold-full-skill"
-                                    class="text-xl text-white font-bold text-linear-gradient text-stroke">N/A</span>
-                            </p>
-                            <p class="mt-3 mb-12">
-                                <span id="gold-full-description" class="text-xs text-white font-bold text-linear-gradient text-stroke">
-                                    N/A
-                                </span>
-                            </p>
-                        </div>
-                        <div class="absolute bottom-2 w-full px-4 flex justify-between">
-                            <div class="stat-dmg font-bold text-lg" id="gold-full-damage">
-                                DMG <span>0</span>
+            <div class="grid grid-cols-2 gap-10">
+                <div class="gradient-border-basic p-1 shadow-basic rarity-card" tabindex="0">
+                    <div class="rarity-preview">
+                        <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
+                            <div class="card-image-box">
+                                <img id="basic-image" alt="Basic rarity image"
+                                    class="absolute inset-0 w-full h-full object-cover opacity-80"
+                                    src="https://placehold.co/160x160" />
                             </div>
-                            <div class="stat-hp font-bold text-lg" id="gold-full-hp">
-                                HP <span>0</span>
+                            <div class="absolute inset-0 bg-black bg-opacity-40">
+
+                            </div>
+                            <div class="absolute top-2 left-2 bg-basic text-black text-xs font-bold px-2 py-1 rounded">
+                                BASIC
+                            </div>
+                            <div class="absolute bottom-2 right-2 text-white text-sm font-bold text-stroke-bolder" id="basic-probability">
+
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="gradient-border-rainbow p-1 shadow-rainbow rarity-card" tabindex="0">
-            <div class="rarity-preview">
-                <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
-                    <div class="card-image-box">
-                        <img id="rainbow-image" alt="Rainbow rarity image"
-                            class="absolute inset-0 w-full h-full object-cover opacity-80"
-                            src="https://placehold.co/160x160" />
-                    </div>
-                    <div class="absolute inset-0 bg-black bg-opacity-40">
-
-                    </div>
-                    <div
-                        class="absolute top-2 left-2 bg-rainbow text-black text-xs font-bold px-2 py-1 rounded">
-                        RAINBOW</div>
-                    <div class="absolute bottom-2 right-2 text-white text-sm font-bold text-stroke-bolder" id="rainbow-probability">
-
-                    </div>
-                </div>
-            </div>
-            <div class="full-card">
-                <div class="gradient-border-rainbow p-2 shadow-rainbow">
-                    <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
-                        <div class="card-image-box">
-                            <img id="rainbow-full-image" src="https://placehold.co/320x500" />
-                        </div>
-                        <div class="absolute top-2 left-2 bg-rainbow text-black text-xs font-bold px-2 py-1 rounded">
-                            RAINBOW
-                        </div>
-                        <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
-                            <span id="rainbow-full-name" class="text-stroke-bolder">
-                                N/A
-                            </span>
-                        </div>
-                        <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
-                            <span id="card-rainbow-number">
-                                #0
-                            </span>
-                        </div>
-                        <div class="absolute bottom-16 left-2 right-2 px-2">
-                            <p>
-                                <span id="rainbow-full-skill" class="text-xl text-white font-bold text-linear-gradient text-stroke">
-                                    N/A
-                                </span>
-                            </p>
-                            <p class="mt-3 mb-12">
-                                <span id="rainbow-full-description" class="text-xs text-white font-bold text-linear-gradient text-stroke">
-                                    N/A
-                                </span>
-                            </p>
-                        </div>
-                        <div class="absolute bottom-2 w-full px-4 flex justify-between">
-                            <div class="stat-dmg font-bold text-lg" id="rainbow-full-damage">
-                                DMG <span>0</span>
-                            </div>
-                            <div class="stat-hp font-bold text-lg" id="rainbow-full-hp">
-                                HP <span>0</span>
+                    <div class="full-card">
+                        <div class="gradient-border-basic p-2 shadow-basic">
+                            <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
+                                <div class="card-image-box">
+                                    <img id="basic-full-image" src="https://placehold.co/320x500" />
+                                </div>
+                                <div class="absolute top-2 left-2 bg-basic text-black text-xs font-bold px-2 py-1 rounded">
+                                    BASIC
+                                </div>
+                                <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
+                                    <span id="basic-full-name" class="text-stroke-bolder">
+                                        N/A
+                                    </span>
+                                </div>
+                                <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                                    <span id="card-basic-number">
+                                        #0
+                                    </span>
+                                </div>
+                                <div class="absolute bottom-16 left-2 right-2 px-2">
+                                    <p>
+                                        <span id="basic-full-skill" class="text-xl text-white font-bold text-linear-gradient text-stroke">
+                                            N/A
+                                        </span>
+                                    </p>
+                                    <p class="mt-3 mb-12">
+                                        <span id="basic-full-description" class="text-xs text-white font-bold text-linear-gradient text-stroke">
+                                            N/A
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="absolute bottom-2 w-full px-4 flex justify-between">
+                                    <div class="stat-dmg font-bold text-lg" id="basic-full-damage">
+                                        DMG <span>0</span>
+                                    </div>
+                                    <div class="stat-hp font-bold text-lg" id="basic-full-hp">
+                                        HP <span>0</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="gradient-border-secret p-1 shadow-secret rarity-card" tabindex="0">
-            <div class="rarity-preview">
-                <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
-                    <div class="card-image-box">
-                        <img id="secret-image" alt="Secret rarity image"
-                            class="absolute inset-0 w-full h-full object-cover opacity-80"
-                            src="https://placehold.co/160x160" />
-                    </div>
-                    <div class="absolute inset-0 bg-black bg-opacity-40">
+                <div class="gradient-border-gold p-1 shadow-gold rarity-card" tabindex="0">
+                    <div class="rarity-preview">
+                        <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
+                            <div class="card-image-box">
+                                <img id="gold-image" alt="Gold rarity image"
+                                    class="absolute inset-0 w-full h-full object-cover opacity-80"
+                                    src="https://placehold.co/160x160" />
+                            </div>
+                            <div class="absolute inset-0 bg-black bg-opacity-40">
 
-                    </div>
-                    <div class="absolute top-2 left-2 bg-secret text-black text-xs font-bold px-2 py-1 rounded">
-                        SECRET
-                    </div>
-                    <div class="absolute bottom-2 right-2 text-white text-sm font-bold text-stroke-bolder" id="secret-probability">
+                            </div>
+                            <div class="absolute top-2 left-2 bg-gold text-black text-xs font-bold px-2 py-1 rounded">
+                                GOLD
+                            </div>
+                            <div class="absolute bottom-2 right-2 text-white text-sm font-bold text-stroke-bolder" id="gold-probability">
 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="full-card">
+                        <div class="gradient-border-gold p-2 shadow-gold">
+                            <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
+                                <div class="card-image-box">
+                                    <img id="gold-full-image" src="https://placehold.co/320x500" />
+                                </div>
+                                <div class="absolute top-2 left-2 bg-gold text-black text-xs font-bold px-2 py-1 rounded">
+                                    GOLD
+                                </div>
+                                <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
+                                    <span id="gold-full-name" class="text-stroke-bolder">
+                                        N/A
+                                    </span>
+                                </div>
+                                <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                                    <span id="card-gold-number">
+                                        #0
+                                    </span>
+                                </div>
+                                <div class="absolute bottom-16 left-2 right-2 px-2">
+                                    <p><span id="gold-full-skill"
+                                            class="text-xl text-white font-bold text-linear-gradient text-stroke">N/A</span>
+                                    </p>
+                                    <p class="mt-3 mb-12">
+                                        <span id="gold-full-description" class="text-xs text-white font-bold text-linear-gradient text-stroke">
+                                            N/A
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="absolute bottom-2 w-full px-4 flex justify-between">
+                                    <div class="stat-dmg font-bold text-lg" id="gold-full-damage">
+                                        DMG <span>0</span>
+                                    </div>
+                                    <div class="stat-hp font-bold text-lg" id="gold-full-hp">
+                                        HP <span>0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="full-card">
-                <div class="gradient-border-secret p-2 shadow-secret">
-                    <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
-                        <div class="card-image-box">
-                            <img id="secret-full-image" src="https://placehold.co/320x500" />
-                        </div>
-                        <div class="absolute top-2 left-2 bg-secret text-black text-xs font-bold px-2 py-1 rounded">
-                            SECRET
-                        </div>
-                        <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
-                            <span id="secret-full-name" class="text-stroke-bolder">
-                                N/A
-                            </span>
-                        </div>
-                        <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
-                            <span id="card-secret-number">
-                                #0
-                            </span>
-                        </div>
-                        <div class="absolute bottom-16 left-2 right-2 px-2">
-                            <p>
-                                <span id="secret-full-skill" class="text-xl text-white font-bold text-linear-gradient text-stroke">
-                                    N/A
-                                </span>
-                            </p>
-                            <p class="mt-3 mb-12">
-                                <span id="secret-full-description" class="text-xs text-white font-bold text-linear-gradient text-stroke">
-                                    N/A
-                                </span>
-                            </p>
-                        </div>
-                        <div class="absolute bottom-2 w-full px-4 flex justify-between">
-                            <div class="stat-dmg font-bold text-lg" id="secret-full-damage">
-                                DMG <span>0</span>
+
+                <div class="gradient-border-rainbow p-1 shadow-rainbow rarity-card" tabindex="0">
+                    <div class="rarity-preview">
+                        <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
+                            <div class="card-image-box">
+                                <img id="rainbow-image" alt="Rainbow rarity image"
+                                    class="absolute inset-0 w-full h-full object-cover opacity-80"
+                                    src="https://placehold.co/160x160" />
                             </div>
-                            <div class="stat-hp font-bold text-lg" id="secret-full-hp">
-                                HP <span>0</span>
+                            <div class="absolute inset-0 bg-black bg-opacity-40">
+
+                            </div>
+                            <div
+                                class="absolute top-2 left-2 bg-rainbow text-black text-xs font-bold px-2 py-1 rounded">
+                                RAINBOW</div>
+                            <div class="absolute bottom-2 right-2 text-white text-sm font-bold text-stroke-bolder" id="rainbow-probability">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="full-card">
+                        <div class="gradient-border-rainbow p-2 shadow-rainbow">
+                            <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
+                                <div class="card-image-box">
+                                    <img id="rainbow-full-image" src="https://placehold.co/320x500" />
+                                </div>
+                                <div class="absolute top-2 left-2 bg-rainbow text-black text-xs font-bold px-2 py-1 rounded">
+                                    RAINBOW
+                                </div>
+                                <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
+                                    <span id="rainbow-full-name" class="text-stroke-bolder">
+                                        N/A
+                                    </span>
+                                </div>
+                                <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                                    <span id="card-rainbow-number">
+                                        #0
+                                    </span>
+                                </div>
+                                <div class="absolute bottom-16 left-2 right-2 px-2">
+                                    <p>
+                                        <span id="rainbow-full-skill" class="text-xl text-white font-bold text-linear-gradient text-stroke">
+                                            N/A
+                                        </span>
+                                    </p>
+                                    <p class="mt-3 mb-12">
+                                        <span id="rainbow-full-description" class="text-xs text-white font-bold text-linear-gradient text-stroke">
+                                            N/A
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="absolute bottom-2 w-full px-4 flex justify-between">
+                                    <div class="stat-dmg font-bold text-lg" id="rainbow-full-damage">
+                                        DMG <span>0</span>
+                                    </div>
+                                    <div class="stat-hp font-bold text-lg" id="rainbow-full-hp">
+                                        HP <span>0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gradient-border-secret p-1 shadow-secret rarity-card" tabindex="0">
+                    <div class="rarity-preview">
+                        <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
+                            <div class="card-image-box">
+                                <img id="secret-image" alt="Secret rarity image"
+                                    class="absolute inset-0 w-full h-full object-cover opacity-80"
+                                    src="https://placehold.co/160x160" />
+                            </div>
+                            <div class="absolute inset-0 bg-black bg-opacity-40">
+
+                            </div>
+                            <div class="absolute top-2 left-2 bg-secret text-black text-xs font-bold px-2 py-1 rounded">
+                                SECRET
+                            </div>
+                            <div class="absolute bottom-2 right-2 text-white text-sm font-bold text-stroke-bolder" id="secret-probability">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="full-card">
+                        <div class="gradient-border-secret p-2 shadow-secret">
+                            <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
+                                <div class="card-image-box">
+                                    <img id="secret-full-image" src="https://placehold.co/320x500" />
+                                </div>
+                                <div class="absolute top-2 left-2 bg-secret text-black text-xs font-bold px-2 py-1 rounded">
+                                    SECRET
+                                </div>
+                                <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
+                                    <span id="secret-full-name" class="text-stroke-bolder">
+                                        N/A
+                                    </span>
+                                </div>
+                                <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                                    <span id="card-secret-number">
+                                        #0
+                                    </span>
+                                </div>
+                                <div class="absolute bottom-16 left-2 right-2 px-2">
+                                    <p>
+                                        <span id="secret-full-skill" class="text-xl text-white font-bold text-linear-gradient text-stroke">
+                                            N/A
+                                        </span>
+                                    </p>
+                                    <p class="mt-3 mb-12">
+                                        <span id="secret-full-description" class="text-xs text-white font-bold text-linear-gradient text-stroke">
+                                            N/A
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="absolute bottom-2 w-full px-4 flex justify-between">
+                                    <div class="stat-dmg font-bold text-lg" id="secret-full-damage">
+                                        DMG <span>0</span>
+                                    </div>
+                                    <div class="stat-hp font-bold text-lg" id="secret-full-hp">
+                                        HP <span>0</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
