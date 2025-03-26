@@ -369,8 +369,8 @@ include 'includes/header.php';
                         <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
                             <span id="card-name" class="text-stroke-bolder">N/A</span>
                         </div>
-                        <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient card-number">
-                            #0
+                        <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                            <span id="card-preview-number">#0</span>
                         </div>
                         <div class="absolute bottom-16 left-2 right-2 px-2">
                             <p>
@@ -424,9 +424,9 @@ include 'includes/header.php';
                                     class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
                                     <span id="basic-full-name" class="text-stroke-bolder">N/A</span>
                                 </div>
-                                <div
-                                    class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient card-number">
-                                    #0</div>
+                                <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                                    <span id="card-basic-number">#0</span>
+                                </div>
                                 <div class="absolute bottom-16 left-2 right-2 px-2">
                                     <p><span id="basic-full-skill"
                                             class="text-xl text-white font-bold text-linear-gradient text-stroke">N/A</span>
@@ -476,9 +476,9 @@ include 'includes/header.php';
                                     class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
                                     <span id="gold-full-name" class="text-stroke-bolder">N/A</span>
                                 </div>
-                                <div
-                                    class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient card-number">
-                                    #0</div>
+                                <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                                    <span id="card-gold-number">#0</span>
+                                </div>
                                 <div class="absolute bottom-16 left-2 right-2 px-2">
                                     <p><span id="gold-full-skill"
                                             class="text-xl text-white font-bold text-linear-gradient text-stroke">N/A</span>
@@ -526,9 +526,9 @@ include 'includes/header.php';
                                     class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
                                     <span id="rainbow-full-name" class="text-stroke-bolder">N/A</span>
                                 </div>
-                                <div
-                                    class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient card-number">
-                                    #0</div>
+                                <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                                    <span id="card-rainbow-number">#0</span>
+                                </div>
                                 <div class="absolute bottom-16 left-2 right-2 px-2">
                                     <p><span id="rainbow-full-skill"
                                             class="text-xl text-white font-bold text-linear-gradient text-stroke">N/A</span>
@@ -578,9 +578,9 @@ include 'includes/header.php';
                                     class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
                                     <span id="secret-full-name" class="text-stroke-bolder">N/A</span>
                                 </div>
-                                <div
-                                    class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient card-number">
-                                    #0</div>
+                                <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                                    <span id="card-secret-number">#0</span>
+                                </div>
                                 <div class="absolute bottom-16 left-2 right-2 px-2">
                                     <p><span id="secret-full-skill"
                                             class="text-xl text-white font-bold text-linear-gradient text-stroke">N/A</span>
