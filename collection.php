@@ -188,36 +188,61 @@ include 'includes/header.php';
     function downloadCard(index) {
         const card = <?php echo json_encode($_SESSION['cards'] ?? []); ?>[index];
         const originalDiv = document.querySelector(`.card-${index}`);
+        const img = originalDiv.querySelector('img');
 
         if (card.cardType !== 'support') {
             const dmgValue = formatNumberWithSuffix(card.damage);
             const hpValue = formatNumberWithSuffix(card.hp);
-            
             const dmgSpan = originalDiv.querySelector(`#stat-dmg-${index}`);
             const hpSpan = originalDiv.querySelector(`#stat-hp-${index}`);
-            
             dmgSpan.innerText = dmgValue;
             hpSpan.innerText = hpValue;
         }
 
-        htmlToImage.toPng(originalDiv, {
-            quality: 1,
-            pixelRatio: 2,
-            skipAutoScale: true,
-            cacheBust: true,
-            style: {
-                transformOrigin: 'top left',
-            }
-        })
-        .then(function (dataUrl) {
-            const link = document.createElement('a');
-            link.download = `anime_card_${index}.png`;
-            link.href = dataUrl;
-            link.click();
-        })
-        .catch(function (error) {
-            console.error('Error:', error);
-        });
+        if (img.src.toLowerCase().endsWith('.gif')) {
+            const gif = new GIF({
+                workers: 2,
+                quality: 10,
+                width: originalDiv.offsetWidth * 2,
+                height: originalDiv.offsetHeight * 2,
+                workerScript: 'https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js'
+            });
+
+            gif.addFrame(originalDiv, {
+                copy: true,
+                delay: 100
+            });
+
+            gif.on('finished', function(blob) {
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.download = `anime_card_${index}.gif`;
+                link.href = url;
+                link.click();
+                URL.revokeObjectURL(url);
+            });
+
+            gif.render();
+        } else {
+            htmlToImage.toPng(originalDiv, {
+                quality: 1,
+                pixelRatio: 2,
+                skipAutoScale: true,
+                cacheBust: true,
+                style: {
+                    transformOrigin: 'top left',
+                }
+            })
+            .then(function (dataUrl) {
+                const link = document.createElement('a');
+                link.download = `anime_card_${index}.png`;
+                link.href = dataUrl;
+                link.click();
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+            });
+        }
     }
 
     function deleteCard(index) {
