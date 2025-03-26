@@ -224,24 +224,29 @@ include 'includes/header.php';
 
                                     // Mise à jour des polices
                                     if (data.fonts) {
-                                        Object.entries(data.fonts).forEach(([type, font]) => {
-                                            const fontSelect = document.getElementById(`${type}`);
-                                            const customInput = document.getElementById(`custom${type}`);
+                                        ['name', 'skill', 'desc', 'stats'].forEach(type => {
+                                            const fontKey = `${type}Font`;
+                                            const fontSelect = document.getElementById(fontKey);
+                                            const customInput = document.getElementById(`custom${fontKey}`);
+                                            const applyButton = document.getElementById(`apply-${fontKey}`);
+                                            const fontValue = data.fonts[fontKey];
                                             
-                                            // Si ce n'est pas une police par défaut
-                                            if (font !== 'Electrolize' && font !== 'Lilita One') {
+                                            // Vérifie si c'est une police par défaut
+                                            const isDefaultFont = type === 'stats' 
+                                                ? fontValue === 'Lilita One'
+                                                : fontValue === 'Electrolize';
+
+                                            if (!isDefaultFont) {
                                                 fontSelect.value = 'custom';
-                                                customInput.value = font;
+                                                customInput.value = fontValue;
                                                 customInput.classList.remove('hidden');
-                                                document.getElementById(`apply-${type}`).classList.remove('hidden');
+                                                applyButton.classList.remove('hidden');
                                             } else {
-                                                fontSelect.value = font;
+                                                fontSelect.value = fontValue;
                                             }
                                             
                                             // Applique la police
-                                            if (customInput.value) {
-                                                applyFontToCard(type.replace('Font', ''), font);
-                                            }
+                                            applyFontToCard(type, fontValue);
                                         });
                                     }
 
