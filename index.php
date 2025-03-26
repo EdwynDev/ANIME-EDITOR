@@ -476,11 +476,11 @@ include 'includes/header.php';
                             </p>
                         </div>
                         <div class="absolute bottom-2 w-full px-4 flex justify-between">
-                            <div class="stat-dmg font-bold text-lg">
-                                <span id="card-damage">DMG 0</span>
+                            <div class="stat-dmg font-bold text-lg" id="card-damage">
+                                DMG <span>0</span>
                             </div>
-                            <div class="stat-hp font-bold text-lg">
-                                <span id="card-hp">HP 0</span>
+                            <div class="stat-hp font-bold text-lg" id="card-hp">
+                                HP <span>0</span>
                             </div>
                         </div>
                     </div>
@@ -539,11 +539,11 @@ include 'includes/header.php';
                                     </p>
                                 </div>
                                 <div class="absolute bottom-2 w-full px-4 flex justify-between">
-                                    <div class="stat-dmg font-bold text-lg">
-                                        <span id="basic-full-damage">DMG 0</span>
+                                    <div class="stat-dmg font-bold text-lg" id="basic-full-damage">
+                                        DMG <span>0</span>
                                     </div>
-                                    <div class="stat-hp font-bold text-lg">
-                                        <span id="basic-full-hp">HP 0</span>
+                                    <div class="stat-hp font-bold text-lg" id="basic-full-hp">
+                                        HP <span>0</span>
                                     </div>
                                 </div>
                             </div>
@@ -600,11 +600,11 @@ include 'includes/header.php';
                                     </p>
                                 </div>
                                 <div class="absolute bottom-2 w-full px-4 flex justify-between">
-                                    <div class="stat-dmg font-bold text-lg">
-                                        <span id="gold-full-damage">DMG 0</span>
+                                    <div class="stat-dmg font-bold text-lg" id="gold-full-damage">
+                                        DMG <span>0</span>
                                     </div>
-                                    <div class="stat-hp font-bold text-lg">
-                                        <span id="gold-full-hp"> HP 0</span>
+                                    <div class="stat-hp font-bold text-lg" id="gold-full-hp">
+                                        HP <span>0</span>
                                     </div>
                                 </div>
                             </div>
@@ -663,11 +663,11 @@ include 'includes/header.php';
                                     </p>
                                 </div>
                                 <div class="absolute bottom-2 w-full px-4 flex justify-between">
-                                    <div class="stat-dmg font-bold text-lg">
-                                        <span id="rainbow-full-damage">DMG 0</span>
+                                    <div class="stat-dmg font-bold text-lg" id="rainbow-full-damage">
+                                        DMG <span>0</span>
                                     </div>
-                                    <div class="stat-hp font-bold text-lg">
-                                        <span id="rainbow-full-hp">HP 0</span>
+                                    <div class="stat-hp font-bold text-lg" id="rainbow-full-hp">
+                                        HP <span>0</span>
                                     </div>
                                 </div>
                             </div>
@@ -726,11 +726,11 @@ include 'includes/header.php';
                                     </p>
                                 </div>
                                 <div class="absolute bottom-2 w-full px-4 flex justify-between">
-                                    <div class="stat-dmg font-bold text-lg">
-                                        <span id="secret-full-damage">DMG 0</span>
+                                    <div class="stat-dmg font-bold text-lg" id="secret-full-damage">
+                                        DMG <span>0</span>
                                     </div>
-                                    <div class="stat-hp font-bold text-lg">
-                                        <span id="secret-full-hp">HP 0</span>
+                                    <div class="stat-hp font-bold text-lg" id="secret-full-hp">
+                                        HP <span>0</span>
                                     </div>
                                 </div>
                             </div>

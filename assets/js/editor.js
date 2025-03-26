@@ -76,8 +76,13 @@ function updateCard() {
     document.getElementById('card-name').innerText = name;
     document.getElementById('card-skill').innerText = skill;
     document.getElementById('card-description').innerText = description;
-    document.getElementById('card-damage').innerText = `DMG ${formatNumberWithSuffix(parseInt(damage))}`;
-    document.getElementById('card-hp').innerText = `HP ${formatNumberWithSuffix(parseInt(hp))}`;
+    
+    const dmgElement = document.getElementById('card-damage');
+    const hpElement = document.getElementById('card-hp');
+    
+    // Garder la structure DMG/HP + valeur
+    dmgElement.innerHTML = `DMG <span>${formatNumberWithSuffix(parseInt(damage))}</span>`;
+    hpElement.innerHTML = `HP <span>${formatNumberWithSuffix(parseInt(hp))}</span>`;
     
     const formattedNumber = formatCardNumber(cardNumber);
     document.getElementById('card-preview-number').innerText = `#${formattedNumber}`;
@@ -114,8 +119,13 @@ function updateFullCards() {
         document.getElementById(`${rarity}-full-name`).innerText = name;
         document.getElementById(`${rarity}-full-skill`).innerText = skill;
         document.getElementById(`${rarity}-full-description`).innerText = description;
-        document.getElementById(`${rarity}-full-damage`).innerText = `DMG ${formatNumberWithSuffix(parseInt(damage) * multiplier)}`;
-        document.getElementById(`${rarity}-full-hp`).innerText = `HP ${formatNumberWithSuffix(parseInt(hp) * multiplier)}`;
+        
+        // Mise à jour des stats avec la structure DMG/HP + valeur
+        const dmgElement = document.getElementById(`${rarity}-full-damage`);
+        const hpElement = document.getElementById(`${rarity}-full-hp`);
+        
+        dmgElement.innerHTML = `DMG <span>${formatNumberWithSuffix(parseInt(damage) * multiplier)}</span>`;
+        hpElement.innerHTML = `HP <span>${formatNumberWithSuffix(parseInt(hp) * multiplier)}</span>`;
     });
 }
 
