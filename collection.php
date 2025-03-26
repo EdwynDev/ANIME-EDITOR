@@ -201,30 +201,24 @@ include 'includes/header.php';
             hpSpan.innerText = hpValue;
         }
 
-        // Use dom-to-image-improved
-        domtoimage.toPng(originalDiv, {
+        // Capture avec html-to-image
+        htmlToImage.toPng(originalDiv, {
             quality: 1,
-            width: originalDiv.offsetWidth * 2,
-            height: originalDiv.offsetHeight * 2,
+            pixelRatio: 2,
+            skipAutoScale: true,
+            cacheBust: true,
             style: {
                 transform: 'scale(2)',
                 transformOrigin: 'top left',
-                '-webkit-font-smoothing': 'antialiased'
-            },
-            filter: (node) => {
-                return (!node.classList ||
-                    (!node.classList.contains('download-card') &&
-                     !node.classList.contains('edit-card') &&
-                     !node.classList.contains('delete-card')))
             }
         })
-        .then(dataUrl => {
+        .then(function (dataUrl) {
             const link = document.createElement('a');
             link.download = `anime_card_${index}.png`;
             link.href = dataUrl;
             link.click();
         })
-        .catch(error => {
+        .catch(function (error) {
             console.error('Error:', error);
         });
     }
