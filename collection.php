@@ -187,9 +187,7 @@ include 'includes/header.php';
 <script>
     function downloadCard(index) {
         const div = document.querySelector(`.card-${index}`);
-        // Attendre que les polices soient chargées
         document.fonts.ready.then(() => {
-            // Calculer les stats avant la capture
             const dmgSpan = document.getElementById(`stat-dmg-${index}`);
             const hpSpan = document.getElementById(`stat-hp-${index}`);
             if (dmgSpan) dmgSpan.style.visibility = 'visible';
@@ -201,11 +199,9 @@ include 'includes/header.php';
                 height: div.offsetHeight,
                 width: div.offsetWidth,
                 style: {
-                    transform: 'scale(2)',
                     transformOrigin: 'top left',
                 },
                 filter: (node) => {
-                    // S'assurer que tous les éléments sont capturés
                     return true;
                 }
             })
