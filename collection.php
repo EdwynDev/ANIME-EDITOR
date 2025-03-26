@@ -189,17 +189,21 @@ include 'includes/header.php';
         const originalDiv = document.querySelector(`.card-${index}`);
         const clonedDiv = originalDiv.cloneNode(true);
 
+        // Forcer le rendu des valeurs DMG et HP
         const dmgElement = clonedDiv.querySelector(`#stat-dmg-${index}`);
         const hpElement = clonedDiv.querySelector(`#stat-hp-${index}`);
         dmgElement.innerText = document.getElementById(`stat-dmg-${index}`).innerText;
         hpElement.innerText = document.getElementById(`stat-hp-${index}`).innerText;
 
-        clonedDiv.style.fontFamily = window.getComputedStyle(originalDiv).fontFamily;
+        // Créer un conteneur temporaire pour le clone
+        const container = document.createElement('div');
+        container.style.position = 'absolute';
+        container.style.left = '-9999px';
+        container.style.top = '0';
+        container.appendChild(clonedDiv);
+        document.body.appendChild(container);
 
-        document.body.appendChild(clonedDiv);
-        clonedDiv.style.position = 'absolute';
-        clonedDiv.style.left = '-9999px';
-
+        // Attendre que les images soient complètement chargées
         const images = clonedDiv.querySelectorAll('img');
         const imagePromises = Array.from(images).map(img => {
             return new Promise(resolve => {
@@ -228,12 +232,14 @@ include 'includes/header.php';
                 link.href = dataUrl;
                 link.click();
 
-                document.body.removeChild(clonedDiv);
+                // Supprimer le conteneur temporaire après capture
+                document.body.removeChild(container);
             })
             .catch(function (error) {
                 console.error('Error downloading card:', error);
 
-                document.body.removeChild(clonedDiv);
+                // Supprimer le conteneur temporaire en cas d'erreur
+                document.body.removeChild(container);
             });
         });
     }
