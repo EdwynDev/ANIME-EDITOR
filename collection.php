@@ -188,9 +188,8 @@ include 'includes/header.php';
     function downloadCard(index) {
         const card = <?php echo json_encode($_SESSION['cards'] ?? []); ?>[index];
         const originalDiv = document.querySelector(`.card-${index}`);
-        const img = originalDiv.querySelector('img');
 
-        // Update stats
+        // Force DMG/HP update
         if (card.cardType !== 'support') {
             const dmgValue = formatNumberWithSuffix(card.damage);
             const hpValue = formatNumberWithSuffix(card.hp);
@@ -200,54 +199,43 @@ include 'includes/header.php';
             hpSpan.innerText = hpValue;
         }
 
-        if (img.src.toLowerCase().endsWith('.gif')) {
-            // First convert to canvas
-            htmlToImage.toCanvas(originalDiv, {
-                quality: 1,
-                pixelRatio: 2,
-                skipAutoScale: true,
-                backgroundColor: null,
-                filter: (node) => {
-                    return (!node.classList ||
-                        (!node.classList.contains('download-card') &&
-                         !node.classList.contains('edit-card') &&
-                         !node.classList.contains('delete-card')))
-                }
-            })
-            .then(canvas => {
-                // Create and download as PNG instead
-                const link = document.createElement('a');
-                link.download = `anime_card_${index}.png`;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        } else {
-            // Standard PNG capture
-            htmlToImage.toPng(originalDiv, {
-                quality: 1,
-                pixelRatio: 2,
-                skipAutoScale: true,
-                backgroundColor: null,
-                filter: (node) => {
-                    return (!node.classList ||
-                        (!node.classList.contains('download-card') &&
-                         !node.classList.contains('edit-card') &&
-                         !node.classList.contains('delete-card')))
-                }
-            })
-            .then(function (dataUrl) {
-                const link = document.createElement('a');
-                link.download = `anime_card_${index}.png`;
-                link.href = dataUrl;
-                link.click();
-            })
-            .catch(function (error) {
-                console.error('Error:', error);
-            });
-        }
+        // Clone and prepare for capture
+        const container = document.createElement('div');
+        container.style.position = 'absolute';
+        container.style.left = '-9999px';
+        container.style.top = '0';
+        const clone = originalDiv.cloneNode(true);
+        container.appendChild(clone);
+        document.body.appendChild(container);
+
+        // Capture with fixed options
+        htmlToImage.toPng(clone, {
+            quality: 1,
+            pixelRatio: 2,
+            skipAutoScale: true,
+            cacheBust: true,
+            includeQueryParams: true,
+            ignoreElements: (element) => {
+                return element.classList?.contains('download-card') ||
+                       element.classList?.contains('edit-card') ||
+                       element.classList?.contains('delete-card');
+            },
+            style: {
+                transform: 'scale(1)',
+                'transform-origin': 'top left'
+            }
+        })
+        .then(dataUrl => {
+            const link = document.createElement('a');
+            link.download = `anime_card_${index}.png`;
+            link.href = dataUrl;
+            link.click();
+            document.body.removeChild(container);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.body.removeChild(container);
+        });
     }
 
     function deleteCard(index) {
