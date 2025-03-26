@@ -78,7 +78,7 @@ include 'includes/header.php';
         <div class="flex flex-wrap gap-6 justify-center">
             <?php foreach ($_SESSION['cards'] as $index => $card): ?>
                 <div class="relative flex flex-col items-center align-center gap-4">
-                    <div class="gradient-border-<?php echo strtolower($card['rarity'] ?? 'basic'); ?> p-2 shadow-<?php echo strtolower($card['rarity'] ?? 'basic'); ?>">
+                    <div class="card-<?php echo $index; ?> gradient-border-<?php echo strtolower($card['rarity'] ?? 'basic'); ?> p-2 shadow-<?php echo strtolower($card['rarity'] ?? 'basic'); ?>">
                         <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
                             <div class="card-image-box">
                                 <img src="<?php echo !empty($card['imageUrl']) ? htmlspecialchars($card['imageUrl']) : 'https://placehold.co/320x500'; ?>"
@@ -186,7 +186,7 @@ include 'includes/header.php';
 
 <script>
     function downloadCard(index) {
-        const div = document.querySelectorAll('.relative')[index];
+        const div = document.querySelector(`.card-${index}`);
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
 
