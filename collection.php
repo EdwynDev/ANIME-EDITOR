@@ -190,6 +190,7 @@ include 'includes/header.php';
         const originalDiv = document.querySelector(`.card-${index}`);
         const img = originalDiv.querySelector('img');
 
+        // Force DMG/HP update
         if (card.cardType !== 'support') {
             const dmgValue = formatNumberWithSuffix(card.damage);
             const hpValue = formatNumberWithSuffix(card.hp);
@@ -200,6 +201,7 @@ include 'includes/header.php';
         }
 
         if (img.src.toLowerCase().endsWith('.gif')) {
+            // Créer le GIF avec les paramètres optimisés
             const gif = new GIF({
                 workers: 2,
                 quality: 10,
@@ -208,9 +210,17 @@ include 'includes/header.php';
                 workerScript: 'https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.worker.js'
             });
 
-            gif.addFrame(originalDiv, {
-                copy: true,
-                delay: 100
+            // D'abord convertir en canvas avec html-to-image
+            htmlToImage.toCanvas(originalDiv, {
+                pixelRatio: 2,
+                skipAutoScale: true,
+                quality: 1,
+                width: originalDiv.offsetWidth * 2,
+                height: originalDiv.offsetHeight * 2
+            })
+            .then(canvas => {
+                gif.addFrame(canvas, { delay: 100, copy: true });
+                gif.render();
             });
 
             gif.on('finished', function(blob) {
@@ -221,9 +231,8 @@ include 'includes/header.php';
                 link.click();
                 URL.revokeObjectURL(url);
             });
-
-            gif.render();
         } else {
+            // PNG normal pour les images statiques
             htmlToImage.toPng(originalDiv, {
                 quality: 1,
                 pixelRatio: 2,
