@@ -76,8 +76,8 @@ function updateCard() {
     document.getElementById('card-name').innerText = name;
     document.getElementById('card-skill').innerText = skill;
     document.getElementById('card-description').innerText = description;
-    document.getElementById('card-damage').innerText = formatNumberWithSuffix(parseInt(damage));
-    document.getElementById('card-hp').innerText = formatNumberWithSuffix(parseInt(hp));
+    document.getElementById('card-damage').innerText = `DMG ${formatNumberWithSuffix(parseInt(damage))}`;
+    document.getElementById('card-hp').innerText = `HP ${formatNumberWithSuffix(parseInt(hp))}`;
     
     const formattedNumber = formatCardNumber(cardNumber);
     document.getElementById('card-preview-number').innerText = `#${formattedNumber}`;
