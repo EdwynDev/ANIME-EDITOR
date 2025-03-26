@@ -141,10 +141,7 @@ header("X-Content-Type-Options: nosniff");
             -webkit-background-clip: text;
             background-image: linear-gradient(180deg, #e37d80 0%, #d14647 100%);
             text-shadow: none;
-            visibility: visible !important;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+            }
 
         .stat-hp {
             font-family: "Lilita One";
@@ -154,10 +151,7 @@ header("X-Content-Type-Options: nosniff");
             -webkit-background-clip: text;
             background-image: linear-gradient(180deg, #7db380 0%, #458c49 100%);
             text-shadow: none;
-            visibility: visible !important;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+            }
 
         @keyframes rotatingShadow {
             0% {
@@ -344,13 +338,6 @@ header("X-Content-Type-Options: nosniff");
             background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
             color: #c4b5fd;
-        }
-
-        /* Forcer le chargement des polices */
-        @font-face {
-            font-family: 'Lilita One';
-            font-display: block;
-            src: url('https://fonts.gstatic.com/s/lilitaone/v13/i7dPIFZ9Zz-WBtRtedDbYEF8RHi.woff2') format('woff2');
         }
     </style>
     <?php
