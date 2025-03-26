@@ -200,27 +200,41 @@ include 'includes/header.php';
         clonedDiv.style.position = 'absolute';
         clonedDiv.style.left = '-9999px';
 
-        domtoimage.toPng(clonedDiv, {
-            quality: 1,
-            width: originalDiv.offsetWidth * 2,
-            height: originalDiv.offsetHeight * 2,
-            style: {
-                transform: 'scale(2)',
-                transformOrigin: 'top left',
-            }
-        })
-        .then(function (dataUrl) {
-            const link = document.createElement('a');
-            link.download = `anime_card_${index}.png`;
-            link.href = dataUrl;
-            link.click();
+        const images = clonedDiv.querySelectorAll('img');
+        const imagePromises = Array.from(images).map(img => {
+            return new Promise(resolve => {
+                if (img.complete) {
+                    resolve();
+                } else {
+                    img.onload = resolve;
+                    img.onerror = resolve;
+                }
+            });
+        });
 
-            document.body.removeChild(clonedDiv);
-        })
-        .catch(function (error) {
-            console.error('Error downloading card:', error);
+        Promise.all(imagePromises).then(() => {
+            domtoimage.toPng(clonedDiv, {
+                quality: 1,
+                width: originalDiv.offsetWidth * 2,
+                height: originalDiv.offsetHeight * 2,
+                style: {
+                    transform: 'scale(2)',
+                    transformOrigin: 'top left',
+                }
+            })
+            .then(function (dataUrl) {
+                const link = document.createElement('a');
+                link.download = `anime_card_${index}.png`;
+                link.href = dataUrl;
+                link.click();
 
-            document.body.removeChild(clonedDiv);
+                document.body.removeChild(clonedDiv);
+            })
+            .catch(function (error) {
+                console.error('Error downloading card:', error);
+
+                document.body.removeChild(clonedDiv);
+            });
         });
     }
 
