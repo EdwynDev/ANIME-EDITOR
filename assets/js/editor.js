@@ -80,7 +80,6 @@ function updateCard() {
     const dmgElement = document.getElementById('card-damage');
     const hpElement = document.getElementById('card-hp');
     
-    // Garder la structure DMG/HP + valeur
     dmgElement.innerHTML = `DMG <span>${formatNumberWithSuffix(parseInt(damage))}</span>`;
     hpElement.innerHTML = `HP <span>${formatNumberWithSuffix(parseInt(hp))}</span>`;
     
