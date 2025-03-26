@@ -79,7 +79,7 @@ include 'includes/header.php';
             <?php foreach ($_SESSION['cards'] as $index => $card): ?>
                 <div class="relative flex flex-col items-center align-center gap-4">
                     <div class="gradient-border-<?php echo strtolower($card['rarity'] ?? 'basic'); ?> p-2 shadow-<?php echo strtolower($card['rarity'] ?? 'basic'); ?>">
-                        <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden" id="card-<?php echo $card['id']; ?>">
+                        <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
                             <div class="card-image-box">
                                 <img src="<?php echo htmlspecialchars($card['imageUrl']); ?>" 
                                     alt="Card Image" 
@@ -119,16 +119,10 @@ include 'includes/header.php';
                             onclick="deleteCard(<?php echo $index; ?>)">
                             <i class="fas fa-trash-alt mr-2"></i>Delete
                         </button>
-                        <button onclick="downloadCard('card-<?php echo $card['id']; ?>')" class="btn-download bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition duration-200">
-                            <i class="fas fa-download mr-2"></i>Download
-                        </button>
                     </div>
                 </div>
             <?php endforeach; ?>
         </div>
-        <button onclick="downloadAllCards()" class="btn-download-all bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition duration-200 mt-4">
-            <i class="fas fa-file-archive mr-2"></i>Download All as ZIP
-        </button>
     <?php endif; ?>
     <a href="/" class="inline-flex items-center text-purple-400 hover:text-purple-300 mb-8 mt-8">
         <i class="fas fa-arrow-left mr-2"></i>Back to Editor
@@ -151,8 +145,6 @@ include 'includes/header.php';
 </div>
 
 <script>
-    import html2canvas from 'html2canvas';
-    
     function deleteCard(index) {
         showConfirm('Are you sure you want to delete this card ?', () => {
             fetch('delete_card.php', {
@@ -240,38 +232,6 @@ include 'includes/header.php';
             content.classList.add('hidden');
             arrow.style.transform = 'rotate(0deg)';
         }
-    }
-
-    function downloadCard(cardId) {
-        const cardElement = document.getElementById(cardId);
-        html2canvas(cardElement).then(canvas => {
-            const link = document.createElement('a');
-            link.href = canvas.toDataURL('image/png');
-            link.download = `${cardId}.png`;
-            link.click();
-        });
-    }
-
-    function downloadAllCards() {
-        const zip = new JSZip();
-        const cards = document.querySelectorAll('.gradient-content');
-        const promises = [];
-
-        cards.forEach((card, index) => {
-            promises.push(html2canvas(card).then(canvas => {
-                const dataUrl = canvas.toDataURL('image/png');
-                zip.file(`card_${index + 1}.png`, dataUrl.split(',')[1], { base64: true });
-            }));
-        });
-
-        Promise.all(promises).then(() => {
-            zip.generateAsync({ type: 'blob' }).then(content => {
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(content);
-                link.download = 'cards.zip';
-                link.click();
-            });
-        });
     }
 </script>
 </body>
