@@ -187,38 +187,29 @@ include 'includes/header.php';
 <script>
     function downloadCard(index) {
         const div = document.querySelector(`.card-${index}`);
-        
-        const dmgElement = document.getElementById(`stat-dmg-${index}`);
-        const hpElement = document.getElementById(`stat-hp-${index}`);
-        const dmgValue = dmgElement.textContent;
-        const hpValue = hpElement.textContent;
+        const scale = 2;
 
-        document.fonts.ready.then(() => {
-            domtoimage.toPng(div, {
-                quality: 1,
-                bgcolor: 'transparent',
-                style: {
-                    'transform': 'scale(2)',
-                    'transform-origin': 'top left',
-                },
-                width: div.offsetWidth * 2,
-                height: div.offsetHeight * 2,
-                filter: (node) => {
-                    return (node.tagName !== 'BUTTON');
-                }
-            })
-            .then(function (dataUrl) {
-                if (dmgElement.textContent !== dmgValue) dmgElement.textContent = dmgValue;
-                if (hpElement.textContent !== hpValue) hpElement.textContent = hpValue;
+        const style = {
+            transform: 'scale(' + scale + ')',
+            transformOrigin: 'top left',
+            width: div.offsetWidth + "px",
+            height: div.offsetHeight + "px"
+        };
 
-                const link = document.createElement('a');
-                link.download = `anime_card_${index}.png`;
-                link.href = dataUrl;
-                link.click();
-            })
-            .catch(function (error) {
-                console.error('Error downloading card:', error);
-            });
+        domtoimage.toPng(div, {
+            quality: 1,
+            width: div.offsetWidth * scale,
+            height: div.offsetHeight * scale,
+            style: style
+        })
+        .then(function (dataUrl) {
+            const link = document.createElement('a');
+            link.download = `anime_card_${index}.png`;
+            link.href = dataUrl;
+            link.click();
+        })
+        .catch(function (error) {
+            console.error('Error downloading card:', error);
         });
     }
 
