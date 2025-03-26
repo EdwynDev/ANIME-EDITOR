@@ -30,6 +30,7 @@ header("X-Content-Type-Options: nosniff");
     <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.min.js"></script>
     <link rel="stylesheet" href="assets/css/modal.css">
     <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html-to-gif@0.0.4/index.min.js"></script>
     <style>
         body {
             font-family: 'Electrolize';
