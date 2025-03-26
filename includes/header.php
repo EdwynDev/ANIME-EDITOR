@@ -29,8 +29,7 @@ header("X-Content-Type-Options: nosniff");
     <link href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.min.js"></script>
     <link rel="stylesheet" href="assets/css/modal.css">
-    <script src="https://cdn.jsdelivr.net/npm/dom-to-image-more@3.5.0/dist/dom-to-image-more.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/dom-to-image-more@3.5.0/spec/resources/fonts/web-fonts/embedded.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/save-html-as-image@1.7.1/dist/index.min.js"></script>
     <style>
         body {
             font-family: 'Electrolize';
@@ -422,3 +421,5 @@ header("X-Content-Type-Options: nosniff");
             };
         }
     </script>
+</body>
+</html>

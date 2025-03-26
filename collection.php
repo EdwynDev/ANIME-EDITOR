@@ -189,53 +189,34 @@ include 'includes/header.php';
         const card = <?php echo json_encode($_SESSION['cards'] ?? []); ?>[index];
         const originalDiv = document.querySelector(`.card-${index}`);
 
-        const container = document.createElement('div');
-        container.style.cssText = `
-            position: fixed;
-            left: -9999px;
-            top: 0;
-            z-index: -9999;
-            background: transparent;
-        `;
-        document.body.appendChild(container);
-
-        const cardClone = originalDiv.cloneNode(true);
-        container.appendChild(cardClone);
-
+        // Forcer la mise à jour des stats
         if (card.cardType !== 'support') {
             const dmgValue = formatNumberWithSuffix(card.damage);
             const hpValue = formatNumberWithSuffix(card.hp);
             
-            const dmgSpan = cardClone.querySelector('.stat-dmg');
-            const hpSpan = cardClone.querySelector('.stat-hp');
+            const dmgSpan = originalDiv.querySelector(`#stat-dmg-${index}`);
+            const hpSpan = originalDiv.querySelector(`#stat-hp-${index}`);
             
-            if (dmgSpan) dmgSpan.innerHTML = `DMG <span>${dmgValue}</span>`;
-            if (hpSpan) hpSpan.innerHTML = `HP <span>${hpValue}</span>`;
+            if (dmgSpan) dmgSpan.innerText = dmgValue;
+            if (hpSpan) hpSpan.innerText = hpValue;
         }
 
-        window.domtoimage.toPng(cardClone, {
-            quality: 1,
-            width: originalDiv.offsetWidth * 2,
-            height: originalDiv.offsetHeight * 2,
-            imagePlaceholder: 'https://placehold.co/320x500',
-            filter: node => !node.classList?.contains('download-card'),
+        // Configuration des options de capture
+        const config = {
+            filename: `anime_card_${index}`,
+            scale: 2,
             style: {
-                transform: 'scale(2)',
-                transformOrigin: 'top left',
-                '-webkit-font-smoothing': 'subpixel-antialiased',
+                transform: 'scale(1)',
+                'transform-origin': 'top left',
+                background: 'transparent'
             }
-        })
-        .then(dataUrl => {
-            const link = document.createElement('a');
-            link.download = `anime_card_${index}.png`;
-            link.href = dataUrl;
-            link.click();
-            document.body.removeChild(container);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            document.body.removeChild(container);
-        });
+        };
+
+        // Capturer et télécharger l'image
+        saveAsImage.saveAsPng(originalDiv, config)
+            .catch(err => {
+                console.error('Error saving image:', err);
+            });
     }
 
     function deleteCard(index) {
