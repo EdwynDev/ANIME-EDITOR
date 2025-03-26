@@ -146,3 +146,20 @@ document.addEventListener('DOMContentLoaded', function () {
     updateCardType();
     updateCard();
 });
+
+function downloadCard(cardId) {
+    const card = document.getElementById(cardId);
+    
+    html2canvas(card, {
+        allowTaint: true,
+        useCORS: true,
+        backgroundColor: null,
+        scale: 2, // Higher quality
+    }).then(canvas => {
+        // Create download link
+        const link = document.createElement('a');
+        link.download = `anime-card-${cardId}-${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    });
+}
