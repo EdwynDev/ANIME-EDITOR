@@ -188,8 +188,9 @@ include 'includes/header.php';
     function downloadCard(index) {
         const card = <?php echo json_encode($_SESSION['cards'] ?? []); ?>[index];
         const originalDiv = document.querySelector(`.card-${index}`);
+        const img = originalDiv.querySelector('img');
 
-        // Force DMG/HP update
+        // Update stats
         if (card.cardType !== 'support') {
             const dmgValue = formatNumberWithSuffix(card.damage);
             const hpValue = formatNumberWithSuffix(card.hp);
@@ -199,43 +200,78 @@ include 'includes/header.php';
             hpSpan.innerText = hpValue;
         }
 
-        // Clone and prepare for capture
-        const container = document.createElement('div');
-        container.style.position = 'absolute';
-        container.style.left = '-9999px';
-        container.style.top = '0';
-        const clone = originalDiv.cloneNode(true);
-        container.appendChild(clone);
-        document.body.appendChild(container);
+        if (img.src.toLowerCase().endsWith('.gif')) {
+            // Créer le GIF encoder
+            const gif = new GIF({
+                workers: 2,
+                quality: 10,
+                width: originalDiv.offsetWidth * 2,
+                height: originalDiv.offsetHeight * 2,
+                workerScript: 'assets/js/gif.worker.js'
+            });
 
-        // Capture with fixed options
-        htmlToImage.toPng(clone, {
-            quality: 1,
-            pixelRatio: 2,
-            skipAutoScale: true,
-            cacheBust: true,
-            includeQueryParams: true,
-            ignoreElements: (element) => {
-                return element.classList?.contains('download-card') ||
-                       element.classList?.contains('edit-card') ||
-                       element.classList?.contains('delete-card');
-            },
-            style: {
-                transform: 'scale(1)',
-                'transform-origin': 'top left'
+            let frameCount = 0;
+            const maxFrames = 20; // Nombre de frames à capturer
+            const interval = 100; // Intervalle entre chaque frame (100ms = 0.1s)
+
+            function captureFrame() {
+                htmlToImage.toCanvas(originalDiv, {
+                    quality: 1,
+                    pixelRatio: 2,
+                    skipAutoScale: true,
+                    backgroundColor: null,
+                    filter: (node) => {
+                        return (!node.classList ||
+                            (!node.classList.contains('download-card') &&
+                             !node.classList.contains('edit-card') &&
+                             !node.classList.contains('delete-card')))
+                    }
+                })
+                .then(canvas => {
+                    gif.addFrame(canvas, {delay: interval});
+                    frameCount++;
+                    
+                    if (frameCount < maxFrames) {
+                        setTimeout(captureFrame, interval);
+                    } else {
+                        gif.on('finished', function(blob) {
+                            const url = URL.createObjectURL(blob);
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.download = `anime_card_${index}.gif`;
+                            link.click();
+                            URL.revokeObjectURL(url);
+                        });
+                        gif.render();
+                    }
+                })
+                .catch(error => console.error('Error:', error));
             }
-        })
-        .then(dataUrl => {
-            const link = document.createElement('a');
-            link.download = `anime_card_${index}.png`;
-            link.href = dataUrl;
-            link.click();
-            document.body.removeChild(container);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            document.body.removeChild(container);
-        });
+
+            // Démarrer la capture
+            captureFrame();
+        } else {
+            // PNG normal pour les images statiques
+            htmlToImage.toPng(originalDiv, {
+                quality: 1,
+                pixelRatio: 2,
+                skipAutoScale: true,
+                backgroundColor: null,
+                filter: (node) => {
+                    return (!node.classList ||
+                        (!node.classList.contains('download-card') &&
+                         !node.classList.contains('edit-card') &&
+                         !node.classList.contains('delete-card')))
+                }
+            })
+            .then(function (dataUrl) {
+                const link = document.createElement('a');
+                link.download = `anime_card_${index}.png`;
+                link.href = dataUrl;
+                link.click();
+            })
+            .catch(error => console.error('Error:', error));
+        }
     }
 
     function deleteCard(index) {
