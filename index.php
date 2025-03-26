@@ -210,20 +210,9 @@ include 'includes/header.php';
                     spinner.classList.remove('hidden');
                     spinner.classList.add('flex');
 
-                    const previewCard = document.getElementById('card-preview');
+                    const originalDiv = document.querySelector(`.card-preview`);
 
-                    if (document.getElementById('cardType').value !== 'support') {
-                        const dmgValue = formatNumberWithSuffix(parseInt(document.getElementById('damage').value) || 0);
-                        const hpValue = formatNumberWithSuffix(parseInt(document.getElementById('hp').value) || 0);
-
-                        const dmgSpan = previewCard.querySelector('#card-damage span');
-                        const hpSpan = previewCard.querySelector('#card-hp span');
-
-                        dmgSpan.innerText = dmgValue;
-                        hpSpan.innerText = hpValue;
-                    }
-
-                    htmlToImage.toPng(previewCard, {
+                    htmlToImage.toPng(originalDiv, {
                             quality: 1,
                             pixelRatio: 2,
                             skipAutoScale: true,
@@ -234,8 +223,7 @@ include 'includes/header.php';
                         })
                         .then(function(dataUrl) {
                             const link = document.createElement('a');
-                            const cardName = document.getElementById('name').value.trim() || 'card';
-                            link.download = `anime_card_${cardName}.png`;
+                            link.download = `anime_card.png`;
                             link.href = dataUrl;
                             link.click();
                             spinner.classList.remove('flex');
@@ -489,8 +477,8 @@ include 'includes/header.php';
             </div>
         </div>
 
-        <div id="card-preview-all" class="space-y-6 flex flex-col items-center">
-            <div id="card-preview" class="gradient-border-basic p-2 shadow-basic">
+        <div class="card-preview-all space-y-6 flex flex-col items-center">
+            <div class="card-preview gradient-border-basic p-2 shadow-basic">
                 <div id="card" class="mx-auto relative w-80 ">
                     <div class="gradient-content h-[500px] bg-black rounded-lg overflow-hidden">
                         <div class="card-image-box">
