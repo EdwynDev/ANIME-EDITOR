@@ -189,7 +189,6 @@ include 'includes/header.php';
         const card = <?php echo json_encode($_SESSION['cards'] ?? []); ?>[index];
         const originalDiv = document.querySelector(`.card-${index}`);
         const buttonaction = originalDiv.querySelector('.button-action');
-
         buttonaction.style.display = 'none';
 
         if (card.cardType !== 'support') {
@@ -217,7 +216,6 @@ include 'includes/header.php';
                 link.download = `anime_card_${index}.png`;
                 link.href = dataUrl;
                 link.click();
-                buttonaction.style.display = 'flex';
             })
             .catch(function(error) {
                 console.error('Error:', error);
