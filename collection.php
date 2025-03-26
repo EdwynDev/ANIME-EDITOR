@@ -187,21 +187,7 @@ include 'includes/header.php';
 <script>
     function downloadCard(index) {
         const div = document.querySelector(`.card-${index}`);
-        html2canvas(div, {
-            allowTaint: true,
-            useCORS: true,
-            backgroundColor: null,
-            scale: 2, // Better quality
-            logging: false,
-            onclone: function(clonedDoc) {
-                // Ensure fonts are loaded in the cloned document
-                const card = clonedDoc.querySelector(`.card-${index}`);
-                if (card) {
-                    card.style.width = '320px';
-                    card.style.height = '500px';
-                }
-            }
-        }).then(canvas => {
+        html2canvas(div).then(function(canvas) {
             const img = canvas.toDataURL('image/png');
             const link = document.createElement('a');
             link.href = img;
