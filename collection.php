@@ -150,11 +150,11 @@ include 'includes/header.php';
                     <div class="flex justify-center mt-2 gap-2">
                         <button class="edit-card bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200"
                             onclick="editCard(<?php echo $index; ?>)">
-                            <i class="fas fa-edit mr-2"></i>Edit
+                            <i class="fas fa-edit"></i>
                         </button>
                         <button class="delete-card bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition duration-200"
                             onclick="deleteCard(<?php echo $index; ?>)">
-                            <i class="fas fa-trash-alt mr-2"></i>Delete
+                            <i class="fas fa-trash-alt"></i>
                         </button>
                         <button class="download-card bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition duration-200"
                             onclick="downloadCard(<?php echo $index; ?>)">
