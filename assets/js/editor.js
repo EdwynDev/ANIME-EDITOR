@@ -79,7 +79,6 @@ function updateCard() {
     document.getElementById('card-damage').innerText = formatNumberWithSuffix(parseInt(damage));
     document.getElementById('card-hp').innerText = formatNumberWithSuffix(parseInt(hp));
     
-    // Format card number with space separator
     const formattedNumber = formatCardNumber(cardNumber);
     document.getElementById('card-preview-number').innerText = `#${formattedNumber}`;
 
@@ -107,7 +106,6 @@ function updateFullCards() {
     const rarities = ['basic', 'gold', 'rainbow', 'secret'];
     const multipliers = [1, 4, 16, 64];
 
-    // Format card number with space separator
     const formattedNumber = formatCardNumber(cardNumber);
 
     rarities.forEach((rarity, index) => {
