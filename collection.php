@@ -184,8 +184,19 @@ include 'includes/header.php';
     </div>
 </div>
 
+<div id="downloadSpinner" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+    <div class="text-center">
+        <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
+        <p class="text-white mt-4">Downloading card...</p>
+    </div>
+</div>
+
 <script>
     function downloadCard(index) {
+        const spinner = document.getElementById('downloadSpinner');
+        spinner.classList.remove('hidden');
+        spinner.classList.add('flex');
+
         const card = <?php echo json_encode($_SESSION['cards'] ?? []); ?>[index];
         const originalDiv = document.querySelector(`.card-${index}`);
 
@@ -214,9 +225,14 @@ include 'includes/header.php';
             link.download = `anime_card_${index}.png`;
             link.href = dataUrl;
             link.click();
+            spinner.classList.remove('flex');
+            spinner.classList.add('hidden');
         })
         .catch(function (error) {
             console.error('Error:', error);
+            spinner.classList.remove('flex');
+            spinner.classList.add('hidden');
+            showModal('errorModal', 'Error downloading card');
         });
     }
 
