@@ -224,10 +224,25 @@ include 'includes/header.php';
 
                                     // Mise à jour des polices
                                     if (data.fonts) {
-                                        document.getElementById('nameFont').value = data.fonts.nameFont || 'Electrolize';
-                                        document.getElementById('skillFont').value = data.fonts.skillFont || 'Electrolize';
-                                        document.getElementById('descFont').value = data.fonts.descFont || 'Electrolize';
-                                        document.getElementById('statsFont').value = data.fonts.statsFont || 'Lilita One';
+                                        Object.entries(data.fonts).forEach(([type, font]) => {
+                                            const fontSelect = document.getElementById(`${type}`);
+                                            const customInput = document.getElementById(`custom${type}`);
+                                            
+                                            // Si ce n'est pas une police par défaut
+                                            if (font !== 'Electrolize' && font !== 'Lilita One') {
+                                                fontSelect.value = 'custom';
+                                                customInput.value = font;
+                                                customInput.classList.remove('hidden');
+                                                document.getElementById(`apply-${type}`).classList.remove('hidden');
+                                            } else {
+                                                fontSelect.value = font;
+                                            }
+                                            
+                                            // Applique la police
+                                            if (customInput.value) {
+                                                applyFontToCard(type.replace('Font', ''), font);
+                                            }
+                                        });
                                     }
 
                                     updateCard();
