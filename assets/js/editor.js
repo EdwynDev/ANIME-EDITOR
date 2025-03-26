@@ -58,6 +58,10 @@ function updateCardType() {
     updateCard();
 }
 
+function formatCardNumber(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}
+
 function updateCard() {
     const cardType = document.getElementById('cardType').value;
     const name = document.getElementById('name').value.trim() || 'N/A';
@@ -75,7 +79,9 @@ function updateCard() {
     document.getElementById('card-damage').innerText = formatNumberWithSuffix(parseInt(damage));
     document.getElementById('card-hp').innerText = formatNumberWithSuffix(parseInt(hp));
     
-    document.getElementById('card-preview-number').innerText = `#${cardNumber}`;
+    // Format card number with space separator
+    const formattedNumber = formatCardNumber(cardNumber);
+    document.getElementById('card-preview-number').innerText = `#${formattedNumber}`;
 
     if (imageUrl) {
         updateAllImages(imageUrl);
@@ -101,9 +107,12 @@ function updateFullCards() {
     const rarities = ['basic', 'gold', 'rainbow', 'secret'];
     const multipliers = [1, 4, 16, 64];
 
+    // Format card number with space separator
+    const formattedNumber = formatCardNumber(cardNumber);
+
     rarities.forEach((rarity, index) => {
         const multiplier = multipliers[index];
-        document.getElementById(`card-${rarity}-number`).innerText = `#${cardNumber}`;
+        document.getElementById(`card-${rarity}-number`).innerText = `#${formattedNumber}`;
         document.getElementById(`${rarity}-full-name`).innerText = name;
         document.getElementById(`${rarity}-full-skill`).innerText = skill;
         document.getElementById(`${rarity}-full-description`).innerText = description;
