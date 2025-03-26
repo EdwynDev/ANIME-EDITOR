@@ -72,9 +72,9 @@ function updateCard() {
     updateFullCards();
 
     if (cardType === 'support') {
-        document.getElementById('card-damage').parentElement.style.display = 'none';
+       dmgElement.parentElement.style.display = 'none';
     } else {
-        document.getElementById('card-damage').parentElement.style.display = 'flex';
+       dmgElement.parentElement.style.display = 'flex';
     }
 }
 
@@ -97,7 +97,6 @@ function updateFullCards() {
         document.getElementById(`${rarity}-full-skill`).innerText = skill;
         document.getElementById(`${rarity}-full-description`).innerText = description;
 
-        // Mise à jour des stats avec la structure DMG/HP + valeur
         const dmgElement = document.getElementById(`${rarity}-full-damage`);
         const hpElement = document.getElementById(`${rarity}-full-hp`);
 
