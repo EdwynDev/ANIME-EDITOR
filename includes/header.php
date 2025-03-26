@@ -30,7 +30,8 @@ header("X-Content-Type-Options: nosniff");
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.min.js"></script>
     <link rel="stylesheet" href="assets/css/modal.css">
-    <script></script>
+    <script src="https://cdn.jsdelivr.net/npm/dom-to-image@2.6.0/dist/dom-to-image.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/dom-to-image@2.6.0/bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Electrolize';

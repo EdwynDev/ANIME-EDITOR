@@ -187,12 +187,29 @@ include 'includes/header.php';
 <script>
     function downloadCard(index) {
         const div = document.querySelector(`.card-${index}`);
-        html2canvas(div).then(function(canvas) {
-            const img = canvas.toDataURL('image/png');
+        const scale = 2; // Augmente la qualité
+
+        const style = {
+            transform: 'scale(' + scale + ')',
+            transformOrigin: 'top left',
+            width: div.offsetWidth + "px",
+            height: div.offsetHeight + "px"
+        };
+
+        domtoimage.toPng(div, {
+            quality: 1,
+            width: div.offsetWidth * scale,
+            height: div.offsetHeight * scale,
+            style: style
+        })
+        .then(function (dataUrl) {
             const link = document.createElement('a');
-            link.href = img;
             link.download = `anime_card_${index}.png`;
+            link.href = dataUrl;
             link.click();
+        })
+        .catch(function (error) {
+            console.error('Error downloading card:', error);
         });
     }
 
