@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 header('Content-Type: application/json');
 
 try {
@@ -11,13 +10,15 @@ try {
         $data['imageUrl'] = 'https://placehold.co/320x500';
     }
 
-    // Add fonts to the card data
-    $data['fonts'] = [
-        'nameFont' => $_POST['nameFont'] ?? 'Electrolize',
-        'skillFont' => $_POST['skillFont'] ?? 'Electrolize',
-        'descFont' => $_POST['descFont'] ?? 'Electrolize',
-        'statsFont' => $_POST['statsFont'] ?? 'Lilita One'
-    ];
+    // S'assurer que les polices sont préservées du JSON envoyé
+    if (!isset($data['fonts'])) {
+        $data['fonts'] = [
+            'nameFont' => $data['fonts']['nameFont'] ?? 'Electrolize',
+            'skillFont' => $data['fonts']['skillFont'] ?? 'Electrolize',
+            'descFont' => $data['fonts']['descFont'] ?? 'Electrolize',
+            'statsFont' => $data['fonts']['statsFont'] ?? 'Lilita One'
+        ];
+    }
 
     if (!isset($_SESSION['cards'])) {
         $_SESSION['cards'] = [];
