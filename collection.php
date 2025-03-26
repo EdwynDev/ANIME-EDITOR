@@ -208,7 +208,6 @@ include 'includes/header.php';
             skipAutoScale: true,
             cacheBust: true,
             style: {
-                transform: 'scale(2)',
                 transformOrigin: 'top left',
             }
         })
