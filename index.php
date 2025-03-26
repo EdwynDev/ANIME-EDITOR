@@ -95,6 +95,62 @@ include 'includes/header.php';
                     </div>
                 </div>
 
+                <div class="space-y-4 p-4 bg-gray-800/50 rounded-lg">
+                    <h3 class="text-purple-300 font-bold">
+                        <i class="fas fa-font mr-2"></i>Font Customization
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-purple-300 text-sm mb-2">
+                                Card Name Font
+                            </label>
+                            <select id="nameFont" class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500" onchange="updateFonts()">
+                                <option value="Electrolize">Default (Electrolize)</option>
+                                <option value="custom">Custom Font</option>
+                            </select>
+                            <input id="customNameFont" type="text" placeholder="Google Fonts name or URL" 
+                                class="mt-2 w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
+                        </div>
+
+                        <div>
+                            <label class="block text-purple-300 text-sm mb-2">
+                                Skill Name Font
+                            </label>
+                            <select id="skillFont" class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500" onchange="updateFonts()">
+                                <option value="Electrolize">Default (Electrolize)</option>
+                                <option value="custom">Custom Font</option>
+                            </select>
+                            <input id="customSkillFont" type="text" placeholder="Google Fonts name or URL" 
+                                class="mt-2 w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
+                        </div>
+
+                        <div>
+                            <label class="block text-purple-300 text-sm mb-2">
+                                Description Font
+                            </label>
+                            <select id="descFont" class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500" onchange="updateFonts()">
+                                <option value="Electrolize">Default (Electrolize)</option>
+                                <option value="custom">Custom Font</option>
+                            </select>
+                            <input id="customDescFont" type="text" placeholder="Google Fonts name or URL" 
+                                class="mt-2 w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
+                        </div>
+
+                        <div>
+                            <label class="block text-purple-300 text-sm mb-2">
+                                Stats Font
+                            </label>
+                            <select id="statsFont" class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500" onchange="updateFonts()">
+                                <option value="Lilita One">Default (Lilita One)</option>
+                                <option value="custom">Custom Font</option>
+                            </select>
+                            <input id="customStatsFont" type="text" placeholder="Google Fonts name or URL" 
+                                class="mt-2 w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="flex gap-4">
                 <button id="save-button" 
@@ -209,7 +265,71 @@ include 'includes/header.php';
                     } else {
                         console.log('Bouton Save non trouvé !');
                     }
+
+                    const defaultFonts = {
+                        name: 'Electrolize',
+                        skill: 'Electrolize',
+                        desc: 'Electrolize',
+                        stats: 'Lilita One'
+                    };
+                    
+                    Object.entries(defaultFonts).forEach(([type, font]) => {
+                        applyFont(type, font);
+                    });
                 });
+
+                function updateFonts() {
+                    const elements = ['name', 'skill', 'desc', 'stats'];
+                    elements.forEach(type => {
+                        const select = document.getElementById(`${type}Font`);
+                        const customInput = document.getElementById(`custom${type}Font`);
+                        
+                        if (select.value === 'custom') {
+                            customInput.classList.remove('hidden');
+                            customInput.addEventListener('input', loadCustomFont);
+                        } else {
+                            customInput.classList.add('hidden');
+                            applyFont(type, select.value);
+                        }
+                    });
+                }
+
+                function loadCustomFont(e) {
+                    const fontName = e.target.value;
+                    if (fontName.includes('fonts.googleapis.com')) {
+                        // Handle Google Fonts URL
+                        const link = document.createElement('link');
+                        link.href = fontName;
+                        link.rel = 'stylesheet';
+                        document.head.appendChild(link);
+                    } else {
+                        // Handle Google Fonts name
+                        const link = document.createElement('link');
+                        link.href = `https://fonts.googleapis.com/css2?family=${fontName}&display=swap`;
+                        link.rel = 'stylesheet';
+                        document.head.appendChild(link);
+                    }
+                    
+                    const type = e.target.id.replace('custom', '').replace('Font', '').toLowerCase();
+                    applyFont(type, fontName);
+                }
+
+                function applyFont(type, fontFamily) {
+                    const cardData = {
+                        name: { element: 'card-name', style: 'text-stroke-bolder' },
+                        skill: { element: 'card-skill', style: 'text-stroke' },
+                        desc: { element: 'card-description', style: 'text-stroke' },
+                        stats: { element: ['card-damage', 'card-hp'] }
+                    };
+
+                    if (Array.isArray(cardData[type].element)) {
+                        cardData[type].element.forEach(el => {
+                            document.getElementById(el).style.fontFamily = `"${fontFamily}", sans-serif`;
+                        });
+                    } else {
+                        document.getElementById(cardData[type].element).style.fontFamily = `"${fontFamily}", sans-serif`;
+                    }
+                }
             </script>
         </div>
 

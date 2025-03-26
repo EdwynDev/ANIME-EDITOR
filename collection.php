@@ -81,7 +81,11 @@ include 'includes/header.php';
                     <div class="gradient-border-<?php echo strtolower($card['rarity'] ?? 'basic'); ?> p-2 shadow-<?php echo strtolower($card['rarity'] ?? 'basic'); ?>">
                         <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
                             <div class="card-image-box">
-                                <img src="<?php echo htmlspecialchars($card['imageUrl']); ?>" alt="Card Image" />
+                                <img src="<?php echo htmlspecialchars($card['imageUrl']); ?>" 
+                                    alt="Card Image" 
+                                    class="absolute inset-0 w-full h-full object-cover"
+                                    onerror="this.src='https://placehold.co/320x500'"
+                                />
                             </div>
                             <div class="absolute top-2 left-2 bg-<?php echo strtolower($card['rarity'] ?? 'basic'); ?> text-black text-xs font-bold px-2 py-1 rounded">
                                 <?php echo strtoupper($card['rarity'] ?? 'basic'); ?>
