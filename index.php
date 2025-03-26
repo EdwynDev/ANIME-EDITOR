@@ -523,7 +523,7 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-10">
+            <div class="all-rarity grid grid-cols-2 gap-10">
                 <div class="gradient-border-basic p-1 shadow-basic rarity-card" tabindex="0">
                     <div class="rarity-preview">
                         <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">

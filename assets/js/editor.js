@@ -32,7 +32,9 @@ function handleImageUpload() {
 
 function updateCardType() {
     const statsContainer = document.getElementById('stats-container');
+    const allRarity = document.querySelector('.all-rarity');
     statsContainer.style.display = cardType === 'support' ? 'none' : 'grid';
+    allRarity.style.display = 'grid';
     updateCard();
 }
 
