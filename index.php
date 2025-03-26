@@ -108,7 +108,7 @@ include 'includes/header.php';
                     <h3 class="text-purple-300 font-bold">
                         <i class="fas fa-font mr-2"></i>Font Customization
                     </h3>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-purple-300 text-sm mb-2">
@@ -118,7 +118,7 @@ include 'includes/header.php';
                                 <option value="Electrolize">Default (Electrolize)</option>
                                 <option value="custom">Custom Font</option>
                             </select>
-                            <input id="customNameFont" type="text" placeholder="Google Fonts name or URL" 
+                            <input id="customnameFont" type="text" placeholder="Google Fonts name or URL"
                                 class="mt-2 w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
                         </div>
 
@@ -130,7 +130,7 @@ include 'includes/header.php';
                                 <option value="Electrolize">Default (Electrolize)</option>
                                 <option value="custom">Custom Font</option>
                             </select>
-                            <input id="customSkillFont" type="text" placeholder="Google Fonts name or URL" 
+                            <input id="customskillFont" type="text" placeholder="Google Fonts name or URL"
                                 class="mt-2 w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
                         </div>
 
@@ -142,7 +142,7 @@ include 'includes/header.php';
                                 <option value="Electrolize">Default (Electrolize)</option>
                                 <option value="custom">Custom Font</option>
                             </select>
-                            <input id="customDescFont" type="text" placeholder="Google Fonts name or URL" 
+                            <input id="customdescFont" type="text" placeholder="Google Fonts name or URL"
                                 class="mt-2 w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
                         </div>
 
@@ -154,7 +154,7 @@ include 'includes/header.php';
                                 <option value="Lilita One">Default (Lilita One)</option>
                                 <option value="custom">Custom Font</option>
                             </select>
-                            <input id="customStatsFont" type="text" placeholder="Google Fonts name or URL" 
+                            <input id="customstatsFont" type="text" placeholder="Google Fonts name or URL"
                                 class="mt-2 w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
                         </div>
                     </div>
@@ -162,14 +162,14 @@ include 'includes/header.php';
 
             </div>
             <div class="flex gap-4">
-                <button id="save-button" 
+                <button id="save-button"
                     class="text-white hover:text-purple-400 group relative">
                     <i class="fas fa-save mr-1"></i>Save in your collection
                     <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
                         Save this card to view it later in your collection page
                     </span>
                 </button>
-                <button id="edit-button" 
+                <button id="edit-button"
                     class="text-white hover:text-blue-400 group relative hidden">
                     <i class="fas fa-edit mr-1"></i>Save Edit
                     <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
@@ -183,11 +183,11 @@ include 'includes/header.php';
                     const editButton = document.getElementById('edit-button');
                     const urlParams = new URLSearchParams(window.location.search);
                     const editIndex = urlParams.get('edit');
-                    
+
                     if (editIndex !== null) {
                         saveButton.classList.add('hidden');
                         editButton.classList.remove('hidden');
-                        
+
                         fetch(`load_card.php?index=${editIndex}`)
                             .then(response => response.json())
                             .then(data => {
@@ -201,9 +201,9 @@ include 'includes/header.php';
                                     document.getElementById('hp').value = data.hp || '';
                                     document.getElementById('cardType').value = data.cardType;
                                     document.getElementById('cardNumber').value = data.cardNumber || '0';
-                                    
+
                                     updateCard();
-                                    
+
                                     editButton.addEventListener('click', function() {
                                         const cardData = {
                                             index: editIndex,
@@ -219,26 +219,26 @@ include 'includes/header.php';
                                         };
 
                                         fetch('update_card.php', {
-                                            method: 'POST',
-                                            headers: {
-                                                'Content-Type': 'application/json',
-                                            },
-                                            body: JSON.stringify(cardData)
-                                        })
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            if (data.success) {
-                                                showModal('successModal', 'Card updated successfully !');
-                                                setTimeout(() => {
-                                                    window.location.href = '/collection.php';
-                                                }, 1500);
-                                            }
-                                        });
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                },
+                                                body: JSON.stringify(cardData)
+                                            })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                if (data.success) {
+                                                    showModal('successModal', 'Card updated successfully !');
+                                                    setTimeout(() => {
+                                                        window.location.href = '/collection.php';
+                                                    }, 1500);
+                                                }
+                                            });
                                     });
                                 }
                             });
                     }
-                    
+
                     if (saveButton) {
                         saveButton.addEventListener('click', function() {
                             try {
@@ -284,7 +284,7 @@ include 'includes/header.php';
                         desc: 'Electrolize',
                         stats: 'Lilita One'
                     };
-                    
+
                     Object.entries(defaultFonts).forEach(([type, font]) => {
                         applyFont(type, font);
                     });
@@ -295,7 +295,7 @@ include 'includes/header.php';
                     elements.forEach(type => {
                         const select = document.getElementById(`${type}Font`);
                         const customInput = document.getElementById(`custom${type}Font`);
-                        
+
                         if (select.value === 'custom') {
                             customInput.classList.remove('hidden');
                             if (!customInput.hasAttribute('data-has-listener')) {
@@ -326,12 +326,12 @@ include 'includes/header.php';
                             applyFont(type, fontFamily);
                         }
                     } else {
-                        
+
                         const link = document.createElement('link');
                         link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontName)}&display=swap`;
                         link.rel = 'stylesheet';
                         document.head.appendChild(link);
-                        
+
                         const type = e.target.id.replace('custom', '').replace('Font', '').toLowerCase();
                         applyFont(type, fontName);
                     }
@@ -339,10 +339,21 @@ include 'includes/header.php';
 
                 function applyFont(type, fontFamily) {
                     const cardData = {
-                        name: { element: 'card-name', style: 'text-stroke-bolder' },
-                        skill: { element: 'card-skill', style: 'text-stroke' },
-                        desc: { element: 'card-description', style: 'text-stroke' },
-                        stats: { element: ['card-damage', 'card-hp'] }
+                        name: {
+                            element: 'card-name',
+                            style: 'text-stroke-bolder'
+                        },
+                        skill: {
+                            element: 'card-skill',
+                            style: 'text-stroke'
+                        },
+                        desc: {
+                            element: 'card-description',
+                            style: 'text-stroke'
+                        },
+                        stats: {
+                            element: ['card-damage', 'card-hp']
+                        }
                     };
 
                     if (Array.isArray(cardData[type].element)) {
