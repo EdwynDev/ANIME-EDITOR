@@ -95,6 +95,15 @@ include 'includes/header.php';
                     </div>
                 </div>
 
+                <div>
+                    <label class="block text-purple-300 text-sm mb-2">
+                        <i class="fas fa-hashtag mr-2"></i>Card Number
+                    </label>
+                    <input id="cardNumber" type="number" min="0"
+                        class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 focus:border-purple-300 focus:ring-2 focus:ring-purple-300 outline-none"
+                        placeholder="Card number" oninput="updateCard()">
+                </div>
+
                 <div class="space-y-4 p-4 bg-gray-800/50 rounded-lg">
                     <h3 class="text-purple-300 font-bold">
                         <i class="fas fa-font mr-2"></i>Font Customization
@@ -191,6 +200,7 @@ include 'includes/header.php';
                                     document.getElementById('damage').value = data.damage || '';
                                     document.getElementById('hp').value = data.hp || '';
                                     document.getElementById('cardType').value = data.cardType;
+                                    document.getElementById('cardNumber').value = data.cardNumber || '0';
                                     
                                     updateCard();
                                     
@@ -204,7 +214,8 @@ include 'includes/header.php';
                                             probability: parseFloat(document.getElementById('probability').value) || 1,
                                             damage: document.getElementById('damage').value || '0',
                                             hp: document.getElementById('hp').value || '0',
-                                            cardType: document.getElementById('cardType').value
+                                            cardType: document.getElementById('cardType').value,
+                                            cardNumber: parseInt(document.getElementById('cardNumber').value) || 0
                                         };
 
                                         fetch('update_card.php', {
@@ -239,7 +250,8 @@ include 'includes/header.php';
                                     probability: parseFloat(document.getElementById('probability').value) || 1,
                                     damage: document.getElementById('damage').value || '0',
                                     hp: document.getElementById('hp').value || '0',
-                                    cardType: document.getElementById('cardType').value
+                                    cardType: document.getElementById('cardType').value,
+                                    cardNumber: parseInt(document.getElementById('cardNumber').value) || 0
                                 };
 
                                 fetch('save_card.php', {
@@ -346,7 +358,7 @@ include 'includes/header.php';
                         <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
                             <span id="card-name" class="text-stroke-bolder">N/A</span>
                         </div>
-                        <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                        <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient card-number">
                             #0
                         </div>
                         <div class="absolute bottom-16 left-2 right-2 px-2">
@@ -402,7 +414,7 @@ include 'includes/header.php';
                                     <span id="basic-full-name" class="text-stroke-bolder">N/A</span>
                                 </div>
                                 <div
-                                    class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                                    class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient card-number">
                                     #0</div>
                                 <div class="absolute bottom-16 left-2 right-2 px-2">
                                     <p><span id="basic-full-skill"
@@ -454,7 +466,7 @@ include 'includes/header.php';
                                     <span id="gold-full-name" class="text-stroke-bolder">N/A</span>
                                 </div>
                                 <div
-                                    class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                                    class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient card-number">
                                     #0</div>
                                 <div class="absolute bottom-16 left-2 right-2 px-2">
                                     <p><span id="gold-full-skill"
@@ -504,7 +516,7 @@ include 'includes/header.php';
                                     <span id="rainbow-full-name" class="text-stroke-bolder">N/A</span>
                                 </div>
                                 <div
-                                    class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                                    class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient card-number">
                                     #0</div>
                                 <div class="absolute bottom-16 left-2 right-2 px-2">
                                     <p><span id="rainbow-full-skill"
@@ -556,7 +568,7 @@ include 'includes/header.php';
                                     <span id="secret-full-name" class="text-stroke-bolder">N/A</span>
                                 </div>
                                 <div
-                                    class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                                    class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient card-number">
                                     #0</div>
                                 <div class="absolute bottom-16 left-2 right-2 px-2">
                                     <p><span id="secret-full-skill"

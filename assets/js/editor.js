@@ -67,12 +67,19 @@ function updateCard() {
     const probability = parseFloat(document.getElementById('probability').value) || 1;
     const damage = document.getElementById('damage').value || '0';
     const hp = document.getElementById('hp').value || '0';
+    const cardNumber = document.getElementById('cardNumber').value || '0';
 
+    // Update card elements
     document.getElementById('card-name').innerText = name;
     document.getElementById('card-skill').innerText = skill;
     document.getElementById('card-description').innerText = description;
     document.getElementById('card-damage').innerText = formatNumberWithSuffix(parseInt(damage));
     document.getElementById('card-hp').innerText = formatNumberWithSuffix(parseInt(hp));
+    
+    // Update card numbers on all cards
+    document.querySelectorAll('.card-number').forEach(el => {
+        el.innerText = `#${cardNumber}`;
+    });
 
     if (imageUrl) {
         updateAllImages(imageUrl);

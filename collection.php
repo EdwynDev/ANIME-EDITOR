@@ -94,7 +94,7 @@ include 'includes/header.php';
                                 <span class="text-stroke-bolder"><?php echo htmlspecialchars($card['name']); ?></span>
                             </div>
                             <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
-                                #<?php echo $index; ?>
+                                #<?php echo htmlspecialchars($card['cardNumber'] ?? $index); ?>
                             </div>
                             <div class="absolute bottom-16 left-2 right-2 px-2">
                                 <p><span class="text-xl text-white font-bold text-linear-gradient text-stroke">
