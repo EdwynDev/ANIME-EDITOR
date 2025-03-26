@@ -187,7 +187,7 @@ include 'includes/header.php';
 <script>
     function downloadCard(index) {
         const div = document.querySelector(`.card-${index}`);
-        html2canvas(div).then(function(canvas) {
+        html2canvas(document.body).then(function(canvas) {
             const img = canvas.toDataURL('image/png');
             const link = document.createElement('a');
             link.href = img;
