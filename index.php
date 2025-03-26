@@ -118,11 +118,11 @@ include 'includes/header.php';
                                 <option value="Electrolize">Default (Electrolize)</option>
                                 <option value="custom">Custom Font</option>
                             </select>
-                            <input id="customnameFont" type="text" placeholder="Google Fonts name or URL" 
+                            <input id="customNameFont" type="text" placeholder="Google Fonts name or URL" 
                                 class="mt-2 w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
                         </div>
 
-                        <div></div>
+                        <div>
                             <label class="block text-purple-300 text-sm mb-2">
                                 Skill Name Font
                             </label>
@@ -130,7 +130,7 @@ include 'includes/header.php';
                                 <option value="Electrolize">Default (Electrolize)</option>
                                 <option value="custom">Custom Font</option>
                             </select>
-                            <input id="customskillFont" type="text" placeholder="Google Fonts name or URL" 
+                            <input id="customSkillFont" type="text" placeholder="Google Fonts name or URL" 
                                 class="mt-2 w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
                         </div>
 
@@ -142,7 +142,7 @@ include 'includes/header.php';
                                 <option value="Electrolize">Default (Electrolize)</option>
                                 <option value="custom">Custom Font</option>
                             </select>
-                            <input id="customdescFont" type="text" placeholder="Google Fonts name or URL" 
+                            <input id="customDescFont" type="text" placeholder="Google Fonts name or URL" 
                                 class="mt-2 w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
                         </div>
 
@@ -154,7 +154,7 @@ include 'includes/header.php';
                                 <option value="Lilita One">Default (Lilita One)</option>
                                 <option value="custom">Custom Font</option>
                             </select>
-                            <input id="customstatsFont" type="text" placeholder="Google Fonts name or URL" 
+                            <input id="customStatsFont" type="text" placeholder="Google Fonts name or URL" 
                                 class="mt-2 w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
                         </div>
                     </div>
@@ -353,53 +353,42 @@ include 'includes/header.php';
                         document.getElementById(cardData[type].element).style.fontFamily = `"${fontFamily}", sans-serif`;
                     }
                 }
-
-                function downloadCard(cardId) {
-                    const cardElement = document.getElementById(cardId);
-                    html2canvas(cardElement).then(canvas => {
-                        const link = document.createElement('a');
-                        link.href = canvas.toDataURL('image/png');
-                        link.download = `${cardId}.png`;
-                        link.click();
-                    });
-                }
             </script>
         </div>
 
         <div class="space-y-6 flex flex-col items-center">
             <div class="gradient-border-basic p-2 shadow-basic">
-                <button onclick="downloadCard('main-card')" class="absolute top-2 right-12 z-10 text-white hover:text-purple-400">
-                    <i class="fas fa-download"></i>
-                </button>
-                <div id="main-card" class="gradient-content h-[500px] bg-black rounded-lg overflow-hidden">
-                    <div class="card-image-box">
-                        <img id="card-image" src="https://placehold.co/320x500" />
-                    </div>
-                    <div class="absolute top-2 left-2 bg-basic text-black text-xs font-bold px-2 py-1 rounded">
-                        <span id="card-rarity">BASIC</span>
-                    </div>
-                    <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
-                        <span id="card-name" class="text-stroke-bolder">N/A</span>
-                    </div>
-                    <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
-                        <span id="card-preview-number">#0</span>
-                    </div>
-                    <div class="absolute bottom-16 left-2 right-2 px-2">
-                        <p>
-                            <span id="card-skill"
-                                class="text-xl text-white font-bold text-linear-gradient text-stroke">N/A</span>
-                        </p>
-                        <p class="mt-3">
-                            <span id="card-description"
-                                class="text-xs text-white font-bold text-linear-gradient text-stroke">N/A</span>
-                        </p>
-                    </div>
-                    <div class="absolute bottom-2 w-full px-4 flex justify-between">
-                        <div class="stat-dmg font-bold text-lg">
-                            DMG <span id="card-damage">0</span>
+                <div id="card" class="mx-auto relative w-80 ">
+                    <div class="gradient-content h-[500px] bg-black rounded-lg overflow-hidden">
+                        <div class="card-image-box">
+                            <img id="card-image" src="https://placehold.co/320x500" />
                         </div>
-                        <div class="stat-hp font-bold text-lg">
-                            HP <span id="card-hp">0</span>
+                        <div class="absolute top-2 left-2 bg-basic text-black text-xs font-bold px-2 py-1 rounded">
+                            <span id="card-rarity">BASIC</span>
+                        </div>
+                        <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
+                            <span id="card-name" class="text-stroke-bolder">N/A</span>
+                        </div>
+                        <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
+                            <span id="card-preview-number">#0</span>
+                        </div>
+                        <div class="absolute bottom-16 left-2 right-2 px-2">
+                            <p>
+                                <span id="card-skill"
+                                    class="text-xl text-white font-bold text-linear-gradient text-stroke">N/A</span>
+                            </p>
+                            <p class="mt-3">
+                                <span id="card-description"
+                                    class="text-xs text-white font-bold text-linear-gradient text-stroke">N/A</span>
+                            </p>
+                        </div>
+                        <div class="absolute bottom-2 w-full px-4 flex justify-between">
+                            <div class="stat-dmg font-bold text-lg">
+                                DMG <span id="card-damage">0</span>
+                            </div>
+                            <div class="stat-hp font-bold text-lg">
+                                HP <span id="card-hp">0</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -424,10 +413,7 @@ include 'includes/header.php';
                     </div>
                     <div class="full-card">
                         <div class="gradient-border-basic p-2 shadow-basic">
-                            <button onclick="downloadCard('basic-card')" class="absolute top-2 right-12 z-10 text-white hover:text-purple-400">
-                                <i class="fas fa-download"></i>
-                            </button>
-                            <div id="basic-card" class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
+                            <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
                                 <div class="card-image-box">
                                     <img id="basic-full-image" src="https://placehold.co/320x500" />
                                 </div>
@@ -479,10 +465,7 @@ include 'includes/header.php';
                     </div>
                     <div class="full-card">
                         <div class="gradient-border-gold p-2 shadow-gold">
-                            <button onclick="downloadCard('gold-card')" class="absolute top-2 right-12 z-10 text-white hover:text-purple-400">
-                                <i class="fas fa-download"></i>
-                            </button>
-                            <div id="gold-card" class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
+                            <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
                                 <div class="card-image-box">
                                     <img id="gold-full-image" src="https://placehold.co/320x500" />
                                 </div>
@@ -497,6 +480,23 @@ include 'includes/header.php';
                                     <span id="card-gold-number">#0</span>
                                 </div>
                                 <div class="absolute bottom-16 left-2 right-2 px-2">
+                                    <p><span id="gold-full-skill"
+                                            class="text-xl text-white font-bold text-linear-gradient text-stroke">N/A</span>
+                                    </p>
+                                    <p class="mt-3 mb-12"><span id="gold-full-description"
+                                            class="text-xs text-white font-bold text-linear-gradient text-stroke">N/A</span>
+                                    </p>
+                                </div>
+                                <div class="absolute bottom-2 w-full px-4 flex justify-between">
+                                    <div class="stat-dmg font-bold text-lg">DMG <span id="gold-full-damage">0</span>
+                                    </div>
+                                    <div class="stat-hp font-bold text-lg">HP <span id="gold-full-hp">0</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="gradient-border-rainbow p-1 shadow-rainbow rarity-card" tabindex="0">
                     <div class="rarity-preview">
                         <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
