@@ -186,64 +186,64 @@ include 'includes/header.php';
 
 <script>
     function downloadCard(index) {
+        const card = <?php echo json_encode($_SESSION['cards'] ?? []); ?>[index];
         const originalDiv = document.querySelector(`.card-${index}`);
-        const clonedDiv = originalDiv.cloneNode(true);
-
-        // Forcer le rendu des valeurs DMG et HP
-        const dmgElement = clonedDiv.querySelector(`#stat-dmg-${index}`);
-        const hpElement = clonedDiv.querySelector(`#stat-hp-${index}`);
-        const originalDmgValue = document.getElementById(`stat-dmg-${index}`).innerText;
-        const originalHpValue = document.getElementById(`stat-hp-${index}`).innerText;
-
-        dmgElement.innerText = originalDmgValue;
-        hpElement.innerText = originalHpValue;
-
-        // Créer un conteneur temporaire pour le clone
+        
+        // Créer un conteneur temporaire
         const container = document.createElement('div');
-        container.style.position = 'absolute';
-        container.style.left = '-9999px';
-        container.style.top = '0';
+        container.style.cssText = 'position: fixed; left: -9999px; top: 0; z-index: -1;';
+        
+        // Cloner la carte
+        const clonedDiv = originalDiv.cloneNode(true);
         container.appendChild(clonedDiv);
         document.body.appendChild(container);
 
-        // Attendre que les images soient complètement chargées
-        const images = clonedDiv.querySelectorAll('img');
-        const imagePromises = Array.from(images).map(img => {
-            return new Promise(resolve => {
-                if (img.complete) {
-                    resolve();
-                } else {
-                    img.onload = resolve;
-                    img.onerror = resolve;
-                }
+        // Forcer les valeurs DMG/HP dans le clone
+        if (card.cardType !== 'support') {
+            const dmgValue = formatNumberWithSuffix(card.damage);
+            const hpValue = formatNumberWithSuffix(card.hp);
+            clonedDiv.querySelector('.stat-dmg').innerHTML = `DMG <span>${dmgValue}</span>`;
+            clonedDiv.querySelector('.stat-hp').innerHTML = `HP <span>${hpValue}</span>`;
+            
+            // Forcer les polices
+            Array.from(clonedDiv.querySelectorAll('[style*="font-family"]')).forEach(el => {
+                el.style.fontFamily = window.getComputedStyle(el).fontFamily;
             });
-        });
+        }
 
-        Promise.all(imagePromises).then(() => {
-            domtoimage.toPng(clonedDiv, {
-                quality: 1,
-                width: originalDiv.offsetWidth * 2,
-                height: originalDiv.offsetHeight * 2,
-                style: {
-                    transform: 'scale(2)',
-                    transformOrigin: 'top left',
-                }
-            })
-            .then(function (dataUrl) {
-                const link = document.createElement('a');
-                link.download = `anime_card_${index}.png`;
-                link.href = dataUrl;
-                link.click();
-
-                // Supprimer le conteneur temporaire après capture
-                document.body.removeChild(container);
-            })
-            .catch(function (error) {
-                console.error('Error downloading card:', error);
-
-                // Supprimer le conteneur temporaire en cas d'erreur
-                document.body.removeChild(container);
-            });
+        // Attendre le chargement complet
+        Promise.all([
+            document.fonts.ready,
+            ...Array.from(clonedDiv.querySelectorAll('img')).map(img => 
+                new Promise(resolve => {
+                    if (img.complete) resolve();
+                    else img.onload = () => resolve();
+                })
+            )
+        ]).then(() => {
+            // Petit délai pour s'assurer du rendu
+            setTimeout(() => {
+                domtoimage.toPng(clonedDiv, {
+                    quality: 1,
+                    width: originalDiv.offsetWidth * 2,
+                    height: originalDiv.offsetHeight * 2,
+                    style: {
+                        transform: 'scale(2)',
+                        transformOrigin: 'top left'
+                    }
+                })
+                .then(dataUrl => {
+                    const link = document.createElement('a');
+                    link.download = `anime_card_${index}.png`;
+                    link.href = dataUrl;
+                    link.click();
+                    document.body.removeChild(container);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.body.removeChild(container);
+                });
+            }, 100);
         });
     }
 
