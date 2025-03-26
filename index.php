@@ -196,9 +196,61 @@ include 'includes/header.php';
                         Update this card in your collection
                     </span>
                 </button>
+                <button onclick="downloadPreview()"
+                    class="text-white hover:text-green-400 group relative">
+                    <i class="fas fa-download mr-1"></i>Download Preview
+                    <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
+                        Download the current card preview as image
+                    </span>
+                </button>
             </div>
             <script>
+                function downloadPreview() {
+                    const spinner = document.getElementById('downloadSpinner');
+                    spinner.classList.remove('hidden');
+                    spinner.classList.add('flex');
+
+                    const previewCard = document.getElementById('card-preview');
+
+                    if (document.getElementById('cardType').value !== 'support') {
+                        const dmgValue = formatNumberWithSuffix(parseInt(document.getElementById('damage').value) || 0);
+                        const hpValue = formatNumberWithSuffix(parseInt(document.getElementById('hp').value) || 0);
+
+                        const dmgSpan = previewCard.querySelector('#card-damage span');
+                        const hpSpan = previewCard.querySelector('#card-hp span');
+
+                        dmgSpan.innerText = dmgValue;
+                        hpSpan.innerText = hpValue;
+                    }
+
+                    htmlToImage.toPng(previewCard, {
+                            quality: 1,
+                            pixelRatio: 2,
+                            skipAutoScale: true,
+                            cacheBust: true,
+                            style: {
+                                transformOrigin: 'top left',
+                            }
+                        })
+                        .then(function(dataUrl) {
+                            const link = document.createElement('a');
+                            const cardName = document.getElementById('name').value.trim() || 'card';
+                            link.download = `anime_card_${cardName}.png`;
+                            link.href = dataUrl;
+                            link.click();
+                            spinner.classList.remove('flex');
+                            spinner.classList.add('hidden');
+                        })
+                        .catch(function(error) {
+                            console.error('Error:', error);
+                            spinner.classList.remove('flex');
+                            spinner.classList.add('hidden');
+                            showModal('errorModal', 'Error downloading card');
+                        });
+                }
+
                 document.addEventListener('DOMContentLoaded', function() {
+
                     const saveButton = document.getElementById('save-button');
                     const editButton = document.getElementById('edit-button');
                     const urlParams = new URLSearchParams(window.location.search);
@@ -229,10 +281,10 @@ include 'includes/header.php';
                                             const customInput = document.getElementById(`custom${fontKey}`);
                                             const applyButton = document.getElementById(`apply-${fontKey}`);
                                             const fontValue = data.fonts[fontKey];
-                                            
-                                            const isDefaultFont = type === 'stats' 
-                                                ? fontValue === 'Lilita One'
-                                                : fontValue === 'Electrolize';
+
+                                            const isDefaultFont = type === 'stats' ?
+                                                fontValue === 'Lilita One' :
+                                                fontValue === 'Electrolize';
 
                                             if (!isDefaultFont) {
                                                 fontSelect.value = 'custom';
@@ -242,7 +294,7 @@ include 'includes/header.php';
                                             } else {
                                                 fontSelect.value = fontValue;
                                             }
-                                            
+
                                             applyFontToCard(type, fontValue);
                                         });
                                     }
@@ -263,18 +315,14 @@ include 'includes/header.php';
                                             cardType: document.getElementById('cardType').value,
                                             cardNumber: parseInt(document.getElementById('cardNumber').value) || 0,
                                             fonts: {
-                                                nameFont: document.getElementById('nameFont').value === 'custom' 
-                                                    ? document.getElementById('customnameFont').value || 'Electrolize'
-                                                    : document.getElementById('nameFont').value,
-                                                skillFont: document.getElementById('skillFont').value === 'custom'
-                                                    ? document.getElementById('customskillFont').value || 'Electrolize'
-                                                    : document.getElementById('skillFont').value,
-                                                descFont: document.getElementById('descFont').value === 'custom'
-                                                    ? document.getElementById('customdescFont').value || 'Electrolize'
-                                                    : document.getElementById('descFont').value,
-                                                statsFont: document.getElementById('statsFont').value === 'custom'
-                                                    ? document.getElementById('customstatsFont').value || 'Lilita One'
-                                                    : document.getElementById('statsFont').value
+                                                nameFont: document.getElementById('nameFont').value === 'custom' ?
+                                                    document.getElementById('customnameFont').value || 'Electrolize' : document.getElementById('nameFont').value,
+                                                skillFont: document.getElementById('skillFont').value === 'custom' ?
+                                                    document.getElementById('customskillFont').value || 'Electrolize' : document.getElementById('skillFont').value,
+                                                descFont: document.getElementById('descFont').value === 'custom' ?
+                                                    document.getElementById('customdescFont').value || 'Electrolize' : document.getElementById('descFont').value,
+                                                statsFont: document.getElementById('statsFont').value === 'custom' ?
+                                                    document.getElementById('customstatsFont').value || 'Lilita One' : document.getElementById('statsFont').value
                                             }
                                         };
 
@@ -314,18 +362,14 @@ include 'includes/header.php';
                                     cardType: document.getElementById('cardType').value,
                                     cardNumber: parseInt(document.getElementById('cardNumber').value) || 0,
                                     fonts: {
-                                        nameFont: document.getElementById('nameFont').value === 'custom' 
-                                            ? document.getElementById('customnameFont').value || 'Electrolize'
-                                            : document.getElementById('nameFont').value,
-                                        skillFont: document.getElementById('skillFont').value === 'custom'
-                                            ? document.getElementById('customskillFont').value || 'Electrolize'
-                                            : document.getElementById('skillFont').value,
-                                        descFont: document.getElementById('descFont').value === 'custom'
-                                            ? document.getElementById('customdescFont').value || 'Electrolize'
-                                            : document.getElementById('descFont').value,
-                                        statsFont: document.getElementById('statsFont').value === 'custom'
-                                            ? document.getElementById('customstatsFont').value || 'Lilita One'
-                                            : document.getElementById('statsFont').value
+                                        nameFont: document.getElementById('nameFont').value === 'custom' ?
+                                            document.getElementById('customnameFont').value || 'Electrolize' : document.getElementById('nameFont').value,
+                                        skillFont: document.getElementById('skillFont').value === 'custom' ?
+                                            document.getElementById('customskillFont').value || 'Electrolize' : document.getElementById('skillFont').value,
+                                        descFont: document.getElementById('descFont').value === 'custom' ?
+                                            document.getElementById('customdescFont').value || 'Electrolize' : document.getElementById('descFont').value,
+                                        statsFont: document.getElementById('statsFont').value === 'custom' ?
+                                            document.getElementById('customstatsFont').value || 'Lilita One' : document.getElementById('statsFont').value
                                     }
                                 };
 
@@ -437,9 +481,16 @@ include 'includes/header.php';
                 }
             </script>
         </div>
+        
+        <div id="downloadSpinner" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+            <div class="text-center">
+                <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
+                <p class="text-white mt-4">Downloading card...</p>
+            </div>
+        </div>
 
-        <div class="space-y-6 flex flex-col items-center">
-            <div class="gradient-border-basic p-2 shadow-basic">
+        <div class="card-preview-all space-y-6 flex flex-col items-center">
+            <div class="card-preview gradient-border-basic p-2 shadow-basic">
                 <div id="card" class="mx-auto relative w-80 ">
                     <div class="gradient-content h-[500px] bg-black rounded-lg overflow-hidden">
                         <div class="card-image-box">
