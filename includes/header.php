@@ -141,7 +141,7 @@ header("X-Content-Type-Options: nosniff");
             -webkit-background-clip: text;
             background-image: linear-gradient(180deg, #e37d80 0%, #d14647 100%);
             text-shadow: none;
-            }
+        }
 
         .stat-hp {
             font-family: "Lilita One";
@@ -151,7 +151,7 @@ header("X-Content-Type-Options: nosniff");
             -webkit-background-clip: text;
             background-image: linear-gradient(180deg, #7db380 0%, #458c49 100%);
             text-shadow: none;
-            }
+        }
 
         @keyframes rotatingShadow {
             0% {

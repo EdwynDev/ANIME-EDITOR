@@ -187,33 +187,36 @@ include 'includes/header.php';
 <script>
     function downloadCard(index) {
         const div = document.querySelector(`.card-${index}`);
-        document.fonts.ready.then(() => {
-            const dmgSpan = document.getElementById(`stat-dmg-${index}`);
-            const hpSpan = document.getElementById(`stat-hp-${index}`);
-            if (dmgSpan) dmgSpan.style.visibility = 'visible';
-            if (hpSpan) hpSpan.style.visibility = 'visible';
+        
+        const dmgElement = document.getElementById(`stat-dmg-${index}`);
+        const hpElement = document.getElementById(`stat-hp-${index}`);
+        const dmgValue = dmgElement.textContent;
+        const hpValue = hpElement.textContent;
 
-            domtoimage.toBlob(div, {
+        document.fonts.ready.then(() => {
+            domtoimage.toPng(div, {
                 quality: 1,
                 bgcolor: 'transparent',
-                height: div.offsetHeight,
-                width: div.offsetWidth,
                 style: {
-                    transformOrigin: 'top left',
+                    'transform': 'scale(2)',
+                    'transform-origin': 'top left',
                 },
+                width: div.offsetWidth * 2,
+                height: div.offsetHeight * 2,
                 filter: (node) => {
-                    return true;
+                    return (node.tagName !== 'BUTTON');
                 }
             })
-            .then(function(blob) {
-                const url = URL.createObjectURL(blob);
+            .then(function (dataUrl) {
+                if (dmgElement.textContent !== dmgValue) dmgElement.textContent = dmgValue;
+                if (hpElement.textContent !== hpValue) hpElement.textContent = hpValue;
+
                 const link = document.createElement('a');
                 link.download = `anime_card_${index}.png`;
-                link.href = url;
+                link.href = dataUrl;
                 link.click();
-                URL.revokeObjectURL(url);
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 console.error('Error downloading card:', error);
             });
         });
