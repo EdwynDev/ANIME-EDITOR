@@ -190,11 +190,9 @@ include 'includes/header.php';
         const dmgElement = document.getElementById(`stat-dmg-${index}`);
         const hpElement = document.getElementById(`stat-hp-${index}`);
 
-        // Forcer le rendu des valeurs DMG et HP
         const dmgValue = dmgElement.innerText;
         const hpValue = hpElement.innerText;
 
-        // Appliquer les styles dynamiques
         const style = {
             transform: 'scale(2)',
             transformOrigin: 'top left',
@@ -203,7 +201,6 @@ include 'includes/header.php';
             fontFamily: window.getComputedStyle(div).fontFamily,
         };
 
-        // Ajouter les valeurs DMG et HP dans le DOM avant la capture
         dmgElement.innerText = dmgValue;
         hpElement.innerText = hpValue;
 
