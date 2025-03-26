@@ -481,7 +481,7 @@ include 'includes/header.php';
                 }
             </script>
         </div>
-        
+
         <div id="downloadSpinner" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
             <div class="text-center">
                 <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
@@ -489,8 +489,8 @@ include 'includes/header.php';
             </div>
         </div>
 
-        <div class="card-preview-all space-y-6 flex flex-col items-center">
-            <div class="card-preview gradient-border-basic p-2 shadow-basic">
+        <div id="card-preview-all" class="space-y-6 flex flex-col items-center">
+            <div id="card-preview" class="gradient-border-basic p-2 shadow-basic">
                 <div id="card" class="mx-auto relative w-80 ">
                     <div class="gradient-content h-[500px] bg-black rounded-lg overflow-hidden">
                         <div class="card-image-box">
