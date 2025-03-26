@@ -77,8 +77,8 @@ include 'includes/header.php';
     <?php else: ?>
         <div class="flex flex-wrap gap-6 justify-center">
             <?php foreach ($_SESSION['cards'] as $index => $card): ?>
-                <div class="relative flex flex-col items-center align-center gap-4">
-                    <div class="card-<?php echo $index; ?> gradient-border-<?php echo strtolower($card['rarity'] ?? 'basic'); ?> p-2 shadow-<?php echo strtolower($card['rarity'] ?? 'basic'); ?>">
+                <div class="card-<?php echo $index; ?> relative flex flex-col items-center align-center gap-4">
+                    <div class="gradient-border-<?php echo strtolower($card['rarity'] ?? 'basic'); ?> p-2 shadow-<?php echo strtolower($card['rarity'] ?? 'basic'); ?>">
                         <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
                             <div class="card-image-box">
                                 <img src="<?php echo !empty($card['imageUrl']) ? htmlspecialchars($card['imageUrl']) : 'https://placehold.co/320x500'; ?>"
@@ -147,7 +147,7 @@ include 'includes/header.php';
                             <?php endif; ?>
                         </div>
                     </div>
-                    <div class="flex justify-center mt-2 gap-2">
+                    <div class="button-action flex justify-center mt-2 gap-2">
                         <button class="edit-card bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200"
                             onclick="editCard(<?php echo $index; ?>)">
                             <i class="fas fa-edit"></i>
@@ -188,36 +188,40 @@ include 'includes/header.php';
     function downloadCard(index) {
         const card = <?php echo json_encode($_SESSION['cards'] ?? []); ?>[index];
         const originalDiv = document.querySelector(`.card-${index}`);
+        const buttonaction = originalDiv.querySelector('.button-action');
+
+        buttonaction.style.display = 'none';
 
         if (card.cardType !== 'support') {
             const dmgValue = formatNumberWithSuffix(card.damage);
             const hpValue = formatNumberWithSuffix(card.hp);
-            
+
             const dmgSpan = originalDiv.querySelector(`#stat-dmg-${index}`);
             const hpSpan = originalDiv.querySelector(`#stat-hp-${index}`);
-            
+
             dmgSpan.innerText = dmgValue;
             hpSpan.innerText = hpValue;
         }
 
         htmlToImage.toPng(originalDiv, {
-            quality: 1,
-            pixelRatio: 2,
-            skipAutoScale: true,
-            cacheBust: true,
-            style: {
-                transformOrigin: 'top left',
-            }
-        })
-        .then(function (dataUrl) {
-            const link = document.createElement('a');
-            link.download = `anime_card_${index}.png`;
-            link.href = dataUrl;
-            link.click();
-        })
-        .catch(function (error) {
-            console.error('Error:', error);
-        });
+                quality: 1,
+                pixelRatio: 2,
+                skipAutoScale: true,
+                cacheBust: true,
+                style: {
+                    transformOrigin: 'top left',
+                }
+            })
+            .then(function(dataUrl) {
+                const link = document.createElement('a');
+                link.download = `anime_card_${index}.png`;
+                link.href = dataUrl;
+                link.click();
+                buttonaction.style.display = 'flex';
+            })
+            .catch(function(error) {
+                console.error('Error:', error);
+            });
     }
 
     function deleteCard(index) {
