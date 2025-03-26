@@ -156,6 +156,10 @@ include 'includes/header.php';
                             onclick="deleteCard(<?php echo $index; ?>)">
                             <i class="fas fa-trash-alt mr-2"></i>Delete
                         </button>
+                        <button class="download-card bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition duration-200"
+                            onclick="downloadCard(<?php echo $index; ?>)">
+                            <i class="fas fa-download mr-2"></i>
+                        </button>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -181,6 +185,38 @@ include 'includes/header.php';
 </div>
 
 <script>
+    function downloadCard(index) {
+        const div = document.querySelectorAll('.relative')[index];
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = div.offsetWidth;
+        canvas.height = div.offsetHeight;
+
+        html2canvas(div).then(canvas => {
+            const img = canvas.toDataURL();
+            if (img.includes('image/gif')) {
+                const gif = new GIF({
+                    workers: 2,
+                    quality: 10,
+                });
+                gif.addFrame(canvas);
+                gif.on('finished', function(blob) {
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = 'carte_' + index + '.gif';
+                    link.click();
+                });
+                gif.render();
+            } else {
+                const link = document.createElement('a');
+                link.href = img;
+                link.download = 'carte_' + index + '.png';
+                link.click();
+            }
+        });
+    }
+
     function deleteCard(index) {
         showConfirm('Are you sure you want to delete this card ?', () => {
             fetch('delete_card.php', {
