@@ -24,19 +24,11 @@ header("X-Content-Type-Options: nosniff");
     <meta name="owner" content="Edwyn (@Edy_Chou)">
     <title><?= $pageTitle ?: "Anime Card Clash - Editor" ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap">
-    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap" media="print" onload="this.media='all'">
-    <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.min.js"></script>
-    <script>
-        // Configuration globale pour GIF.js
-        window.gifWorkerPath = "assets/js/gif.worker.js";
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/modal.css">
+    <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.min.js"></script>
     <style>
         body {
             font-family: 'Electrolize';
