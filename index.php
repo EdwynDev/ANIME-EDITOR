@@ -118,8 +118,13 @@ include 'includes/header.php';
                                 <option value="Electrolize">Default (Electrolize)</option>
                                 <option value="custom">Custom Font</option>
                             </select>
-                            <input id="customnameFont" type="text" placeholder="Google Fonts name or URL"
-                                class="mt-2 w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
+                            <div class="flex gap-2 mt-2">
+                                <input id="customnameFont" type="text" placeholder="Google Fonts name or URL"
+                                    class="flex-1 bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
+                                <button onclick="applyFont('name')" class="bg-purple-600 hover:bg-purple-500 text-white rounded-lg px-4 py-2 hidden" id="apply-nameFont">
+                                    Apply
+                                </button>
+                            </div>
                         </div>
 
                         <div>
@@ -130,8 +135,13 @@ include 'includes/header.php';
                                 <option value="Electrolize">Default (Electrolize)</option>
                                 <option value="custom">Custom Font</option>
                             </select>
-                            <input id="customskillFont" type="text" placeholder="Google Fonts name or URL"
-                                class="mt-2 w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
+                            <div class="flex gap-2 mt-2">
+                                <input id="customskillFont" type="text" placeholder="Google Fonts name or URL"
+                                    class="flex-1 bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
+                                <button onclick="applyFont('skill')" class="bg-purple-600 hover:bg-purple-500 text-white rounded-lg px-4 py-2 hidden" id="apply-skillFont">
+                                    Apply
+                                </button>
+                            </div>
                         </div>
 
                         <div>
@@ -142,8 +152,13 @@ include 'includes/header.php';
                                 <option value="Electrolize">Default (Electrolize)</option>
                                 <option value="custom">Custom Font</option>
                             </select>
-                            <input id="customdescFont" type="text" placeholder="Google Fonts name or URL"
-                                class="mt-2 w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
+                            <div class="flex gap-2 mt-2">
+                                <input id="customdescFont" type="text" placeholder="Google Fonts name or URL"
+                                    class="flex-1 bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
+                                <button onclick="applyFont('desc')" class="bg-purple-600 hover:bg-purple-500 text-white rounded-lg px-4 py-2 hidden" id="apply-descFont">
+                                    Apply
+                                </button>
+                            </div>
                         </div>
 
                         <div>
@@ -154,8 +169,13 @@ include 'includes/header.php';
                                 <option value="Lilita One">Default (Lilita One)</option>
                                 <option value="custom">Custom Font</option>
                             </select>
-                            <input id="customstatsFont" type="text" placeholder="Google Fonts name or URL"
-                                class="mt-2 w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
+                            <div class="flex gap-2 mt-2">
+                                <input id="customstatsFont" type="text" placeholder="Google Fonts name or URL"
+                                    class="flex-1 bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
+                                <button onclick="applyFont('stats')" class="bg-purple-600 hover:bg-purple-500 text-white rounded-lg px-4 py-2 hidden" id="apply-statsFont">
+                                    Apply
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -289,71 +309,6 @@ include 'includes/header.php';
                         applyFont(type, font);
                     });
                 });
-
-                let fontLoadTimeout;
-
-                function debounceFontLoad(callback, delay = 500) {
-                    clearTimeout(fontLoadTimeout);
-                    fontLoadTimeout = setTimeout(callback, delay);
-                }
-
-                function updateFonts() {
-                    const elements = ['name', 'skill', 'desc', 'stats'];
-                    elements.forEach(type => {
-                        const select = document.getElementById(`${type}Font`);
-                        const customInput = document.getElementById(`custom${type}Font`);
-                        
-                        if (select.value === 'custom') {
-                            customInput.classList.remove('hidden');
-                            if (!customInput.hasAttribute('data-has-listener')) {
-                                customInput.addEventListener('input', () => {
-                                    debounceFontLoad(() => loadCustomFont(customInput));
-                                });
-                                customInput.setAttribute('data-has-listener', 'true');
-                            }
-                        } else {
-                            customInput.classList.add('hidden');
-                            applyFont(type, select.value);
-                        }
-                    });
-                }
-
-                function loadCustomFont(inputElement) {
-                    const fontName = inputElement.value.trim();
-                    if (!fontName) return;
-
-                    const existingLink = document.querySelector(`link[href*="${fontName}"]`);
-                    if (existingLink) return; // Avoid duplicate links
-
-                    const link = document.createElement('link');
-                    if (fontName.includes('fonts.googleapis.com')) {
-                        link.href = fontName;
-                    } else {
-                        link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontName)}&display=swap`;
-                    }
-                    link.rel = 'stylesheet';
-                    document.head.appendChild(link);
-
-                    const type = inputElement.id.replace('custom', '').replace('Font', '').toLowerCase();
-                    applyFont(type, fontName);
-                }
-
-                function applyFont(type, fontFamily) {
-                    const cardData = {
-                        name: { element: 'card-name', style: 'text-stroke-bolder' },
-                        skill: { element: 'card-skill', style: 'text-stroke' },
-                        desc: { element: 'card-description', style: 'text-stroke' },
-                        stats: { element: ['card-damage', 'card-hp'] }
-                    };
-
-                    if (Array.isArray(cardData[type].element)) {
-                        cardData[type].element.forEach(el => {
-                            document.getElementById(el).style.fontFamily = `"${fontFamily}", sans-serif`;
-                        });
-                    } else {
-                        document.getElementById(cardData[type].element).style.fontFamily = `"${fontFamily}", sans-serif`;
-                    }
-                }
             </script>
         </div>
 
@@ -365,30 +320,38 @@ include 'includes/header.php';
                             <img id="card-image" src="https://placehold.co/320x500" />
                         </div>
                         <div class="absolute top-2 left-2 bg-basic text-black text-xs font-bold px-2 py-1 rounded">
-                            <span id="card-rarity">BASIC</span>
+                            <span id="card-rarity">
+                                BASIC
+                            </span>
                         </div>
                         <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
-                            <span id="card-name" class="text-stroke-bolder">N/A</span>
+                            <span id="card-name" class="text-stroke-bolder">
+                                N/A
+                            </span>
                         </div>
                         <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
-                            <span id="card-preview-number">#0</span>
+                            <span id="card-preview-number">
+                                #0
+                            </span>
                         </div>
                         <div class="absolute bottom-16 left-2 right-2 px-2">
                             <p>
-                                <span id="card-skill"
-                                    class="text-xl text-white font-bold text-linear-gradient text-stroke">N/A</span>
+                                <span id="card-skill" class="text-xl text-white font-bold text-linear-gradient text-stroke">
+                                    N/A
+                                </span>
                             </p>
                             <p class="mt-3">
-                                <span id="card-description"
-                                    class="text-xs text-white font-bold text-linear-gradient text-stroke">N/A</span>
+                                <span id="card-description" class="text-xs text-white font-bold text-linear-gradient text-stroke">
+                                    N/A
+                                </span>
                             </p>
                         </div>
                         <div class="absolute bottom-2 w-full px-4 flex justify-between">
                             <div class="stat-dmg font-bold text-lg">
-                                DMG <span id="card-damage">0</span>
+                                <span id="card-damage">DMG 0</span>
                             </div>
                             <div class="stat-hp font-bold text-lg">
-                                HP <span id="card-hp">0</span>
+                                <span id="card-hp">HP 0</span>
                             </div>
                         </div>
                     </div>
@@ -404,12 +367,15 @@ include 'includes/header.php';
                                     class="absolute inset-0 w-full h-full object-cover opacity-80"
                                     src="https://placehold.co/160x160" />
                             </div>
-                            <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-                            <div
-                                class="absolute top-2 left-2 bg-basic text-black text-xs font-bold px-2 py-1 rounded">
-                                BASIC</div>
-                            <div class="absolute bottom-2 right-2 text-white text-sm font-bold text-stroke-bolder"
-                                id="basic-probability"></div>
+                            <div class="absolute inset-0 bg-black bg-opacity-40">
+
+                            </div>
+                            <div class="absolute top-2 left-2 bg-basic text-black text-xs font-bold px-2 py-1 rounded">
+                                BASIC
+                            </div>
+                            <div class="absolute bottom-2 right-2 text-white text-sm font-bold text-stroke-bolder" id="basic-probability">
+
+                            </div>
                         </div>
                     </div>
                     <div class="full-card">
@@ -418,29 +384,37 @@ include 'includes/header.php';
                                 <div class="card-image-box">
                                     <img id="basic-full-image" src="https://placehold.co/320x500" />
                                 </div>
-                                <div
-                                    class="absolute top-2 left-2 bg-basic text-black text-xs font-bold px-2 py-1 rounded">
-                                    BASIC</div>
-                                <div
-                                    class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
-                                    <span id="basic-full-name" class="text-stroke-bolder">N/A</span>
+                                <div class="absolute top-2 left-2 bg-basic text-black text-xs font-bold px-2 py-1 rounded">
+                                    BASIC
+                                </div>
+                                <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
+                                    <span id="basic-full-name" class="text-stroke-bolder">
+                                        N/A
+                                    </span>
                                 </div>
                                 <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
-                                    <span id="card-basic-number">#0</span>
+                                    <span id="card-basic-number">
+                                        #0
+                                    </span>
                                 </div>
                                 <div class="absolute bottom-16 left-2 right-2 px-2">
-                                    <p><span id="basic-full-skill"
-                                            class="text-xl text-white font-bold text-linear-gradient text-stroke">N/A</span>
+                                    <p>
+                                        <span id="basic-full-skill" class="text-xl text-white font-bold text-linear-gradient text-stroke">
+                                            N/A
+                                        </span>
                                     </p>
-                                    <p class="mt-3 mb-12"><span id="basic-full-description"
-                                            class="text-xs text-white font-bold text-linear-gradient text-stroke">N/A</span>
+                                    <p class="mt-3 mb-12">
+                                        <span id="basic-full-description" class="text-xs text-white font-bold text-linear-gradient text-stroke">
+                                            N/A
+                                        </span>
                                     </p>
                                 </div>
                                 <div class="absolute bottom-2 w-full px-4 flex justify-between">
-                                    <div class="stat-dmg font-bold text-lg">DMG <span
-                                            id="basic-full-damage">0</span>
+                                    <div class="stat-dmg font-bold text-lg">
+                                        <span id="basic-full-damage">DMG 0</span>
                                     </div>
-                                    <div class="stat-hp font-bold text-lg">HP <span id="basic-full-hp">0</span>
+                                    <div class="stat-hp font-bold text-lg">
+                                        <span id="basic-full-hp">HP 0</span>
                                     </div>
                                 </div>
                             </div>
@@ -456,12 +430,15 @@ include 'includes/header.php';
                                     class="absolute inset-0 w-full h-full object-cover opacity-80"
                                     src="https://placehold.co/160x160" />
                             </div>
-                            <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-                            <div
-                                class="absolute top-2 left-2 bg-gold text-black text-xs font-bold px-2 py-1 rounded">
-                                GOLD</div>
-                            <div class="absolute bottom-2 right-2 text-white text-sm font-bold text-stroke-bolder"
-                                id="gold-probability"></div>
+                            <div class="absolute inset-0 bg-black bg-opacity-40">
+
+                            </div>
+                            <div class="absolute top-2 left-2 bg-gold text-black text-xs font-bold px-2 py-1 rounded">
+                                GOLD
+                            </div>
+                            <div class="absolute bottom-2 right-2 text-white text-sm font-bold text-stroke-bolder" id="gold-probability">
+
+                            </div>
                         </div>
                     </div>
                     <div class="full-card">
@@ -470,28 +447,36 @@ include 'includes/header.php';
                                 <div class="card-image-box">
                                     <img id="gold-full-image" src="https://placehold.co/320x500" />
                                 </div>
-                                <div
-                                    class="absolute top-2 left-2 bg-gold text-black text-xs font-bold px-2 py-1 rounded">
-                                    GOLD</div>
-                                <div
-                                    class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
-                                    <span id="gold-full-name" class="text-stroke-bolder">N/A</span>
+                                <div class="absolute top-2 left-2 bg-gold text-black text-xs font-bold px-2 py-1 rounded">
+                                    GOLD
+                                </div>
+                                <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
+                                    <span id="gold-full-name" class="text-stroke-bolder">
+                                        N/A
+                                    </span>
                                 </div>
                                 <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
-                                    <span id="card-gold-number">#0</span>
+                                    <span id="card-gold-number">
+                                        #0
+                                    </span>
                                 </div>
                                 <div class="absolute bottom-16 left-2 right-2 px-2">
                                     <p><span id="gold-full-skill"
                                             class="text-xl text-white font-bold text-linear-gradient text-stroke">N/A</span>
                                     </p>
-                                    <p class="mt-3 mb-12"><span id="gold-full-description"
-                                            class="text-xs text-white font-bold text-linear-gradient text-stroke">N/A</span>
+                                    <p class="mt-3 mb-12">
+                                        <span id="gold-full-description" class="text-xs text-white font-bold text-linear-gradient text-stroke">
+                                            N/A
+                                        </span>
                                     </p>
                                 </div>
                                 <div class="absolute bottom-2 w-full px-4 flex justify-between">
-                                    <div class="stat-dmg font-bold text-lg">DMG <span id="gold-full-damage">0</span>
+                                    <div class="stat-dmg font-bold text-lg">
+                                        <span id="gold-full-damage">DMG 0</span>
                                     </div>
-                                    <div class="stat-hp font-bold text-lg">HP <span id="gold-full-hp">0</span></div>
+                                    <div class="stat-hp font-bold text-lg">
+                                        <span id="gold-full-hp"> HP 0</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -506,12 +491,15 @@ include 'includes/header.php';
                                     class="absolute inset-0 w-full h-full object-cover opacity-80"
                                     src="https://placehold.co/160x160" />
                             </div>
-                            <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+                            <div class="absolute inset-0 bg-black bg-opacity-40">
+
+                            </div>
                             <div
                                 class="absolute top-2 left-2 bg-rainbow text-black text-xs font-bold px-2 py-1 rounded">
                                 RAINBOW</div>
-                            <div class="absolute bottom-2 right-2 text-white text-sm font-bold text-stroke-bolder"
-                                id="rainbow-probability"></div>
+                            <div class="absolute bottom-2 right-2 text-white text-sm font-bold text-stroke-bolder" id="rainbow-probability">
+
+                            </div>
                         </div>
                     </div>
                     <div class="full-card">
@@ -520,29 +508,37 @@ include 'includes/header.php';
                                 <div class="card-image-box">
                                     <img id="rainbow-full-image" src="https://placehold.co/320x500" />
                                 </div>
-                                <div
-                                    class="absolute top-2 left-2 bg-rainbow text-black text-xs font-bold px-2 py-1 rounded">
-                                    RAINBOW</div>
-                                <div
-                                    class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
-                                    <span id="rainbow-full-name" class="text-stroke-bolder">N/A</span>
+                                <div class="absolute top-2 left-2 bg-rainbow text-black text-xs font-bold px-2 py-1 rounded">
+                                    RAINBOW
+                                </div>
+                                <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
+                                    <span id="rainbow-full-name" class="text-stroke-bolder">
+                                        N/A
+                                    </span>
                                 </div>
                                 <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
-                                    <span id="card-rainbow-number">#0</span>
+                                    <span id="card-rainbow-number">
+                                        #0
+                                    </span>
                                 </div>
                                 <div class="absolute bottom-16 left-2 right-2 px-2">
-                                    <p><span id="rainbow-full-skill"
-                                            class="text-xl text-white font-bold text-linear-gradient text-stroke">N/A</span>
+                                    <p>
+                                        <span id="rainbow-full-skill" class="text-xl text-white font-bold text-linear-gradient text-stroke">
+                                            N/A
+                                        </span>
                                     </p>
-                                    <p class="mt-3 mb-12"><span id="rainbow-full-description"
-                                            class="text-xs text-white font-bold text-linear-gradient text-stroke">N/A</span>
+                                    <p class="mt-3 mb-12">
+                                        <span id="rainbow-full-description" class="text-xs text-white font-bold text-linear-gradient text-stroke">
+                                            N/A
+                                        </span>
                                     </p>
                                 </div>
                                 <div class="absolute bottom-2 w-full px-4 flex justify-between">
-                                    <div class="stat-dmg font-bold text-lg">DMG <span
-                                            id="rainbow-full-damage">0</span>
+                                    <div class="stat-dmg font-bold text-lg">
+                                        <span id="rainbow-full-damage">DMG 0</span>
                                     </div>
-                                    <div class="stat-hp font-bold text-lg">HP <span id="rainbow-full-hp">0</span>
+                                    <div class="stat-hp font-bold text-lg">
+                                        <span id="rainbow-full-hp">HP 0</span>
                                     </div>
                                 </div>
                             </div>
@@ -558,12 +554,15 @@ include 'includes/header.php';
                                     class="absolute inset-0 w-full h-full object-cover opacity-80"
                                     src="https://placehold.co/160x160" />
                             </div>
-                            <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-                            <div
-                                class="absolute top-2 left-2 bg-secret text-black text-xs font-bold px-2 py-1 rounded">
-                                SECRET</div>
-                            <div class="absolute bottom-2 right-2 text-white text-sm font-bold text-stroke-bolder"
-                                id="secret-probability"></div>
+                            <div class="absolute inset-0 bg-black bg-opacity-40">
+
+                            </div>
+                            <div class="absolute top-2 left-2 bg-secret text-black text-xs font-bold px-2 py-1 rounded">
+                                SECRET
+                            </div>
+                            <div class="absolute bottom-2 right-2 text-white text-sm font-bold text-stroke-bolder" id="secret-probability">
+
+                            </div>
                         </div>
                     </div>
                     <div class="full-card">
@@ -572,29 +571,37 @@ include 'includes/header.php';
                                 <div class="card-image-box">
                                     <img id="secret-full-image" src="https://placehold.co/320x500" />
                                 </div>
-                                <div
-                                    class="absolute top-2 left-2 bg-secret text-black text-xs font-bold px-2 py-1 rounded">
-                                    SECRET</div>
-                                <div
-                                    class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
-                                    <span id="secret-full-name" class="text-stroke-bolder">N/A</span>
+                                <div class="absolute top-2 left-2 bg-secret text-black text-xs font-bold px-2 py-1 rounded">
+                                    SECRET
+                                </div>
+                                <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
+                                    <span id="secret-full-name" class="text-stroke-bolder">
+                                        N/A
+                                    </span>
                                 </div>
                                 <div class="absolute top-2 right-2 text-white text-xs font-bold text-linear-gradient">
-                                    <span id="card-secret-number">#0</span>
+                                    <span id="card-secret-number">
+                                        #0
+                                    </span>
                                 </div>
                                 <div class="absolute bottom-16 left-2 right-2 px-2">
-                                    <p><span id="secret-full-skill"
-                                            class="text-xl text-white font-bold text-linear-gradient text-stroke">N/A</span>
+                                    <p>
+                                        <span id="secret-full-skill" class="text-xl text-white font-bold text-linear-gradient text-stroke">
+                                            N/A
+                                        </span>
                                     </p>
-                                    <p class="mt-3 mb-12"><span id="secret-full-description"
-                                            class="text-xs text-white font-bold text-linear-gradient text-stroke">N/A</span>
+                                    <p class="mt-3 mb-12">
+                                        <span id="secret-full-description" class="text-xs text-white font-bold text-linear-gradient text-stroke">
+                                            N/A
+                                        </span>
                                     </p>
                                 </div>
                                 <div class="absolute bottom-2 w-full px-4 flex justify-between">
-                                    <div class="stat-dmg font-bold text-lg">DMG <span
-                                            id="secret-full-damage">0</span>
+                                    <div class="stat-dmg font-bold text-lg">
+                                        <span id="secret-full-damage">DMG 0</span>
                                     </div>
-                                    <div class="stat-hp font-bold text-lg">HP <span id="secret-full-hp">0</span>
+                                    <div class="stat-hp font-bold text-lg">
+                                        <span id="secret-full-hp">HP 0</span>
                                     </div>
                                 </div>
                             </div>
