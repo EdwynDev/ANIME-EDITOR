@@ -33,24 +33,18 @@ function handleImageUpload() {
 function updateCardType() {
     const cardType = document.getElementById('cardType').value;
     const statsContainer = document.getElementById('stats-container');
-    const goldCard = document.querySelector('.gradient-border-gold');
-    const rainbowCard = document.querySelector('.gradient-border-rainbow');
-    const secretCard = document.querySelector('.gradient-border-secret');
+    const rarityPreviews = document.querySelector('.grid.grid-cols-2.gap-10');
     const statsDisplays = document.querySelectorAll('.bottom-2.w-full.px-4.flex.justify-between');
 
     if (cardType === 'support') {
         statsContainer.style.display = 'none';
-        goldCard.style.display = 'none';
-        rainbowCard.style.display = 'none';
-        secretCard.style.display = 'none';
+        rarityPreviews.style.display = 'none';
         statsDisplays.forEach(display => {
             display.style.display = 'none';
         });
     } else {
         statsContainer.style.display = 'grid';
-        goldCard.style.display = 'grid';
-        rainbowCard.style.display = 'grid';
-        secretCard.style.display = 'grid';
+        rarityPreviews.style.display = 'grid';
         statsDisplays.forEach(display => {
             display.style.display = 'flex';
         });

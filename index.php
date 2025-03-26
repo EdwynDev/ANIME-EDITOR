@@ -478,7 +478,7 @@ include 'includes/header.php';
         </div>
 
         <div class="card-preview-all space-y-6 flex flex-col items-center">
-            <div class="card-preview gradient-border-basic p-2 shadow-basic">
+            <div class="card-preview gradient-border-basic p-2 shadow-basic mb-8">
                 <div id="card" class="mx-auto relative w-80 ">
                     <div class="gradient-content h-[500px] bg-black rounded-lg overflow-hidden">
                         <div class="card-image-box">
@@ -523,6 +523,7 @@ include 'includes/header.php';
                 </div>
             </div>
 
+            <!-- Previews des différentes raretés -->
             <div class="grid grid-cols-2 gap-10">
                 <div class="gradient-border-basic p-1 shadow-basic rarity-card" tabindex="0">
                     <div class="rarity-preview">
