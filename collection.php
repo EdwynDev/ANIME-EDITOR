@@ -210,7 +210,6 @@ include 'includes/header.php';
             quality: 1,
             bgcolor: 'transparent',
             style: {
-                'transform': 'scale(2)',
                 'transform-origin': 'top left',
             },
             filter: (node) => {
