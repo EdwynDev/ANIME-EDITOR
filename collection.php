@@ -189,21 +189,14 @@ include 'includes/header.php';
         const originalDiv = document.querySelector(`.card-${index}`);
         const clonedDiv = originalDiv.cloneNode(true);
 
-        // Forcer le formatage des valeurs DMG et HP dans le clone
-        const card = <?php echo json_encode($_SESSION['cards'] ?? []); ?>[index];
-        if (card && card.cardType !== 'support') {
-            const dmgElement = clonedDiv.querySelector(`.stat-dmg`);
-            const hpElement = clonedDiv.querySelector(`.stat-hp`);
-            
-            if (dmgElement) {
-                dmgElement.innerHTML = `DMG <span>${formatNumberWithSuffix(card.damage)}</span>`;
-                dmgElement.style.fontFamily = card.fonts.statsFont;
-            }
-            if (hpElement) {
-                hpElement.innerHTML = `HP <span>${formatNumberWithSuffix(card.hp)}</span>`;
-                hpElement.style.fontFamily = card.fonts.statsFont;
-            }
-        }
+        // Forcer le rendu des valeurs DMG et HP
+        const dmgElement = clonedDiv.querySelector(`#stat-dmg-${index}`);
+        const hpElement = clonedDiv.querySelector(`#stat-hp-${index}`);
+        const originalDmgValue = document.getElementById(`stat-dmg-${index}`).innerText;
+        const originalHpValue = document.getElementById(`stat-hp-${index}`).innerText;
+
+        dmgElement.innerText = originalDmgValue;
+        hpElement.innerText = originalHpValue;
 
         // Créer un conteneur temporaire pour le clone
         const container = document.createElement('div');
@@ -213,19 +206,20 @@ include 'includes/header.php';
         container.appendChild(clonedDiv);
         document.body.appendChild(container);
 
-        // Attendre que les images et les polices soient chargées
-        Promise.all([
-            ...Array.from(clonedDiv.querySelectorAll('img')).map(img => {
-                return new Promise(resolve => {
-                    if (img.complete) resolve();
-                    else {
-                        img.onload = resolve;
-                        img.onerror = resolve;
-                    }
-                });
-            }),
-            document.fonts.ready // Attendre le chargement des polices
-        ]).then(() => {
+        // Attendre que les images soient complètement chargées
+        const images = clonedDiv.querySelectorAll('img');
+        const imagePromises = Array.from(images).map(img => {
+            return new Promise(resolve => {
+                if (img.complete) {
+                    resolve();
+                } else {
+                    img.onload = resolve;
+                    img.onerror = resolve;
+                }
+            });
+        });
+
+        Promise.all(imagePromises).then(() => {
             domtoimage.toPng(clonedDiv, {
                 quality: 1,
                 width: originalDiv.offsetWidth * 2,
@@ -240,10 +234,14 @@ include 'includes/header.php';
                 link.download = `anime_card_${index}.png`;
                 link.href = dataUrl;
                 link.click();
+
+                // Supprimer le conteneur temporaire après capture
                 document.body.removeChild(container);
             })
             .catch(function (error) {
                 console.error('Error downloading card:', error);
+
+                // Supprimer le conteneur temporaire en cas d'erreur
                 document.body.removeChild(container);
             });
         });
