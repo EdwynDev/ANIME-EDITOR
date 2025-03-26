@@ -158,7 +158,7 @@ include 'includes/header.php';
                         </button>
                         <button class="download-card bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition duration-200"
                             onclick="downloadCard(<?php echo $index; ?>)">
-                            <i class="fas fa-download mr-2"></i>
+                            <i class="fas fa-download"></i>
                         </button>
                     </div>
                 </div>
