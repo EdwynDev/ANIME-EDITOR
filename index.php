@@ -324,7 +324,8 @@ include 'includes/header.php';
                     spinner.classList.add('flex');
 
                     const originalDiv = document.querySelector(`.${previewId}`);
-
+                    originalDiv.querySelectorAll('hidden').forEach(el => el.classList.remove('hidden'));
+                    
                     htmlToImage.toPng(originalDiv, {
                             quality: 1,
                             pixelRatio: 2,
