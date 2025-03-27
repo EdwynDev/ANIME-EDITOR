@@ -492,6 +492,12 @@ include 'includes/header.php';
                 function handleFontSuggestions(input, suggestionsDivId) {
                     const suggestionsDiv = document.getElementById(suggestionsDivId);
                     const fontName = input.value.trim();
+                    
+                    document.querySelectorAll('link[data-suggestion-font]').forEach(link => {
+                        if (!loadedFonts.has(link.getAttribute('data-font-family'))) {
+                            link.remove();
+                        }
+                    });
 
                     suggestionsDiv.innerHTML = '';
                     
@@ -517,22 +523,33 @@ include 'includes/header.php';
                             }
 
                             data.suggestions.forEach(fontFamily => {
+                                const linkId = `font-preview-${fontFamily.replace(/\s+/g, '-').toLowerCase()}`;
+                                
+                                if (!document.getElementById(linkId)) {
+                                    const link = document.createElement('link');
+                                    link.id = linkId;
+                                    link.href = `https://fonts.googleapis.com/css2?family=${fontFamily.replace(/ /g, '+')}`;
+                                    link.rel = 'stylesheet';
+                                    link.setAttribute('data-suggestion-font', 'true');
+                                    link.setAttribute('data-font-family', fontFamily);
+                                    document.head.appendChild(link);
+                                }
+
                                 const div = document.createElement('div');
-                                div.style.fontFamily = fontFamily;
                                 div.className = 'p-4 text-white flex items-center justify-between transition-colors cursor-pointer hover:bg-purple-600';
                                 
                                 const previewSpan = document.createElement('span');
+                                previewSpan.style.fontFamily = fontFamily;
                                 previewSpan.textContent = fontFamily;
                                 
                                 const sampleText = document.createElement('span');
+                                sampleText.style.fontFamily = fontFamily;
                                 sampleText.className = 'text-gray-400';
                                 sampleText.textContent = 'AaBbCc123';
 
                                 div.onclick = () => {
-                                    loadFont(fontFamily);
+                                    loadedFonts.add(fontFamily);
                                     input.value = fontFamily;
-                                    previewSpan.style.fontFamily = fontFamily;
-                                    sampleText.style.fontFamily = fontFamily;
                                     suggestionsDiv.classList.add('hidden');
                                     applyFont(input.id.replace('custom', '').toLowerCase().replace('font', ''));
                                 };
