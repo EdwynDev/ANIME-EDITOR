@@ -320,6 +320,7 @@ include 'includes/header.php';
             <script>
                 function downloadPreview(previewId) {
                     const spinner = document.getElementById('downloadSpinner');
+                    const cardPreview = document.querySelector('card-preview');
                     spinner.classList.remove('hidden');
                     spinner.classList.add('flex');
 
@@ -329,8 +330,8 @@ include 'includes/header.php';
                         const originalSize = originalDiv.style.width;
                         const fullCard = originalDiv.querySelector('.full-card');
                         if (fullCard) {
-                            originalDiv.style.width = '320px';
-                            originalDiv.style.height = '500px';
+                            originalDiv.style.width = cardPreview.style.width;
+                            originalDiv.style.height = cardPreview.style.height;
                             fullCard.style.display = 'block';
                             fullCard.style.position = 'absolute';
                             fullCard.style.top = '0';
