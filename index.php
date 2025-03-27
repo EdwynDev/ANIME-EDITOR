@@ -475,15 +475,7 @@ include 'includes/header.php';
                     }
                 }
 
-                let googleFonts = [];
                 let loadedFonts = new Set();
-
-                fetch('api/get_fonts.php')
-                    .then(response => response.json())
-                    .then(fonts => {
-                        googleFonts = fonts.map(font => font.family);
-                    })
-                    .catch(error => console.error('Error :', error));
 
                 function loadFont(fontFamily) {
                     if (loadedFonts.has(fontFamily)) {
@@ -497,52 +489,37 @@ include 'includes/header.php';
                     loadedFonts.add(fontFamily);
                 }
 
-                function handleFontSuggestions(input, suggestionsDivId, isFocus = false) {
+                function handleFontSuggestions(input, suggestionsDivId) {
                     const suggestionsDiv = document.getElementById(suggestionsDivId);
-                    const searchTerm = input.value.toLowerCase();
-
-                    const matchingFonts = isFocus && !searchTerm ? 
-                        googleFonts.slice(0, 1000) :
-                        googleFonts.filter(font => 
-                            font.toLowerCase().includes(searchTerm)
-                        ).slice(0, 1000);
+                    const fontName = input.value.trim();
 
                     suggestionsDiv.innerHTML = '';
                     
-                    if (matchingFonts.length === 0) {
+                    if (!fontName) {
                         const div = document.createElement('div');
                         div.className = 'p-2 text-gray-400';
                         div.textContent = 'No matching fonts found';
                         suggestionsDiv.appendChild(div);
                     } else {
-                        matchingFonts.forEach(font => {
-                            // Charger la police une seule fois
-                            loadFont(font);
+                        loadFont(fontName);
 
-                            const div = document.createElement('div');
-                            div.className = 'p-2 hover:bg-purple-600 cursor-pointer text-white flex items-center justify-between transition-colors';
-                            
-                            const previewSpan = document.createElement('span');
-                            previewSpan.style.fontFamily = font;
-                            previewSpan.textContent = font;
-                            
-                            const sampleText = document.createElement('span');
-                            sampleText.style.fontFamily = font;
-                            sampleText.className = 'text-gray-400 text-sm';
-                            sampleText.textContent = 'AaBbCc123';
-                            
-                            div.appendChild(previewSpan);
-                            div.appendChild(sampleText);
-                            
-                            div.onclick = (e) => {
-                                e.stopPropagation();
-                                input.value = font;
-                                suggestionsDiv.classList.add('hidden');
-                                applyFont(input.id.replace('custom', '').toLowerCase().replace('font', ''));
-                            };
-                            
-                            suggestionsDiv.appendChild(div);
-                        });
+                        const div = document.createElement('div');
+                        div.className = 'p-4 text-white flex items-center justify-between transition-colors';
+                        
+                        const previewSpan = document.createElement('span');
+                        previewSpan.style.fontFamily = fontName;
+                        previewSpan.style.fontSize = '18px';
+                        previewSpan.textContent = fontName;
+                        
+                        const sampleText = document.createElement('span');
+                        sampleText.style.fontFamily = fontName;
+                        sampleText.className = 'text-gray-400';
+                        sampleText.textContent = 'AaBbCc123';
+                        
+                        div.appendChild(previewSpan);
+                        div.appendChild(sampleText);
+                        
+                        suggestionsDiv.appendChild(div);
                     }
 
                     suggestionsDiv.classList.remove('hidden');
