@@ -277,46 +277,28 @@ include 'includes/header.php';
             </button>
             <div class="grid grid-cols-2 gap-4">
                 <button onclick="downloadPreview('card-preview')"
-                    class="text-white hover:text-green-400 group relative">
+                    class="text-white hover:text-green-400 relative">
                     <i class="fas fa-download mr-1"></i>Download Preview
-                    <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
-                        Download the current card preview as image
-                    </span>
                 </button>
                 <button onclick="downloadPreview('card-preview-all')"
-                    class="text-white hover:text-green-400 group relative">
+                    class="text-white hover:text-green-400 relative">
                     <i class="fas fa-download mr-1"></i>Download All Previews
-                    <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
-                        Download the current card preview as image
-                    </span>
                 </button>
                 <button onclick="downloadPreview('card-preview-basic-all')"
-                    class="text-white hover:text-gray-400 group relative">
+                    class="text-white hover:text-gray-400 relative">
                     <i class="fas fa-download mr-1"></i>Download Basic Preview
-                    <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
-                        Download the current card preview as image
-                    </span>
                 </button>
                 <button onclick="downloadPreview('card-preview-gold-all')"
-                    class="text-white hover:text-yellow-400 group relative">
+                    class="text-white hover:text-yellow-400 relative">
                     <i class="fas fa-download mr-1"></i>Download Gold Preview
-                    <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
-                        Download the current gold card preview as image
-                    </span>
                 </button>
                 <button onclick="downloadPreview('card-preview-rainbow-all')"
-                    class="text-white hover:text-pink-400 group relative">
+                    class="text-white hover:text-pink-400 relative">
                     <i class="fas fa-download mr-1"></i>Download Rainbow Preview
-                    <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
-                        Download the current rainbow card preview as image
-                    </span>
                 </button>
                 <button onclick="downloadPreview('card-preview-secret-all')"
-                    class="text-white hover:text-red-400 group relative">
+                    class="text-white hover:text-red-400 relative">
                     <i class="fas fa-download mr-1"></i>Download Secret Preview
-                    <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
-                        Download the current secret card preview as image
-                    </span>
                 </button>
             </div>
             <script>
