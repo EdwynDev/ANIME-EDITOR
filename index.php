@@ -122,7 +122,8 @@ include 'includes/header.php';
                                 <div class="relative flex-1">
                                     <input id="customnameFont" type="text" placeholder="Google Fonts name or URL"
                                         class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden"
-                                        oninput="handleFontSuggestions(this, 'nameFontSuggestions')">
+                                        oninput="handleFontSuggestions(this, 'nameFontSuggestions')"
+                                        onfocus="handleFontSuggestions(this, 'nameFontSuggestions', true)">
                                     <div id="nameFontSuggestions" class="suggestions-container hidden absolute w-full z-50 max-h-60 overflow-y-auto bg-gray-800 border border-purple-500 rounded-lg mt-1">
                                     </div>
                                 </div>
@@ -495,28 +496,24 @@ include 'includes/header.php';
                     .then(fonts => {
                         googleFonts = fonts.map(font => font.family);
                     })
-                    .catch(error => console.error('Erreur lors du chargement des polices :', error));
+                    .catch(error => console.error('Error :', error));
 
-                function handleFontSuggestions(input, suggestionsDivId) {
+                function handleFontSuggestions(input, suggestionsDivId, isFocus = false) {
                     const suggestionsDiv = document.getElementById(suggestionsDivId);
                     const searchTerm = input.value.toLowerCase();
 
-                    if (searchTerm === '') {
-                        suggestionsDiv.innerHTML = '';
-                        suggestionsDiv.classList.add('hidden');
-                        return;
-                    }
-
-                    const matchingFonts = googleFonts.filter(font => 
-                        font.toLowerCase().includes(searchTerm)
-                    ).slice(0, 50);
+                    const matchingFonts = isFocus && !searchTerm ? 
+                        googleFonts.slice(0, 100) :
+                        googleFonts.filter(font => 
+                            font.toLowerCase().includes(searchTerm)
+                        ).slice(0, 100);
 
                     suggestionsDiv.innerHTML = '';
                     
                     if (matchingFonts.length === 0) {
                         const div = document.createElement('div');
                         div.className = 'p-2 text-gray-400';
-                        div.textContent = 'Aucune police trouvée';
+                        div.textContent = 'No matching fonts found';
                         suggestionsDiv.appendChild(div);
                     } else {
                         matchingFonts.forEach(font => {
@@ -526,7 +523,7 @@ include 'includes/header.php';
                             document.head.appendChild(link);
 
                             const div = document.createElement('div');
-                            div.className = 'p-2 hover:bg-purple-600 cursor-pointer text-white flex items-center justify-between';
+                            div.className = 'p-2 hover:bg-purple-600 cursor-pointer text-white flex items-center justify-between transition-colors';
                             
                             const previewSpan = document.createElement('span');
                             previewSpan.style.fontFamily = font;
