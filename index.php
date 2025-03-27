@@ -200,6 +200,50 @@ include 'includes/header.php';
                     </div>
                 </div>
 
+                <div class="space-y-4 p-4 bg-gray-800/50 rounded-lg mt-4">
+                    <h3 class="text-purple-300 font-bold">
+                        <i class="fas fa-magic mr-2"></i>Font Effects
+                    </h3>
+
+                    <div class="grid grid-cols-1 gap-4">
+                        <div>
+                            <label class="block text-purple-300 text-sm mb-2">
+                                Card Name Effect
+                            </label>
+                            <select id="nameEffect" class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500" onchange="updateEffects()">
+                                <option value="none">No Effect</option>
+                                <option value="3d">3D</option>
+                                <option value="3d-float">3D Float</option>
+                                <option value="anaglyph">Anaglyph</option>
+                                <option value="fire">Fire</option>
+                                <option value="fire-animation">Fire Animation</option>
+                                <option value="neon">Neon</option>
+                                <option value="outline">Outline</option>
+                                <option value="emboss">Emboss</option>
+                                <option value="shadow-multiple">Multiple Shadows</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-purple-300 text-sm mb-2">
+                                Skill Name Effect
+                            </label>
+                            <select id="skillEffect" class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500" onchange="updateEffects()">
+                                <option value="none">No Effect</option>
+                                <option value="3d">3D</option>
+                                <option value="3d-float">3D Float</option>
+                                <option value="anaglyph">Anaglyph</option>
+                                <option value="fire">Fire</option>
+                                <option value="fire-animation">Fire Animation</option>
+                                <option value="neon">Neon</option>
+                                <option value="outline">Outline</option>
+                                <option value="emboss">Emboss</option>
+                                <option value="shadow-multiple">Multiple Shadows</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="flex gap-4">
                 <button id="save-button"
@@ -331,6 +375,10 @@ include 'includes/header.php';
                                                     document.getElementById('customdescFont').value || 'Electrolize' : document.getElementById('descFont').value,
                                                 statsFont: document.getElementById('statsFont').value === 'custom' ?
                                                     document.getElementById('customstatsFont').value || 'Lilita One' : document.getElementById('statsFont').value
+                                            },
+                                            effects: {
+                                                nameEffect: document.getElementById('nameEffect').value,
+                                                skillEffect: document.getElementById('skillEffect').value
                                             }
                                         };
 
@@ -378,6 +426,10 @@ include 'includes/header.php';
                                             document.getElementById('customdescFont').value || 'Electrolize' : document.getElementById('descFont').value,
                                         statsFont: document.getElementById('statsFont').value === 'custom' ?
                                             document.getElementById('customstatsFont').value || 'Lilita One' : document.getElementById('statsFont').value
+                                    },
+                                    effects: {
+                                        nameEffect: document.getElementById('nameEffect').value,
+                                        skillEffect: document.getElementById('skillEffect').value
                                     }
                                 };
 
@@ -416,6 +468,49 @@ include 'includes/header.php';
                         applyFont(type, font);
                     });
                 });
+
+
+
+                function updateEffects() {
+                    const elements = {
+                        name: {
+                            select: 'nameEffect',
+                            element: 'card-name',
+                            font: document.getElementById('nameFont').value === 'custom' ?
+                                document.getElementById('customnameFont').value : document.getElementById('nameFont').value
+                        },
+                        skill: {
+                            select: 'skillEffect',
+                            element: 'card-skill',
+                            font: document.getElementById('skillFont').value === 'custom' ?
+                                document.getElementById('customskillFont').value : document.getElementById('skillFont').value
+                        }
+                    };
+
+                    document.querySelectorAll('link[data-font-effect]').forEach(link => {
+                        link.remove();
+                    });
+
+                    Object.entries(elements).forEach(([type, data]) => {
+                        const effect = document.getElementById(data.select).value;
+                        const element = document.getElementById(data.element);
+
+                        element.className = element.className
+                            .split(' ')
+                            .filter(cls => !cls.startsWith('font-effect-'))
+                            .join(' ');
+
+                        if (effect !== 'none') {
+                            const link = document.createElement('link');
+                            link.rel = 'stylesheet';
+                            link.href = `https://fonts.googleapis.com/css?family=${data.font}&effect=${effect}`;
+                            link.setAttribute('data-font-effect', `${type}-${effect}`);
+                            document.head.appendChild(link);
+
+                            element.classList.add(`font-effect-${effect}`);
+                        }
+                    });
+                }
 
                 function updateFonts() {
                     const elements = ['name', 'skill', 'desc', 'stats'];
@@ -487,12 +582,15 @@ include 'includes/header.php';
                     link.rel = 'stylesheet';
                     document.head.appendChild(link);
                     loadedFonts.add(fontFamily);
+                    setTimeout(() => {
+                        updateEffects();
+                    }, 100);
                 }
 
                 function handleFontSuggestions(input, suggestionsDivId) {
                     const suggestionsDiv = document.getElementById(suggestionsDivId);
                     const fontName = input.value.trim();
-                    
+
                     document.querySelectorAll('link[data-suggestion-font]').forEach(link => {
                         if (!loadedFonts.has(link.getAttribute('data-font-family'))) {
                             link.remove();
@@ -500,7 +598,7 @@ include 'includes/header.php';
                     });
 
                     suggestionsDiv.innerHTML = '';
-                    
+
                     if (!fontName) {
                         const div = document.createElement('div');
                         div.className = 'p-2 text-gray-400';
@@ -513,7 +611,7 @@ include 'includes/header.php';
                         .then(response => response.json())
                         .then(data => {
                             suggestionsDiv.innerHTML = '';
-                            
+
                             if (!data.suggestions || data.suggestions.length === 0) {
                                 const div = document.createElement('div');
                                 div.className = 'p-2 text-gray-400';
@@ -524,7 +622,7 @@ include 'includes/header.php';
 
                             data.suggestions.forEach(fontFamily => {
                                 const linkId = `font-preview-${fontFamily.replace(/\s+/g, '-').toLowerCase()}`;
-                                
+
                                 if (!document.getElementById(linkId)) {
                                     const link = document.createElement('link');
                                     link.id = linkId;
@@ -537,11 +635,11 @@ include 'includes/header.php';
 
                                 const div = document.createElement('div');
                                 div.className = 'p-4 text-white flex items-center justify-between transition-colors cursor-pointer hover:bg-purple-600';
-                                
+
                                 const previewSpan = document.createElement('span');
                                 previewSpan.style.fontFamily = fontFamily;
                                 previewSpan.textContent = fontFamily;
-                                
+
                                 const sampleText = document.createElement('span');
                                 sampleText.style.fontFamily = fontFamily;
                                 sampleText.className = 'text-gray-400';
@@ -553,10 +651,10 @@ include 'includes/header.php';
                                     suggestionsDiv.classList.add('hidden');
                                     applyFont(input.id.replace('custom', '').toLowerCase().replace('font', ''));
                                 };
-                                
+
                                 div.appendChild(previewSpan);
                                 div.appendChild(sampleText);
-                                
+
                                 suggestionsDiv.appendChild(div);
                             });
                         })
