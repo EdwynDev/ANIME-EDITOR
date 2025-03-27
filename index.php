@@ -488,55 +488,71 @@ include 'includes/header.php';
                     }
                 }
 
-                const popularGoogleFonts = [
-                    'Roboto', 'Open Sans', 'Lato', 'Montserrat', 'Poppins', 'Raleway', 'Ubuntu',
-                    'Playfair Display', 'Oswald', 'Source Sans Pro', 'Merriweather', 'Nunito',
-                    'PT Sans', 'Rubik', 'Noto Sans', 'Quicksand', 'Work Sans', 'Mulish',
-                    'Dancing Script', 'Pacifico', 'Caveat', 'Permanent Marker', 'Comic Neue',
-                    'Press Start 2P', 'VT323', 'Bangers', 'Creepster', 'Nosifer'
-                ];
+                let googleFonts = [];
+
+                fetch('api/get_fonts.php')
+                    .then(response => response.json())
+                    .then(fonts => {
+                        googleFonts = fonts.map(font => font.family);
+                    })
+                    .catch(error => console.error('Erreur lors du chargement des polices :', error));
 
                 function handleFontSuggestions(input, suggestionsDivId) {
                     const suggestionsDiv = document.getElementById(suggestionsDivId);
                     const searchTerm = input.value.toLowerCase();
 
-                    // Vider et cacher les suggestions si le champ est vide
                     if (searchTerm === '') {
                         suggestionsDiv.innerHTML = '';
                         suggestionsDiv.classList.add('hidden');
                         return;
                     }
 
-                    // Filtrer les polices qui correspondent à la recherche
-                    const matchingFonts = popularGoogleFonts.filter(font => 
+                    const matchingFonts = googleFonts.filter(font => 
                         font.toLowerCase().includes(searchTerm)
-                    );
+                    ).slice(0, 50);
 
-                    // Afficher les suggestions
                     suggestionsDiv.innerHTML = '';
-                    matchingFonts.forEach(font => {
-                        // Charger la police pour l'aperçu
-                        const link = document.createElement('link');
-                        link.href = `https://fonts.googleapis.com/css2?family=${font.replace(' ', '+')}&display=swap`;
-                        link.rel = 'stylesheet';
-                        document.head.appendChild(link);
-
-                        // Créer l'élément de suggestion
+                    
+                    if (matchingFonts.length === 0) {
                         const div = document.createElement('div');
-                        div.className = 'p-2 hover:bg-purple-600 cursor-pointer text-white';
-                        div.style.fontFamily = font;
-                        div.textContent = font;
-                        div.onclick = () => {
-                            input.value = font;
-                            suggestionsDiv.classList.add('hidden');
-                        };
+                        div.className = 'p-2 text-gray-400';
+                        div.textContent = 'Aucune police trouvée';
                         suggestionsDiv.appendChild(div);
-                    });
+                    } else {
+                        matchingFonts.forEach(font => {
+                            const link = document.createElement('link');
+                            link.href = `https://fonts.googleapis.com/css2?family=${font.replace(/ /g, '+')}`;
+                            link.rel = 'stylesheet';
+                            document.head.appendChild(link);
+
+                            const div = document.createElement('div');
+                            div.className = 'p-2 hover:bg-purple-600 cursor-pointer text-white flex items-center justify-between';
+                            
+                            const previewSpan = document.createElement('span');
+                            previewSpan.style.fontFamily = font;
+                            previewSpan.textContent = font;
+                            
+                            const sampleText = document.createElement('span');
+                            sampleText.style.fontFamily = font;
+                            sampleText.className = 'text-gray-400 text-sm';
+                            sampleText.textContent = 'AaBbCc123';
+                            
+                            div.appendChild(previewSpan);
+                            div.appendChild(sampleText);
+                            
+                            div.onclick = () => {
+                                input.value = font;
+                                suggestionsDiv.classList.add('hidden');
+                                applyFont(input.id.replace('custom', '').toLowerCase().replace('font', ''));
+                            };
+                            
+                            suggestionsDiv.appendChild(div);
+                        });
+                    }
 
                     suggestionsDiv.classList.remove('hidden');
                 }
 
-                // Masquer les suggestions quand on clique ailleurs
                 document.addEventListener('click', (e) => {
                     const suggestionsContainers = document.querySelectorAll('.suggestions-container');
                     suggestionsContainers.forEach(container => {
