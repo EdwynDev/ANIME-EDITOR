@@ -261,14 +261,14 @@ include 'includes/header.php';
                 </div> -->
 
             </div>
+            <button id="save-button"
+                class="text-white hover:text-purple-400 group relative w-full bg-purple-600 rounded-lg p-3">
+                <i class="fas fa-save mr-1"></i>Save in your collection
+                <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
+                    Save this card to view it later in your collection page
+                </span>
+            </button>
             <div class="grid grid-cols-2 gap-4">
-                <button id="save-button"
-                    class="text-white hover:text-purple-400 group relative">
-                    <i class="fas fa-save mr-1"></i>Save in your collection
-                    <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
-                        Save this card to view it later in your collection page
-                    </span>
-                </button>
                 <button id="edit-button"
                     class="text-white hover:text-blue-400 group relative hidden">
                     <i class="fas fa-edit mr-1"></i>Save Edit
