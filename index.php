@@ -324,7 +324,12 @@ include 'includes/header.php';
                     spinner.classList.add('flex');
 
                     const originalDiv = document.querySelector(`.${previewId}`);
-                    originalDiv.style.display = 'block';
+                    const prewiewIdToStyle = ['card-preview-basic', 'card-preview-gold', 'card-preview-rainbow', 'card-preview-secret'];
+                    if (prewiewIdToStyle.includes(previewId)) {
+                        originalDiv.style.display = 'block';
+                        originalDiv.style.transform = 'translate(-50%, -50%)';
+                    }
+
 
                     htmlToImage.toPng(originalDiv, {
                             quality: 1,
@@ -342,6 +347,10 @@ include 'includes/header.php';
                             link.click();
                             spinner.classList.remove('flex');
                             spinner.classList.add('hidden');
+                            if (prewiewIdToStyle.includes(previewId)) {
+                                originalDiv.style.display = 'none';
+                                originalDiv.style.transform = 'translate(-140%, -100%)';
+                            }
                         })
                         .catch(function(error) {
                             console.error('Error:', error);
