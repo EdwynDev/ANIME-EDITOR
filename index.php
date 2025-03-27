@@ -300,6 +300,22 @@ include 'includes/header.php';
                     class="text-white hover:text-red-400 relative">
                     <i class="fas fa-download mr-1"></i>Download Secret Preview
                 </button>
+                <button onclick="downloadPreview('card-preview-basic')"
+                    class="text-white hover:bg-gray-400 relative">
+                    <i class="fas fa-download mr-1"></i>Download Basic Preview (Full)
+                </button>
+                <button onclick="downloadPreview('card-preview-gold')"
+                    class="text-white hover:bg-yellow-400 relative">
+                    <i class="fas fa-download mr-1"></i>Download Gold Preview (Full)
+                </button>
+                <button onclick="downloadPreview('card-preview-rainbow')"
+                    class="text-white hover:bg-pink-400 relative">
+                    <i class="fas fa-download mr-1"></i>Download Rainbow Preview (Full)
+                </button>
+                <button onclick="downloadPreview('card-preview-secret')"
+                    class="text-white hover:bg-red-400 relative">
+                    <i class="fas fa-download mr-1"></i>Download Secret Preview (Full)
+                </button>
             </div>
             <script>
                 function downloadPreview(previewId) {
