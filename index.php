@@ -595,28 +595,34 @@ include 'includes/header.php';
                 function applyFontToCard(type, fontFamily) {
                     const cardData = {
                         name: {
-                            element: 'card-name',
+                            element: ['card-name', 'basic-full-name', 'gold-full-name', 'rainbow-full-name', 'secret-full-name'],
                             style: 'text-stroke-bolder'
                         },
                         skill: {
-                            element: 'card-skill',
+                            element: ['card-skill', 'basic-full-skill', 'gold-full-skill', 'rainbow-full-skill', 'secret-full-skill'],
                             style: 'text-stroke'
                         },
                         desc: {
-                            element: 'card-description',
+                            element: ['card-description', 'basic-full-description', 'gold-full-description', 'rainbow-full-description', 'secret-full-description'],
                             style: 'text-stroke'
                         },
                         stats: {
-                            element: ['card-damage', 'card-hp']
+                            element: ['card-damage', 'card-hp', 'basic-full-damage', 'basic-full-hp', 'gold-full-damage', 'gold-full-hp', 'rainbow-full-damage', 'rainbow-full-hp', 'secret-full-damage', 'secret-full-hp']
                         }
                     };
 
                     if (Array.isArray(cardData[type].element)) {
                         cardData[type].element.forEach(el => {
-                            document.getElementById(el).style.fontFamily = `"${fontFamily}", sans-serif`;
+                            const element = document.getElementById(el);
+                            if (element) {
+                                element.style.fontFamily = `"${fontFamily}", sans-serif`;
+                            }
                         });
                     } else {
-                        document.getElementById(cardData[type].element).style.fontFamily = `"${fontFamily}", sans-serif`;
+                        const element = document.getElementById(cardData[type].element);
+                        if (element) {
+                            element.style.fontFamily = `"${fontFamily}", sans-serif`;
+                        }
                     }
                 }
 
@@ -804,7 +810,7 @@ include 'includes/header.php';
                         <div class="gradient-border-basic p-2 shadow-basic">
                             <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
                                 <div class="card-image-box">
-                                    <img id="basic-full-image" src="https://placehold.co/320x500" />
+                                    <img id="basic-full-image" src="https://placehold.co/320x500" /> text-stroke-bolder">
                                 </div>
                                 <div class="absolute top-2 left-2 bg-basic text-black text-xs font-bold px-2 py-1 rounded">
                                     BASIC
