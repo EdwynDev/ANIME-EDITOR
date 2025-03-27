@@ -90,8 +90,7 @@ include 'includes/header.php';
                                 <?php echo strtoupper($card['rarity'] ?? 'basic'); ?>
                             </div>
                             <div class="absolute top-8 left-2 text-white text-xl font-bold text-linear-gradient">
-                                <span class="text-stroke-bolder <?php echo !empty($card['effects']['nameEffect']) && $card['effects']['nameEffect'] !== 'none' ? 'font-effect-' . $card['effects']['nameEffect'] : ''; ?>" 
-                                      style="font-family: '<?php echo $card['fonts']['nameFont'] ?? 'Electrolize'; ?>', sans-serif;">
+                                <span class="text-stroke-bolder" style="font-family: '<?php echo $card['fonts']['nameFont'] ?? 'Electrolize'; ?>', sans-serif;">
                                     <?php echo htmlspecialchars($card['name']); ?>
                                 </span>
                             </div>
@@ -100,8 +99,8 @@ include 'includes/header.php';
                             </div>
                             <div class="absolute bottom-16 left-2 right-2 px-2">
                                 <p>
-                                    <span class="text-xl text-white font-bold text-linear-gradient text-stroke <?php echo !empty($card['effects']['skillEffect']) && $card['effects']['skillEffect'] !== 'none' ? 'font-effect-' . $card['effects']['skillEffect'] : ''; ?>"
-                                          style="font-family: '<?php echo $card['fonts']['skillFont'] ?? 'Electrolize'; ?>', sans-serif;">
+                                    <span class="text-xl text-white font-bold text-linear-gradient text-stroke"
+                                        style="font-family: '<?php echo $card['fonts']['skillFont'] ?? 'Electrolize'; ?>', sans-serif;">
                                         <?php echo htmlspecialchars($card['skill']); ?>
                                     </span>
                                 </p>
@@ -327,19 +326,6 @@ include 'includes/header.php';
     }
 </script>
 <script src="assets/js/editor.js"></script>
-<?php
-// Ajouter dans la section du head ou juste après pour charger les effets de police
-foreach ($_SESSION['cards'] ?? [] as $card) {
-    if (!empty($card['effects'])) {
-        foreach ($card['effects'] as $type => $effect) {
-            if ($effect !== 'none') {
-                $fontFamily = $card['fonts'][str_replace('Effect', 'Font', $type)] ?? 'Electrolize';
-                echo '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=' . urlencode($fontFamily) . '&effect=' . urlencode($effect) . '">';
-            }
-        }
-    }
-}
-?>
 </body>
 
 </html>

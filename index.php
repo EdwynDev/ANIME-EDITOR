@@ -200,7 +200,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="space-y-4 p-4 bg-gray-800/50 rounded-lg mt-4">
+                <!-- <div class="space-y-4 p-4 bg-gray-800/50 rounded-lg mt-4">
                     <h3 class="text-purple-300 font-bold">
                         <i class="fas fa-magic mr-2"></i>Font Effects
                     </h3>
@@ -258,7 +258,7 @@ include 'includes/header.php';
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
             </div>
             <div class="flex gap-4">
@@ -393,8 +393,8 @@ include 'includes/header.php';
                                                     document.getElementById('customstatsFont').value || 'Lilita One' : document.getElementById('statsFont').value
                                             },
                                             effects: {
-                                                nameEffect: document.getElementById('nameEffect').value,
-                                                skillEffect: document.getElementById('skillEffect').value
+                                                nameEffect: document.getElementById('nameEffect').value || 'none',
+                                                skillEffect: document.getElementById('skillEffect').value || 'none'
                                             }
                                         };
 
@@ -444,8 +444,8 @@ include 'includes/header.php';
                                             document.getElementById('customstatsFont').value || 'Lilita One' : document.getElementById('statsFont').value
                                     },
                                     effects: {
-                                        nameEffect: document.getElementById('nameEffect').value,
-                                        skillEffect: document.getElementById('skillEffect').value
+                                        nameEffect: document.getElementById('nameEffect').value || 'none',
+                                        skillEffect: document.getElementById('skillEffect').value || 'none'
                                     }
                                 };
 
@@ -485,98 +485,6 @@ include 'includes/header.php';
                     });
                 });
 
-
-
-
-                function previewEffect(type) {
-                    const select = document.getElementById(`${type}Effect`);
-                    const preview = document.getElementById(`preview-${type}Effect`);
-                    const effect = select.value;
-                    const font = document.getElementById(`${type}Font`).value === 'custom' ?
-                        document.getElementById(`custom${type}Font`).value : document.getElementById(`${type}Font`).value;
-
-                    preview.textContent = type === 'name' ? 'Preview Name Text' : 'Preview Skill Text';
-                    preview.className = 'text-white text-xl'; 
-                    
-                    if (effect !== 'none') {
-                        const link = document.createElement('link');
-                        link.rel = 'stylesheet';
-                        link.href = `https://fonts.googleapis.com/css?family=${font}&effect=${effect}`;
-                        link.setAttribute('data-preview-effect', `${type}-${effect}`);
-                        document.head.appendChild(link);
-
-                        setTimeout(() => {
-                            preview.style.fontFamily = `"${font}", sans-serif`;
-                            preview.classList.add(`font-effect-${effect}`);
-                        }, 100);
-                    }
-                }
-
-                function applyEffect(type) {
-                    const effect = document.getElementById(`${type}Effect`).value;
-                    document.querySelectorAll('link[data-font-effect]').forEach(link => {
-                        if (link.getAttribute('data-font-effect').startsWith(type)) {
-                            link.remove();
-                        }
-                    });
-
-                    const element = document.getElementById(`card-${type}`);
-                    element.className = element.className
-                        .split(' ')
-                        .filter(cls => !cls.startsWith('font-effect-'))
-                        .join(' ');
-
-                    if (effect !== 'none') {
-                        updateEffects();
-                    }
-                }
-
-                function updateEffects() {
-                    const elements = {
-                        name: {
-                            select: 'nameEffect',
-                            element: ['card-name', 'basic-full-name', 'gold-full-name', 'rainbow-full-name', 'secret-full-name'],
-                            font: document.getElementById('nameFont').value === 'custom' ?
-                                document.getElementById('customnameFont').value : document.getElementById('nameFont').value
-                        },
-                        skill: {
-                            select: 'skillEffect',
-                            element: ['card-skill', 'basic-full-skill', 'gold-full-skill', 'rainbow-full-skill', 'secret-full-skill'],
-                            font: document.getElementById('skillFont').value === 'custom' ?
-                                document.getElementById('customskillFont').value : document.getElementById('skillFont').value
-                        }
-                    };
-
-                    document.querySelectorAll('link[data-font-effect]').forEach(link => {
-                        link.remove();
-                    });
-
-                    Object.entries(elements).forEach(([type, data]) => {
-                        const effect = document.getElementById(data.select).value;
-                        
-                        data.element.forEach(elementId => {
-                            const element = document.getElementById(elementId);
-                            if (element) {
-                                element.className = element.className
-                                    .split(' ')
-                                    .filter(cls => !cls.startsWith('font-effect-'))
-                                    .join(' ');
-
-                                if (effect !== 'none') {
-                                    const link = document.createElement('link');
-                                    link.rel = 'stylesheet';
-                                    link.href = `https://fonts.googleapis.com/css?family=${data.font}&effect=${effect}`;
-                                    link.setAttribute('data-font-effect', `${type}-${effect}`);
-                                    document.head.appendChild(link);
-
-                                    setTimeout(() => {
-                                        element.classList.add(`font-effect-${effect}`);
-                                    }, 100);
-                                }
-                            }
-                        });
-                    });
-                }
 
                 function updateFonts() {
                     const elements = ['name', 'skill', 'desc', 'stats'];
@@ -648,9 +556,6 @@ include 'includes/header.php';
                     link.rel = 'stylesheet';
                     document.head.appendChild(link);
                     loadedFonts.add(fontFamily);
-                    setTimeout(() => {
-                        updateEffects();
-                    }, 100);
                 }
 
                 function handleFontSuggestions(input, suggestionsDivId) {
