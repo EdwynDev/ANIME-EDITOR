@@ -750,7 +750,7 @@ include 'includes/header.php';
             </div>
 
             <div class="all-rarity grid grid-cols-2 gap-10">
-                <div class="gradient-border-basic p-1 shadow-basic rarity-card  card-preview-basic-all" tabindex="0">
+                <div class="gradient-border-basic p-1 shadow-basic rarity-card  card-preview-basic-all card-preview-basic" tabindex="0">
                     <div class="rarity-preview">
                         <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
                             <div class="card-image-box">
@@ -769,7 +769,7 @@ include 'includes/header.php';
                             </div>
                         </div>
                     </div>
-                    <div class="full-card card-preview-basic">
+                    <div class="full-card">
                         <div class="gradient-border-basic p-2 shadow-basic">
                             <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
                                 <div class="card-image-box">
@@ -813,7 +813,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="gradient-border-gold p-1 shadow-gold rarity-card card-preview-gold-all" tabindex="0">
+                <div class="gradient-border-gold p-1 shadow-gold rarity-card card-preview-gold-all card-preview-gold" tabindex="0">
                     <div class="rarity-preview">
                         <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
                             <div class="card-image-box">
@@ -832,7 +832,7 @@ include 'includes/header.php';
                             </div>
                         </div>
                     </div>
-                    <div class="full-card card-preview-gold">
+                    <div class="full-card">
                         <div class="gradient-border-gold p-2 shadow-gold">
                             <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
                                 <div class="card-image-box">
@@ -874,7 +874,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="gradient-border-rainbow p-1 shadow-rainbow rarity-card card-preview-rainbow-all" tabindex="0">
+                <div class="gradient-border-rainbow p-1 shadow-rainbow rarity-card card-preview-rainbow-all card-preview-rainbow" tabindex="0">
                     <div class="rarity-preview">
                         <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
                             <div class="card-image-box">
@@ -893,7 +893,7 @@ include 'includes/header.php';
                             </div>
                         </div>
                     </div>
-                    <div class="full-card card-preview-rainbow">
+                    <div class="full-card">
                         <div class="gradient-border-rainbow p-2 shadow-rainbow">
                             <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
                                 <div class="card-image-box">
@@ -937,7 +937,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="gradient-border-secret p-1 shadow-secret rarity-card card-preview-secret-all" tabindex="0">
+                <div class="gradient-border-secret p-1 shadow-secret rarity-card card-preview-secret-all card-preview-secret" tabindex="0">
                     <div class="rarity-preview">
                         <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
                             <div class="card-image-box">
@@ -956,7 +956,7 @@ include 'includes/header.php';
                             </div>
                         </div>
                     </div>
-                    <div class="full-card card-preview-secret">
+                    <div class="full-card">
                         <div class="gradient-border-secret p-2 shadow-secret">
                             <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
                                 <div class="card-image-box">
