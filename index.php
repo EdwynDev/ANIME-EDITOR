@@ -326,13 +326,11 @@ include 'includes/header.php';
                     const originalDiv = document.querySelector(`.${previewId}`);
                     const prewiewIdToStyle = ['card-preview-basic', 'card-preview-gold', 'card-preview-rainbow', 'card-preview-secret'];
                     if (prewiewIdToStyle.includes(previewId)) {
-                        // Modification ici: on stocke la taille originale
                         const originalSize = originalDiv.style.width;
                         const fullCard = originalDiv.querySelector('.full-card');
                         if (fullCard) {
-                            // On ajuste la taille du conteneur pour le rendu
-                            originalDiv.style.width = '320px';
-                            originalDiv.style.height = '500px';
+                            originalDiv.style.width = '100%';
+                            originalDiv.style.height = '100%';
                             fullCard.style.display = 'block';
                             fullCard.style.position = 'absolute';
                             fullCard.style.top = '0';
@@ -340,7 +338,6 @@ include 'includes/header.php';
                             fullCard.style.transform = 'none';
                         }
 
-                        // Après la capture, on remet la configuration initiale
                         htmlToImage.toPng(originalDiv, {
                             quality: 1,
                             pixelRatio: 2,
@@ -355,7 +352,6 @@ include 'includes/header.php';
                             spinner.classList.remove('flex');
                             spinner.classList.add('hidden');
                             
-                            // Restauration de l'état initial
                             if (fullCard) {
                                 originalDiv.style.width = originalSize;
                                 originalDiv.style.height = 'auto';
