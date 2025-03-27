@@ -508,37 +508,39 @@ include 'includes/header.php';
                         .then(data => {
                             suggestionsDiv.innerHTML = '';
                             
-                            if (!data.exists) {
+                            if (!data.suggestions || data.suggestions.length === 0) {
                                 const div = document.createElement('div');
                                 div.className = 'p-2 text-gray-400';
-                                div.textContent = 'Font not found in Google Fonts';
+                                div.textContent = 'No matching fonts found';
                                 suggestionsDiv.appendChild(div);
                                 return;
                             }
 
-                            const div = document.createElement('div');
-                            div.className = 'p-4 text-white flex items-center justify-between transition-colors cursor-pointer hover:bg-purple-600';
-                            
-                            const previewSpan = document.createElement('span');
-                            previewSpan.textContent = data.fontFamily; 
-                            
-                            const sampleText = document.createElement('span');
-                            sampleText.className = 'text-gray-400';
-                            sampleText.textContent = 'AaBbCc123';
+                            data.suggestions.forEach(fontFamily => {
+                                const div = document.createElement('div');
+                                div.className = 'p-4 text-white flex items-center justify-between transition-colors cursor-pointer hover:bg-purple-600';
+                                
+                                const previewSpan = document.createElement('span');
+                                previewSpan.textContent = fontFamily;
+                                
+                                const sampleText = document.createElement('span');
+                                sampleText.className = 'text-gray-400';
+                                sampleText.textContent = 'AaBbCc123';
 
-                            div.onclick = () => {
-                                loadFont(data.fontFamily);
-                                input.value = data.fontFamily;
-                                previewSpan.style.fontFamily = data.fontFamily;
-                                sampleText.style.fontFamily = data.fontFamily;
-                                suggestionsDiv.classList.add('hidden');
-                                applyFont(input.id.replace('custom', '').toLowerCase().replace('font', ''));
-                            };
-                            
-                            div.appendChild(previewSpan);
-                            div.appendChild(sampleText);
-                            
-                            suggestionsDiv.appendChild(div);
+                                div.onclick = () => {
+                                    loadFont(fontFamily);
+                                    input.value = fontFamily;
+                                    previewSpan.style.fontFamily = fontFamily;
+                                    sampleText.style.fontFamily = fontFamily;
+                                    suggestionsDiv.classList.add('hidden');
+                                    applyFont(input.id.replace('custom', '').toLowerCase().replace('font', ''));
+                                };
+                                
+                                div.appendChild(previewSpan);
+                                div.appendChild(sampleText);
+                                
+                                suggestionsDiv.appendChild(div);
+                            });
                         })
                         .catch(error => {
                             console.error('Error checking font:', error);
