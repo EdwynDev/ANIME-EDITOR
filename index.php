@@ -119,8 +119,13 @@ include 'includes/header.php';
                                 <option value="custom">Custom Font</option>
                             </select>
                             <div class="flex gap-2 mt-2">
-                                <input id="customnameFont" type="text" placeholder="Google Fonts name or URL"
-                                    class="flex-1 bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
+                                <div class="relative flex-1">
+                                    <input id="customnameFont" type="text" placeholder="Google Fonts name or URL"
+                                        class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden"
+                                        oninput="handleFontSuggestions(this, 'nameFontSuggestions')">
+                                    <div id="nameFontSuggestions" class="suggestions-container hidden absolute w-full z-50 max-h-60 overflow-y-auto bg-gray-800 border border-purple-500 rounded-lg mt-1">
+                                    </div>
+                                </div>
                                 <button onclick="applyFont('name')" class="bg-purple-600 hover:bg-purple-500 text-white rounded-lg px-4 py-2 hidden" id="apply-nameFont">
                                     Apply
                                 </button>
@@ -136,8 +141,13 @@ include 'includes/header.php';
                                 <option value="custom">Custom Font</option>
                             </select>
                             <div class="flex gap-2 mt-2">
-                                <input id="customskillFont" type="text" placeholder="Google Fonts name or URL"
-                                    class="flex-1 bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
+                                <div class="relative flex-1">
+                                    <input id="customskillFont" type="text" placeholder="Google Fonts name or URL"
+                                        class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden"
+                                        oninput="handleFontSuggestions(this, 'skillFontSuggestions')">
+                                    <div id="skillFontSuggestions" class="suggestions-container hidden absolute w-full z-50 max-h-60 overflow-y-auto bg-gray-800 border border-purple-500 rounded-lg mt-1">
+                                    </div>
+                                </div>
                                 <button onclick="applyFont('skill')" class="bg-purple-600 hover:bg-purple-500 text-white rounded-lg px-4 py-2 hidden" id="apply-skillFont">
                                     Apply
                                 </button>
@@ -153,8 +163,13 @@ include 'includes/header.php';
                                 <option value="custom">Custom Font</option>
                             </select>
                             <div class="flex gap-2 mt-2">
-                                <input id="customdescFont" type="text" placeholder="Google Fonts name or URL"
-                                    class="flex-1 bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
+                                <div class="relative flex-1">
+                                    <input id="customdescFont" type="text" placeholder="Google Fonts name or URL"
+                                        class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden"
+                                        oninput="handleFontSuggestions(this, 'descFontSuggestions')">
+                                    <div id="descFontSuggestions" class="suggestions-container hidden absolute w-full z-50 max-h-60 overflow-y-auto bg-gray-800 border border-purple-500 rounded-lg mt-1">
+                                    </div>
+                                </div>
                                 <button onclick="applyFont('desc')" class="bg-purple-600 hover:bg-purple-500 text-white rounded-lg px-4 py-2 hidden" id="apply-descFont">
                                     Apply
                                 </button>
@@ -170,8 +185,13 @@ include 'includes/header.php';
                                 <option value="custom">Custom Font</option>
                             </select>
                             <div class="flex gap-2 mt-2">
-                                <input id="customstatsFont" type="text" placeholder="Google Fonts name or URL"
-                                    class="flex-1 bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden">
+                                <div class="relative flex-1">
+                                    <input id="customstatsFont" type="text" placeholder="Google Fonts name or URL"
+                                        class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden"
+                                        oninput="handleFontSuggestions(this, 'statsFontSuggestions')">
+                                    <div id="statsFontSuggestions" class="suggestions-container hidden absolute w-full z-50 max-h-60 overflow-y-auto bg-gray-800 border border-purple-500 rounded-lg mt-1">
+                                    </div>
+                                </div>
                                 <button onclick="applyFont('stats')" class="bg-purple-600 hover:bg-purple-500 text-white rounded-lg px-4 py-2 hidden" id="apply-statsFont">
                                     Apply
                                 </button>
@@ -467,6 +487,64 @@ include 'includes/header.php';
                         document.getElementById(cardData[type].element).style.fontFamily = `"${fontFamily}", sans-serif`;
                     }
                 }
+
+                const popularGoogleFonts = [
+                    'Roboto', 'Open Sans', 'Lato', 'Montserrat', 'Poppins', 'Raleway', 'Ubuntu',
+                    'Playfair Display', 'Oswald', 'Source Sans Pro', 'Merriweather', 'Nunito',
+                    'PT Sans', 'Rubik', 'Noto Sans', 'Quicksand', 'Work Sans', 'Mulish',
+                    'Dancing Script', 'Pacifico', 'Caveat', 'Permanent Marker', 'Comic Neue',
+                    'Press Start 2P', 'VT323', 'Bangers', 'Creepster', 'Nosifer'
+                ];
+
+                function handleFontSuggestions(input, suggestionsDivId) {
+                    const suggestionsDiv = document.getElementById(suggestionsDivId);
+                    const searchTerm = input.value.toLowerCase();
+
+                    // Vider et cacher les suggestions si le champ est vide
+                    if (searchTerm === '') {
+                        suggestionsDiv.innerHTML = '';
+                        suggestionsDiv.classList.add('hidden');
+                        return;
+                    }
+
+                    // Filtrer les polices qui correspondent à la recherche
+                    const matchingFonts = popularGoogleFonts.filter(font => 
+                        font.toLowerCase().includes(searchTerm)
+                    );
+
+                    // Afficher les suggestions
+                    suggestionsDiv.innerHTML = '';
+                    matchingFonts.forEach(font => {
+                        // Charger la police pour l'aperçu
+                        const link = document.createElement('link');
+                        link.href = `https://fonts.googleapis.com/css2?family=${font.replace(' ', '+')}&display=swap`;
+                        link.rel = 'stylesheet';
+                        document.head.appendChild(link);
+
+                        // Créer l'élément de suggestion
+                        const div = document.createElement('div');
+                        div.className = 'p-2 hover:bg-purple-600 cursor-pointer text-white';
+                        div.style.fontFamily = font;
+                        div.textContent = font;
+                        div.onclick = () => {
+                            input.value = font;
+                            suggestionsDiv.classList.add('hidden');
+                        };
+                        suggestionsDiv.appendChild(div);
+                    });
+
+                    suggestionsDiv.classList.remove('hidden');
+                }
+
+                // Masquer les suggestions quand on clique ailleurs
+                document.addEventListener('click', (e) => {
+                    const suggestionsContainers = document.querySelectorAll('.suggestions-container');
+                    suggestionsContainers.forEach(container => {
+                        if (!container.contains(e.target)) {
+                            container.classList.add('hidden');
+                        }
+                    });
+                });
             </script>
         </div>
 
