@@ -761,7 +761,7 @@ include 'includes/header.php';
                         <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
                             <div class="card-image-box">
                                 <img id="basic-image" alt="Basic rarity image"
-                                    class="absolute inset-0 w-full h-full object-cover opacity-80"
+                                    class="absolute inset-0 w-full h-full object-cover object-top opacity-80"
                                     src="https://placehold.co/160x160" />
                             </div>
                             <div class="absolute inset-0 bg-black bg-opacity-40">
