@@ -122,8 +122,7 @@ include 'includes/header.php';
                                 <div class="relative flex-1">
                                     <input id="customnameFont" type="text" placeholder="Google Fonts name or URL"
                                         class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500 hidden"
-                                        oninput="handleFontSuggestions(this, 'nameFontSuggestions')"
-                                        onfocus="handleFontSuggestions(this, 'nameFontSuggestions', true)">
+                                        oninput="handleFontSuggestions(this, 'nameFontSuggestions')">
                                     <div id="nameFontSuggestions" class="suggestions-container hidden absolute w-full z-50 max-h-60 overflow-y-auto bg-gray-800 border border-purple-500 rounded-lg mt-1">
                                     </div>
                                 </div>
@@ -441,24 +440,11 @@ include 'includes/header.php';
                     const fontName = customInput.value.trim();
                     if (!fontName) return;
 
-                    const existingLink = document.getElementById(`font-link-${type}`);
-                    if (existingLink) {
-                        existingLink.remove();
-                    }
-
-                    const link = document.createElement('link');
-                    link.id = `font-link-${type}`;
-                    link.rel = 'stylesheet';
-                    if (fontName.includes('fonts.googleapis.com')) {
-                        link.href = fontName;
-                    } else {
-                        link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontName)}&display=swap`;
-                    }
-                    document.head.appendChild(link);
+                    loadFont(fontName);
 
                     setTimeout(() => {
                         applyFontToCard(type, fontName);
-                    }, 500);
+                    }, 100);
                 }
 
                 function applyFontToCard(type, fontFamily) {
@@ -490,6 +476,7 @@ include 'includes/header.php';
                 }
 
                 let googleFonts = [];
+                let loadedFonts = new Set();
 
                 fetch('api/get_fonts.php')
                     .then(response => response.json())
@@ -497,6 +484,18 @@ include 'includes/header.php';
                         googleFonts = fonts.map(font => font.family);
                     })
                     .catch(error => console.error('Error :', error));
+
+                function loadFont(fontFamily) {
+                    if (loadedFonts.has(fontFamily)) {
+                        return;
+                    }
+
+                    const link = document.createElement('link');
+                    link.href = `https://fonts.googleapis.com/css2?family=${fontFamily.replace(/ /g, '+')}`;
+                    link.rel = 'stylesheet';
+                    document.head.appendChild(link);
+                    loadedFonts.add(fontFamily);
+                }
 
                 function handleFontSuggestions(input, suggestionsDivId, isFocus = false) {
                     const suggestionsDiv = document.getElementById(suggestionsDivId);
@@ -517,10 +516,8 @@ include 'includes/header.php';
                         suggestionsDiv.appendChild(div);
                     } else {
                         matchingFonts.forEach(font => {
-                            const link = document.createElement('link');
-                            link.href = `https://fonts.googleapis.com/css2?family=${font.replace(/ /g, '+')}`;
-                            link.rel = 'stylesheet';
-                            document.head.appendChild(link);
+                            // Charger la police une seule fois
+                            loadFont(font);
 
                             const div = document.createElement('div');
                             div.className = 'p-2 hover:bg-purple-600 cursor-pointer text-white flex items-center justify-between transition-colors';
@@ -537,7 +534,8 @@ include 'includes/header.php';
                             div.appendChild(previewSpan);
                             div.appendChild(sampleText);
                             
-                            div.onclick = () => {
+                            div.onclick = (e) => {
+                                e.stopPropagation();
                                 input.value = font;
                                 suggestionsDiv.classList.add('hidden');
                                 applyFont(input.id.replace('custom', '').toLowerCase().replace('font', ''));
