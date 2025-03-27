@@ -14,13 +14,19 @@ $response = file_get_contents("{$baseUrl}?key={$apiKey}");
 $fonts = json_decode($response, true);
 
 $exists = false;
+$exactFontFamily = '';
+
 if ($fonts && isset($fonts['items'])) {
     foreach ($fonts['items'] as $font) {
         if (strtolower($font['family']) === strtolower($fontName)) {
             $exists = true;
+            $exactFontFamily = $font['family'];
             break;
         }
     }
 }
 
-echo json_encode(['exists' => $exists]);
+echo json_encode([
+    'exists' => $exists,
+    'fontFamily' => $exactFontFamily
+]);

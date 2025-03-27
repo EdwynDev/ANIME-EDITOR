@@ -516,20 +516,24 @@ include 'includes/header.php';
                                 return;
                             }
 
-                            loadFont(fontName);
-
                             const div = document.createElement('div');
-                            div.className = 'p-4 text-white flex items-center justify-between transition-colors';
+                            div.className = 'p-4 text-white flex items-center justify-between transition-colors cursor-pointer hover:bg-purple-600';
                             
                             const previewSpan = document.createElement('span');
-                            previewSpan.style.fontFamily = fontName;
-                            previewSpan.style.fontSize = '18px';
-                            previewSpan.textContent = fontName;
+                            previewSpan.textContent = data.fontFamily; 
                             
                             const sampleText = document.createElement('span');
-                            sampleText.style.fontFamily = fontName;
                             sampleText.className = 'text-gray-400';
                             sampleText.textContent = 'AaBbCc123';
+
+                            div.onclick = () => {
+                                loadFont(data.fontFamily);
+                                input.value = data.fontFamily;
+                                previewSpan.style.fontFamily = data.fontFamily;
+                                sampleText.style.fontFamily = data.fontFamily;
+                                suggestionsDiv.classList.add('hidden');
+                                applyFont(input.id.replace('custom', '').toLowerCase().replace('font', ''));
+                            };
                             
                             div.appendChild(previewSpan);
                             div.appendChild(sampleText);
