@@ -518,6 +518,7 @@ include 'includes/header.php';
 
                             data.suggestions.forEach(fontFamily => {
                                 const div = document.createElement('div');
+                                div.style.fontFamily = fontFamily;
                                 div.className = 'p-4 text-white flex items-center justify-between transition-colors cursor-pointer hover:bg-purple-600';
                                 
                                 const previewSpan = document.createElement('span');
