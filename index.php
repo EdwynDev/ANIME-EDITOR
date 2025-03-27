@@ -210,36 +210,52 @@ include 'includes/header.php';
                             <label class="block text-purple-300 text-sm mb-2">
                                 Card Name Effect
                             </label>
-                            <select id="nameEffect" class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500" onchange="updateEffects()">
-                                <option value="none">No Effect</option>
-                                <option value="3d">3D</option>
-                                <option value="3d-float">3D Float</option>
-                                <option value="anaglyph">Anaglyph</option>
-                                <option value="fire">Fire</option>
-                                <option value="fire-animation">Fire Animation</option>
-                                <option value="neon">Neon</option>
-                                <option value="outline">Outline</option>
-                                <option value="emboss">Emboss</option>
-                                <option value="shadow-multiple">Multiple Shadows</option>
-                            </select>
+                            <div class="flex gap-2">
+                                <select id="nameEffect" class="flex-1 bg-gray-800 text-white rounded-lg p-3 border border-purple-500" onchange="previewEffect('name')">
+                                    <option value="none">No Effect</option>
+                                    <option value="3d">3D</option>
+                                    <option value="3d-float">3D Float</option>
+                                    <option value="anaglyph">Anaglyph</option>
+                                    <option value="fire">Fire</option>
+                                    <option value="fire-animation">Fire Animation</option>
+                                    <option value="neon">Neon</option>
+                                    <option value="outline">Outline</option>
+                                    <option value="emboss">Emboss</option>
+                                    <option value="shadow-multiple">Multiple Shadows</option>
+                                </select>
+                                <button onclick="applyEffect('name')" class="bg-purple-600 hover:bg-purple-500 text-white rounded-lg px-4 py-2" id="apply-nameEffect">
+                                    Apply
+                                </button>
+                            </div>
+                            <div class="mt-2 p-3 bg-gray-900 rounded-lg">
+                                <span id="preview-nameEffect" class="text-white text-lg">Preview Text</span>
+                            </div>
                         </div>
 
                         <div>
                             <label class="block text-purple-300 text-sm mb-2">
                                 Skill Name Effect
                             </label>
-                            <select id="skillEffect" class="w-full bg-gray-800 text-white rounded-lg p-3 border border-purple-500" onchange="updateEffects()">
-                                <option value="none">No Effect</option>
-                                <option value="3d">3D</option>
-                                <option value="3d-float">3D Float</option>
-                                <option value="anaglyph">Anaglyph</option>
-                                <option value="fire">Fire</option>
-                                <option value="fire-animation">Fire Animation</option>
-                                <option value="neon">Neon</option>
-                                <option value="outline">Outline</option>
-                                <option value="emboss">Emboss</option>
-                                <option value="shadow-multiple">Multiple Shadows</option>
-                            </select>
+                            <div class="flex gap-2">
+                                <select id="skillEffect" class="flex-1 bg-gray-800 text-white rounded-lg p-3 border border-purple-500" onchange="previewEffect('skill')">
+                                    <option value="none">No Effect</option>
+                                    <option value="3d">3D</option>
+                                    <option value="3d-float">3D Float</option>
+                                    <option value="anaglyph">Anaglyph</option>
+                                    <option value="fire">Fire</option>
+                                    <option value="fire-animation">Fire Animation</option>
+                                    <option value="neon">Neon</option>
+                                    <option value="outline">Outline</option>
+                                    <option value="emboss">Emboss</option>
+                                    <option value="shadow-multiple">Multiple Shadows</option>
+                                </select>
+                                <button onclick="applyEffect('skill')" class="bg-purple-600 hover:bg-purple-500 text-white rounded-lg px-4 py-2" id="apply-skillEffect">
+                                    Apply
+                                </button>
+                            </div>
+                            <div class="mt-2 p-3 bg-gray-900 rounded-lg">
+                                <span id="preview-skillEffect" class="text-white text-lg">Preview Text</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -471,6 +487,48 @@ include 'includes/header.php';
 
 
 
+
+                function previewEffect(type) {
+                    const select = document.getElementById(`${type}Effect`);
+                    const preview = document.getElementById(`preview-${type}Effect`);
+                    const effect = select.value;
+                    const font = document.getElementById(`${type}Font`).value === 'custom' ?
+                        document.getElementById(`custom${type}Font`).value :
+                        document.getElementById(`${type}Font`).value;
+
+                    preview.className = 'text-white text-lg';
+
+                    if (effect !== 'none') {
+                        const link = document.createElement('link');
+                        link.rel = 'stylesheet';
+                        link.href = `https://fonts.googleapis.com/css?family=${font}&effect=${effect}`;
+                        link.setAttribute('data-preview-effect', `${type}-${effect}`);
+                        document.head.appendChild(link);
+
+                        preview.style.fontFamily = `"${font}", sans-serif`;
+                        preview.classList.add(`font-effect-${effect}`);
+                    }
+                }
+
+                function applyEffect(type) {
+                    const effect = document.getElementById(`${type}Effect`).value;
+                    document.querySelectorAll('link[data-font-effect]').forEach(link => {
+                        if (link.getAttribute('data-font-effect').startsWith(type)) {
+                            link.remove();
+                        }
+                    });
+
+                    const element = document.getElementById(`card-${type}`);
+                    element.className = element.className
+                        .split(' ')
+                        .filter(cls => !cls.startsWith('font-effect-'))
+                        .join(' ');
+
+                    if (effect !== 'none') {
+                        updateEffects();
+                    }
+                }
+
                 function updateEffects() {
                     const elements = {
                         name: {
@@ -487,7 +545,7 @@ include 'includes/header.php';
                         }
                     };
 
-                    document.querySelectorAll('link[data-font-effect]').forEach(link => {
+                    document.querySelectorAll('link[data-preview-effect]').forEach(link => {
                         link.remove();
                     });
 
