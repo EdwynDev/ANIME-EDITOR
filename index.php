@@ -391,11 +391,12 @@ include 'includes/header.php';
                                                     document.getElementById('customdescFont').value || 'Electrolize' : document.getElementById('descFont').value,
                                                 statsFont: document.getElementById('statsFont').value === 'custom' ?
                                                     document.getElementById('customstatsFont').value || 'Lilita One' : document.getElementById('statsFont').value
-                                            },
-                                            effects: {
-                                                nameEffect: document.getElementById('nameEffect').value || 'none',
-                                                skillEffect: document.getElementById('skillEffect').value || 'none'
                                             }
+                                            // ,
+                                            // effects: {
+                                            //     nameEffect: document.getElementById('nameEffect').value || 'none',
+                                            //     skillEffect: document.getElementById('skillEffect').value || 'none'
+                                            // }
                                         };
 
                                         fetch('update_card.php', {
@@ -442,11 +443,12 @@ include 'includes/header.php';
                                             document.getElementById('customdescFont').value || 'Electrolize' : document.getElementById('descFont').value,
                                         statsFont: document.getElementById('statsFont').value === 'custom' ?
                                             document.getElementById('customstatsFont').value || 'Lilita One' : document.getElementById('statsFont').value
-                                    },
-                                    effects: {
-                                        nameEffect: document.getElementById('nameEffect').value || 'none',
-                                        skillEffect: document.getElementById('skillEffect').value || 'none'
                                     }
+                                    // ,
+                                    // effects: {
+                                    //     nameEffect: document.getElementById('nameEffect').value || 'none',
+                                    //     skillEffect: document.getElementById('skillEffect').value || 'none'
+                                    // }
                                 };
 
                                 fetch('save_card.php', {

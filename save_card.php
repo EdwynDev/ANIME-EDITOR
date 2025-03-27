@@ -18,12 +18,12 @@ try {
         ];
     }
 
-    if (!isset($data['effects'])) {
-        $data['effects'] = [
-            'nameEffect' => 'none',
-            'skillEffect' => 'none'
-        ];
-    }
+    // if (!isset($data['effects'])) {
+    //     $data['effects'] = [
+    //         'nameEffect' => 'none',
+    //         'skillEffect' => 'none'
+    //     ];
+    // }
 
     if (!isset($_SESSION['cards'])) {
         $_SESSION['cards'] = [];

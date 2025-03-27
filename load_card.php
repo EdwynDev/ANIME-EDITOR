@@ -21,11 +21,12 @@ if (isset($_GET['index']) && isset($_SESSION['cards'])) {
                 'skillFont' => 'Electrolize',
                 'descFont' => 'Electrolize',
                 'statsFont' => 'Lilita One'
-            ],
-            'effects' => [
-                'nameEffect' => 'none',
-                'skillEffect' => 'none'
             ]
+            // ,
+            // 'effects' => [
+            //     'nameEffect' => 'none',
+            //     'skillEffect' => 'none'
+            // ]
         ], $card);
         
         echo json_encode($card);
