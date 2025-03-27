@@ -330,8 +330,8 @@ include 'includes/header.php';
                         const originalSize = originalDiv.style.width;
                         const fullCard = originalDiv.querySelector('.full-card');
                         if (fullCard) {
-                            originalDiv.style.width = '340px';
-                            originalDiv.style.height = '520px';
+                            originalDiv.style.width = '335px';
+                            originalDiv.style.height = '515px';
                             fullCard.style.display = 'block';
                             fullCard.style.position = 'absolute';
                             fullCard.style.top = '0';
