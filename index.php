@@ -261,7 +261,7 @@ include 'includes/header.php';
                 </div> -->
 
             </div>
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-2 gap-4">
                 <button id="save-button"
                     class="text-white hover:text-purple-400 group relative">
                     <i class="fas fa-save mr-1"></i>Save in your collection
