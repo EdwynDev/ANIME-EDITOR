@@ -503,10 +503,10 @@ include 'includes/header.php';
                     const searchTerm = input.value.toLowerCase();
 
                     const matchingFonts = isFocus && !searchTerm ? 
-                        googleFonts :
+                        googleFonts.slice(0, 350) :
                         googleFonts.filter(font => 
                             font.toLowerCase().includes(searchTerm)
-                        );
+                        ).slice(0, 350);
 
                     suggestionsDiv.innerHTML = '';
                     
