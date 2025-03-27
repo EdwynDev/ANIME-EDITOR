@@ -276,21 +276,56 @@ include 'includes/header.php';
                         Update this card in your collection
                     </span>
                 </button>
-                <button onclick="downloadPreview()"
+                <button onclick="downloadPreview('card-preview')"
                     class="text-white hover:text-green-400 group relative">
                     <i class="fas fa-download mr-1"></i>Download Preview
                     <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
                         Download the current card preview as image
                     </span>
                 </button>
+                <button onclick="downloadPreview('card-preview-all')"
+                    class="text-white hover:text-green-400 group relative">
+                    <i class="fas fa-download mr-1"></i>Download All Previews
+                    <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
+                        Download the current card preview as image
+                    </span>
+                </button>
+                <button onclick="downloadPreview('card-preview-basic-all')"
+                    class="text-white hover:text-gray-400 group relative">
+                    <i class="fas fa-download mr-1"></i>Download Basic Preview
+                    <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
+                        Download the current card preview as image
+                    </span>
+                </button>
+                <button onclick="downloadPreview('card-preview-gold-all')"
+                    class="text-white hover:text-yellow-400 group relative">
+                    <i class="fas fa-download mr-1"></i>Download Gold Preview
+                    <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
+                        Download the current gold card preview as image
+                    </span>
+                </button>
+                <button onclick="downloadPreview('card-preview-rainbow-all')"
+                    class="text-white hover:text-pink-400 group relative">
+                    <i class="fas fa-download mr-1"></i>Download Rainbow Preview
+                    <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
+                        Download the current rainbow card preview as image
+                    </span>
+                </button>
+                <button onclick="downloadPreview('card-preview-secret-all')"
+                    class="text-white hover:text-red-400 group relative">
+                    <i class="fas fa-download mr-1"></i>Download Secret Preview
+                    <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
+                        Download the current secret card preview as image
+                    </span>
+                </button>
             </div>
             <script>
-                function downloadPreview() {
+                function downloadPreview(previewId) {
                     const spinner = document.getElementById('downloadSpinner');
                     spinner.classList.remove('hidden');
                     spinner.classList.add('flex');
 
-                    const originalDiv = document.querySelector(`.card-preview`);
+                    const originalDiv = document.querySelector(`.${previewId}`);
 
                     htmlToImage.toPng(originalDiv, {
                             quality: 1,
@@ -707,7 +742,7 @@ include 'includes/header.php';
             </div>
 
             <div class="all-rarity grid grid-cols-2 gap-10">
-                <div class="gradient-border-basic p-1 shadow-basic rarity-card" tabindex="0">
+                <div class="gradient-border-basic p-1 shadow-basic rarity-card  card-preview-basic-all" tabindex="0">
                     <div class="rarity-preview">
                         <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
                             <div class="card-image-box">
@@ -726,7 +761,7 @@ include 'includes/header.php';
                             </div>
                         </div>
                     </div>
-                    <div class="full-card">
+                    <div class="full-card card-preview-basic">
                         <div class="gradient-border-basic p-2 shadow-basic">
                             <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
                                 <div class="card-image-box">
@@ -770,7 +805,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="gradient-border-gold p-1 shadow-gold rarity-card" tabindex="0">
+                <div class="gradient-border-gold p-1 shadow-gold rarity-card card-preview-gold-all" tabindex="0">
                     <div class="rarity-preview">
                         <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
                             <div class="card-image-box">
@@ -789,7 +824,7 @@ include 'includes/header.php';
                             </div>
                         </div>
                     </div>
-                    <div class="full-card">
+                    <div class="full-card card-preview-gold">
                         <div class="gradient-border-gold p-2 shadow-gold">
                             <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
                                 <div class="card-image-box">
@@ -831,7 +866,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="gradient-border-rainbow p-1 shadow-rainbow rarity-card" tabindex="0">
+                <div class="gradient-border-rainbow p-1 shadow-rainbow rarity-card card-preview-rainbow-all" tabindex="0">
                     <div class="rarity-preview">
                         <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
                             <div class="card-image-box">
@@ -850,7 +885,7 @@ include 'includes/header.php';
                             </div>
                         </div>
                     </div>
-                    <div class="full-card">
+                    <div class="full-card card-preview-rainbow">
                         <div class="gradient-border-rainbow p-2 shadow-rainbow">
                             <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
                                 <div class="card-image-box">
@@ -894,7 +929,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="gradient-border-secret p-1 shadow-secret rarity-card" tabindex="0">
+                <div class="gradient-border-secret p-1 shadow-secret rarity-card card-preview-secret-all" tabindex="0">
                     <div class="rarity-preview">
                         <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
                             <div class="card-image-box">
@@ -913,7 +948,7 @@ include 'includes/header.php';
                             </div>
                         </div>
                     </div>
-                    <div class="full-card">
+                    <div class="full-card card-preview-secret">
                         <div class="gradient-border-secret p-2 shadow-secret">
                             <div class="gradient-content h-[500px] w-80 bg-black rounded-lg overflow-hidden">
                                 <div class="card-image-box">
