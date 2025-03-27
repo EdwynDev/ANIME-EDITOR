@@ -56,12 +56,12 @@ function updateCard() {
     document.getElementById('card-name').innerText = name;
     document.getElementById('card-skill').innerText = skill;
     document.getElementById('card-description').innerText = description;
-
-    const dmgElement = document.getElementById('card-damage');
-    const hpElement = document.getElementById('card-hp');
-    if (dmgElement && hpElement) {
-        dmgElement.innerHTML = 'DMG ' + `<span>${formatNumberWithSuffix(parseInt(damage))}</span>`;
-        hpElement.innerHTML = 'HP ' + `<span>${formatNumberWithSuffix(parseInt(hp))}</span>`;
+    if (cardType != 'support') {
+        const dmgElement = document.getElementById('card-damage');
+        const hpElement = document.getElementById('card-hp');
+    
+        dmgElement.innerHTML = `DMG <span>${formatNumberWithSuffix(parseInt(damage))}</span>`;
+        hpElement.innerHTML = `HP <span>${formatNumberWithSuffix(parseInt(hp))}</span>`;
     }
 
     const formattedNumber = formatCardNumber(cardNumber);
@@ -73,9 +73,6 @@ function updateCard() {
 
     updateProbabilities(probability);
     updateFullCards();
-
-    const statsContainer = document.getElementById('stats-container');
-    statsContainer.style.display = cardType === 'support' ? 'none' : 'grid';
 }
 
 function updateFullCards() {
@@ -97,12 +94,12 @@ function updateFullCards() {
         document.getElementById(`${rarity}-full-name`).innerText = name;
         document.getElementById(`${rarity}-full-skill`).innerText = skill;
         document.getElementById(`${rarity}-full-description`).innerText = description;
-        
-        const dmgElement = document.getElementById(`${rarity}-full-damage`);
-        const hpElement = document.getElementById(`${rarity}-full-hp`);
-        if (dmgElement && hpElement) {
-            dmgElement.innerHTML = 'DMG ' + `<span>${formatNumberWithSuffix(parseInt(damage) * multiplier)}</span>`;
-            hpElement.innerHTML = 'HP ' + `<span>${formatNumberWithSuffix(parseInt(hp) * multiplier)}</span>`;
+        if (cardType === 'support') {
+            const dmgElement = document.getElementById(`${rarity}-full-damage`);
+            const hpElement = document.getElementById(`${rarity}-full-hp`);
+    
+            dmgElement.innerHTML = `DMG <span>${formatNumberWithSuffix(parseInt(damage) * multiplier)}</span>`;
+            hpElement.innerHTML = `HP <span>${formatNumberWithSuffix(parseInt(hp) * multiplier)}</span>`;
         }
     });
 }
