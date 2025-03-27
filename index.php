@@ -493,11 +493,11 @@ include 'includes/header.php';
                     const preview = document.getElementById(`preview-${type}Effect`);
                     const effect = select.value;
                     const font = document.getElementById(`${type}Font`).value === 'custom' ?
-                        document.getElementById(`custom${type}Font`).value :
-                        document.getElementById(`${type}Font`).value;
+                        document.getElementById(`custom${type}Font`).value : document.getElementById(`${type}Font`).value;
 
-                    preview.className = 'text-white text-lg';
-
+                    preview.textContent = type === 'name' ? 'Preview Name Text' : 'Preview Skill Text';
+                    preview.className = 'text-white text-xl'; 
+                    
                     if (effect !== 'none') {
                         const link = document.createElement('link');
                         link.rel = 'stylesheet';
@@ -505,8 +505,10 @@ include 'includes/header.php';
                         link.setAttribute('data-preview-effect', `${type}-${effect}`);
                         document.head.appendChild(link);
 
-                        preview.style.fontFamily = `"${font}", sans-serif`;
-                        preview.classList.add(`font-effect-${effect}`);
+                        setTimeout(() => {
+                            preview.style.fontFamily = `"${font}", sans-serif`;
+                            preview.classList.add(`font-effect-${effect}`);
+                        }, 100);
                     }
                 }
 
@@ -533,40 +535,46 @@ include 'includes/header.php';
                     const elements = {
                         name: {
                             select: 'nameEffect',
-                            element: 'card-name',
+                            element: ['card-name', 'basic-full-name', 'gold-full-name', 'rainbow-full-name', 'secret-full-name'],
                             font: document.getElementById('nameFont').value === 'custom' ?
                                 document.getElementById('customnameFont').value : document.getElementById('nameFont').value
                         },
                         skill: {
                             select: 'skillEffect',
-                            element: 'card-skill',
+                            element: ['card-skill', 'basic-full-skill', 'gold-full-skill', 'rainbow-full-skill', 'secret-full-skill'],
                             font: document.getElementById('skillFont').value === 'custom' ?
                                 document.getElementById('customskillFont').value : document.getElementById('skillFont').value
                         }
                     };
 
-                    document.querySelectorAll('link[data-preview-effect]').forEach(link => {
+                    document.querySelectorAll('link[data-font-effect]').forEach(link => {
                         link.remove();
                     });
 
                     Object.entries(elements).forEach(([type, data]) => {
                         const effect = document.getElementById(data.select).value;
-                        const element = document.getElementById(data.element);
+                        
+                        data.element.forEach(elementId => {
+                            const element = document.getElementById(elementId);
+                            if (element) {
+                                element.className = element.className
+                                    .split(' ')
+                                    .filter(cls => !cls.startsWith('font-effect-'))
+                                    .join(' ');
 
-                        element.className = element.className
-                            .split(' ')
-                            .filter(cls => !cls.startsWith('font-effect-'))
-                            .join(' ');
+                                if (effect !== 'none') {
+                                    const link = document.createElement('link');
+                                    link.rel = 'stylesheet';
+                                    link.href = `https://fonts.googleapis.com/css?family=${data.font}&effect=${effect}`;
+                                    link.setAttribute('data-font-effect', `${type}-${effect}`);
+                                    document.head.appendChild(link);
 
-                        if (effect !== 'none') {
-                            const link = document.createElement('link');
-                            link.rel = 'stylesheet';
-                            link.href = `https://fonts.googleapis.com/css?family=${data.font}&effect=${effect}`;
-                            link.setAttribute('data-font-effect', `${type}-${effect}`);
-                            document.head.appendChild(link);
-
-                            element.classList.add(`font-effect-${effect}`);
-                        }
+                                    setTimeout(() => {
+                                        element.classList.add(`font-effect-${effect}`);
+                                    }, 100);
+                                }
+                            }
+                        });
                     });
                 }
 
