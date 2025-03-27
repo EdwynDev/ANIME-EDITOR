@@ -268,14 +268,14 @@ include 'includes/header.php';
                     Save this card to view it later in your collection page
                 </span>
             </button>
+            <button id="edit-button"
+                class="text-white hover:text-purple-400 group relative w-full bg-purple-600 rounded-lg p-3 hidden">
+                <i class="fas fa-edit mr-1"></i>Save Edit
+                <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
+                    Update this card in your collection
+                </span>
+            </button>
             <div class="grid grid-cols-2 gap-4">
-                <button id="edit-button"
-                    class="text-white hover:text-blue-400 group relative hidden">
-                    <i class="fas fa-edit mr-1"></i>Save Edit
-                    <span class="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm bg-gray-900 text-white rounded-lg whitespace-nowrap">
-                        Update this card in your collection
-                    </span>
-                </button>
                 <button onclick="downloadPreview('card-preview')"
                     class="text-white hover:text-green-400 group relative">
                     <i class="fas fa-download mr-1"></i>Download Preview
