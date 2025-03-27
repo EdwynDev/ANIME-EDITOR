@@ -226,8 +226,6 @@ include 'includes/header.php';
                 </button>
             </div>
             <script>
-                const loadedFonts = new Set();
-
                 function downloadPreview() {
                     const spinner = document.getElementById('downloadSpinner');
                     spinner.classList.remove('hidden');
@@ -443,15 +441,24 @@ include 'includes/header.php';
                     const fontName = customInput.value.trim();
                     if (!fontName) return;
 
-                    if (!loadedFonts.has(fontName)) {
-                        const link = document.createElement('link');
-                        link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontName)}&display=swap`;
-                        link.rel = 'stylesheet';
-                        document.head.appendChild(link);
-                        loadedFonts.add(fontName);
+                    const existingLink = document.getElementById(`font-link-${type}`);
+                    if (existingLink) {
+                        existingLink.remove();
                     }
 
-                    applyFontToCard(type, fontName);
+                    const link = document.createElement('link');
+                    link.id = `font-link-${type}`;
+                    link.rel = 'stylesheet';
+                    if (fontName.includes('fonts.googleapis.com')) {
+                        link.href = fontName;
+                    } else {
+                        link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontName)}&display=swap`;
+                    }
+                    document.head.appendChild(link);
+
+                    setTimeout(() => {
+                        applyFontToCard(type, fontName);
+                    }, 500);
                 }
 
                 function applyFontToCard(type, fontFamily) {
@@ -509,18 +516,12 @@ include 'includes/header.php';
                         div.textContent = 'No matching fonts found';
                         suggestionsDiv.appendChild(div);
                     } else {
-                        const fontsToLoad = matchingFonts.filter(font => !loadedFonts.has(font));
-                        if (fontsToLoad.length > 0) {
-                            const fontFamilies = fontsToLoad.map(font => `family=${font.replace(/ /g, '+')}`).join('&');
+                        matchingFonts.forEach(font => {
                             const link = document.createElement('link');
-                            link.href = `https://fonts.googleapis.com/css2?${fontFamilies}&display=swap`;
+                            link.href = `https://fonts.googleapis.com/css2?family=${font.replace(/ /g, '+')}`;
                             link.rel = 'stylesheet';
                             document.head.appendChild(link);
-                            
-                            fontsToLoad.forEach(font => loadedFonts.add(font));
-                        }
 
-                        matchingFonts.forEach(font => {
                             const div = document.createElement('div');
                             div.className = 'p-2 hover:bg-purple-600 cursor-pointer text-white flex items-center justify-between transition-colors';
                             
