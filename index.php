@@ -275,7 +275,7 @@ include 'includes/header.php';
                     Update this card in your collection
                 </span>
             </button>
-            <div class="grid grid-cols-2 gap-4 justify-left">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-left">
                 <button onclick="downloadPreview('card-preview')"
                     class="text-white hover:text-green-400 relative">
                     <i class="fas fa-download mr-1"></i>Download Preview
