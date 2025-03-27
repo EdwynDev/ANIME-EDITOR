@@ -326,22 +326,26 @@ include 'includes/header.php';
                     const originalDiv = document.querySelector(`.${previewId}`);
                     const prewiewIdToStyle = ['card-preview-basic', 'card-preview-gold', 'card-preview-rainbow', 'card-preview-secret'];
                     if (prewiewIdToStyle.includes(previewId)) {
+                        // Modification ici: on stocke la taille originale
+                        const originalSize = originalDiv.style.width;
                         const fullCard = originalDiv.querySelector('.full-card');
                         if (fullCard) {
+                            // On ajuste la taille du conteneur pour le rendu
+                            originalDiv.style.width = '320px';
+                            originalDiv.style.height = '500px';
                             fullCard.style.display = 'block';
-                            fullCard.style.transform = 'translate(-50%, -50%)';
+                            fullCard.style.position = 'absolute';
+                            fullCard.style.top = '0';
+                            fullCard.style.left = '0';
+                            fullCard.style.transform = 'none';
                         }
-                    }
 
-
-                    htmlToImage.toPng(originalDiv, {
+                        // Après la capture, on remet la configuration initiale
+                        htmlToImage.toPng(originalDiv, {
                             quality: 1,
                             pixelRatio: 2,
                             skipAutoScale: true,
                             cacheBust: true,
-                            style: {
-                                transformOrigin: 'top left',
-                            }
                         })
                         .then(function(dataUrl) {
                             const link = document.createElement('a');
@@ -350,12 +354,14 @@ include 'includes/header.php';
                             link.click();
                             spinner.classList.remove('flex');
                             spinner.classList.add('hidden');
-                            if (prewiewIdToStyle.includes(previewId)) {
-                                const fullCard = originalDiv.querySelector('.full-card');
-                                if (fullCard) {
-                                    fullCard.style.display = 'none';
-                                    fullCard.style.transform = 'translate(-140%, -100%)';
-                                }
+                            
+                            // Restauration de l'état initial
+                            if (fullCard) {
+                                originalDiv.style.width = originalSize;
+                                originalDiv.style.height = 'auto';
+                                fullCard.style.display = 'none';
+                                fullCard.style.position = 'absolute';
+                                fullCard.style.transform = 'translate(-140%, -100%)';
                             }
                         })
                         .catch(function(error) {
@@ -364,6 +370,28 @@ include 'includes/header.php';
                             spinner.classList.add('hidden');
                             showModal('errorModal', 'Error downloading card');
                         });
+                    } else {
+                        htmlToImage.toPng(originalDiv, {
+                            quality: 1,
+                            pixelRatio: 2,
+                            skipAutoScale: true,
+                            cacheBust: true,
+                        })
+                        .then(function(dataUrl) {
+                            const link = document.createElement('a');
+                            link.download = `anime_card.png`;
+                            link.href = dataUrl;
+                            link.click();
+                            spinner.classList.remove('flex');
+                            spinner.classList.add('hidden');
+                        })
+                        .catch(function(error) {
+                            console.error('Error:', error);
+                            spinner.classList.remove('flex');
+                            spinner.classList.add('hidden');
+                            showModal('errorModal', 'Error downloading card');
+                        });
+                    }
                 }
 
                 document.addEventListener('DOMContentLoaded', function() {
@@ -761,7 +789,7 @@ include 'includes/header.php';
                         <div class="gradient-content w-40 h-40 bg-black rounded-lg overflow-hidden">
                             <div class="card-image-box">
                                 <img id="basic-image" alt="Basic rarity image"
-                                    class="absolute inset-0 w-full h-full object-cover object-top opacity-80"
+                                    class="absolute inset-0 w-full h-full object-cover opacity-80"
                                     src="https://placehold.co/160x160" />
                             </div>
                             <div class="absolute inset-0 bg-black bg-opacity-40">
