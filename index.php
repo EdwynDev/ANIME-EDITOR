@@ -498,29 +498,51 @@ include 'includes/header.php';
                     if (!fontName) {
                         const div = document.createElement('div');
                         div.className = 'p-2 text-gray-400';
-                        div.textContent = 'No matching fonts found';
+                        div.textContent = 'Start typing to search fonts...';
                         suggestionsDiv.appendChild(div);
-                    } else {
-                        loadFont(fontName);
-
-                        const div = document.createElement('div');
-                        div.className = 'p-4 text-white flex items-center justify-between transition-colors';
-                        
-                        const previewSpan = document.createElement('span');
-                        previewSpan.style.fontFamily = fontName;
-                        previewSpan.style.fontSize = '18px';
-                        previewSpan.textContent = fontName;
-                        
-                        const sampleText = document.createElement('span');
-                        sampleText.style.fontFamily = fontName;
-                        sampleText.className = 'text-gray-400';
-                        sampleText.textContent = 'AaBbCc123';
-                        
-                        div.appendChild(previewSpan);
-                        div.appendChild(sampleText);
-                        
-                        suggestionsDiv.appendChild(div);
+                        return;
                     }
+
+                    fetch(`api/check_font.php?font=${encodeURIComponent(fontName)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            suggestionsDiv.innerHTML = '';
+                            
+                            if (!data.exists) {
+                                const div = document.createElement('div');
+                                div.className = 'p-2 text-gray-400';
+                                div.textContent = 'Font not found in Google Fonts';
+                                suggestionsDiv.appendChild(div);
+                                return;
+                            }
+
+                            loadFont(fontName);
+
+                            const div = document.createElement('div');
+                            div.className = 'p-4 text-white flex items-center justify-between transition-colors';
+                            
+                            const previewSpan = document.createElement('span');
+                            previewSpan.style.fontFamily = fontName;
+                            previewSpan.style.fontSize = '18px';
+                            previewSpan.textContent = fontName;
+                            
+                            const sampleText = document.createElement('span');
+                            sampleText.style.fontFamily = fontName;
+                            sampleText.className = 'text-gray-400';
+                            sampleText.textContent = 'AaBbCc123';
+                            
+                            div.appendChild(previewSpan);
+                            div.appendChild(sampleText);
+                            
+                            suggestionsDiv.appendChild(div);
+                        })
+                        .catch(error => {
+                            console.error('Error checking font:', error);
+                            const div = document.createElement('div');
+                            div.className = 'p-2 text-gray-400';
+                            div.textContent = 'Error checking font availability';
+                            suggestionsDiv.appendChild(div);
+                        });
 
                     suggestionsDiv.classList.remove('hidden');
                 }
