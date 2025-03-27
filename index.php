@@ -301,19 +301,19 @@ include 'includes/header.php';
                     <i class="fas fa-download mr-1"></i>Download Secret Preview
                 </button>
                 <button onclick="downloadPreview('card-preview-basic')"
-                    class="text-white hover:bg-gray-400 relative">
+                    class="text-white bg-gray-600 hover:bg-gray-700 relative rounded-lg p-3">
                     <i class="fas fa-download mr-1"></i>Download Basic Preview (Full)
                 </button>
                 <button onclick="downloadPreview('card-preview-gold')"
-                    class="text-white hover:bg-yellow-400 relative">
+                    class="text-white bg-yellow-600 hover:bg-yellow-700 relative rounded-lg p-3">">
                     <i class="fas fa-download mr-1"></i>Download Gold Preview (Full)
                 </button>
                 <button onclick="downloadPreview('card-preview-rainbow')"
-                    class="text-white hover:bg-pink-400 relative">
+                    class="text-white bg-pink-600 hover:bg-pink-700 relative rounded-lg p-3">
                     <i class="fas fa-download mr-1"></i>Download Rainbow Preview (Full)
                 </button>
                 <button onclick="downloadPreview('card-preview-secret')"
-                    class="text-white hover:bg-red-400 relative">
+                    class="text-white bg-red-600 hover:bg-red-700 relative rounded-lg p-3">
                     <i class="fas fa-download mr-1"></i>Download Secret Preview (Full)
                 </button>
             </div>
