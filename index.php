@@ -326,8 +326,11 @@ include 'includes/header.php';
                     const originalDiv = document.querySelector(`.${previewId}`);
                     const prewiewIdToStyle = ['card-preview-basic', 'card-preview-gold', 'card-preview-rainbow', 'card-preview-secret'];
                     if (prewiewIdToStyle.includes(previewId)) {
-                        originalDiv.children.querySelector('full-card').style.display = 'block';
-                        originalDiv.children.querySelector('full-card').style.transform = 'translate(-50%, -50%)';
+                        const fullCard = originalDiv.querySelector('.full-card');
+                        if (fullCard) {
+                            fullCard.style.display = 'block';
+                            fullCard.style.transform = 'translate(-50%, -50%)';
+                        }
                     }
 
 
@@ -348,8 +351,11 @@ include 'includes/header.php';
                             spinner.classList.remove('flex');
                             spinner.classList.add('hidden');
                             if (prewiewIdToStyle.includes(previewId)) {
-                                originalDiv.children.querySelector('full-card').style.display = 'none';
-                                originalDiv.children.querySelector('full-card').style.transform = 'translate(-140%, -100%)';
+                                const fullCard = originalDiv.querySelector('.full-card');
+                                if (fullCard) {
+                                    fullCard.style.display = 'none';
+                                    fullCard.style.transform = 'translate(-140%, -100%)';
+                                }
                             }
                         })
                         .catch(function(error) {
