@@ -58,11 +58,11 @@ function updateCard() {
     document.getElementById('card-description').innerText = description;
     if (cardType != 'support') {
             
-        const dmg = document.getElementById(`damage`);
-        const hp = document.getElementById(`hp`);
+        const dmgInput = document.getElementById(`damage`);
+        const hpInput = document.getElementById(`hp`);
         
-        dmg.parentElement.style.display = 'block';
-        hp.parentElement.style.display = 'block';
+        dmgInput.parentElement.style.display = 'block';
+        hpInput.parentElement.style.display = 'block';
 
         const dmgElement = document.getElementById('card-damage');
         const hpElement = document.getElementById('card-hp');
@@ -76,15 +76,14 @@ function updateCard() {
         const dmgElement = document.getElementById('card-damage');
         const hpElement = document.getElementById('card-hp');
         
-    
         dmgElement.style.display = 'none';
         hpElement.style.display = 'none';
             
-        const dmg = document.getElementById(`damage`);
-        const hp = document.getElementById(`hp`);
+        const dmgInput = document.getElementById(`damage`);
+        const hpInput = document.getElementById(`hp`);
         
-        dmg.parentElement.style.display = 'none';
-        hp.parentElement.style.display = 'none';
+        dmgInput.parentElement.style.display = 'none';
+        hpInput.parentElement.style.display = 'none';
     }
 
     const formattedNumber = formatCardNumber(cardNumber);
