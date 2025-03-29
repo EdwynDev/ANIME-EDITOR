@@ -57,6 +57,13 @@ function updateCard() {
     document.getElementById('card-skill').innerText = skill;
     document.getElementById('card-description').innerText = description;
     if (cardType != 'support') {
+            
+        const dmg = document.getElementById(`damage`);
+        const hp = document.getElementById(`hp`);
+        
+        dmg.parentElement.style.display = 'block';
+        hp.parentElement.style.display = 'block';
+
         const dmgElement = document.getElementById('card-damage');
         const hpElement = document.getElementById('card-hp');
 
@@ -72,6 +79,12 @@ function updateCard() {
     
         dmgElement.style.display = 'none';
         hpElement.style.display = 'none';
+            
+        const dmg = document.getElementById(`damage`);
+        const hp = document.getElementById(`hp`);
+        
+        dmg.parentElement.style.display = 'none';
+        hp.parentElement.style.display = 'none';
     }
 
     const formattedNumber = formatCardNumber(cardNumber);
@@ -107,9 +120,9 @@ function updateFullCards() {
         if (cardType != 'support') {
             const dmgElement = document.getElementById(`${rarity}-full-damage`);
             const hpElement = document.getElementById(`${rarity}-full-hp`);
-
             dmgElement.style.display = 'block';
             hpElement.style.display = 'block';
+
     
             dmgElement.innerHTML = `DMG <span>${formatNumberWithSuffix(parseInt(damage) * multiplier)}</span>`;
             hpElement.innerHTML = `HP <span>${formatNumberWithSuffix(parseInt(hp) * multiplier)}</span>`;
