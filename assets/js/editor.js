@@ -59,9 +59,19 @@ function updateCard() {
     if (cardType != 'support') {
         const dmgElement = document.getElementById('card-damage');
         const hpElement = document.getElementById('card-hp');
+
+        dmgElement.style.display = 'block';
+        hpElement.style.display = 'block';
     
         dmgElement.innerHTML = `DMG <span>${formatNumberWithSuffix(parseInt(damage))}</span>`;
         hpElement.innerHTML = `HP <span>${formatNumberWithSuffix(parseInt(hp))}</span>`;
+    } else {
+        const dmgElement = document.getElementById('card-damage');
+        const hpElement = document.getElementById('card-hp');
+        
+    
+        dmgElement.style.display = 'none';
+        hpElement.style.display = 'none';
     }
 
     const formattedNumber = formatCardNumber(cardNumber);
@@ -97,9 +107,18 @@ function updateFullCards() {
         if (cardType === 'support') {
             const dmgElement = document.getElementById(`${rarity}-full-damage`);
             const hpElement = document.getElementById(`${rarity}-full-hp`);
+
+            dmgElement.style.display = 'block';
+            hpElement.style.display = 'block';
     
             dmgElement.innerHTML = `DMG <span>${formatNumberWithSuffix(parseInt(damage) * multiplier)}</span>`;
             hpElement.innerHTML = `HP <span>${formatNumberWithSuffix(parseInt(hp) * multiplier)}</span>`;
+        } else {
+            const dmgElement = document.getElementById(`${rarity}-full-damage`);
+            const hpElement = document.getElementById(`${rarity}-full-hp`);
+    
+            dmgElement.style.display = 'none';
+            hpElement.style.display = 'none';
         }
     });
 }
